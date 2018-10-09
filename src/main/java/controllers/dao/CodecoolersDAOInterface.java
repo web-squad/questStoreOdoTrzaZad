@@ -1,4 +1,4 @@
-package controller.dao;
+package controllers.dao;
 
 public interface CodecoolersDAOInterface {
 }

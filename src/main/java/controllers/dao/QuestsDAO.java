@@ -1,4 +1,4 @@
-package controller.dao;
+package controllers.dao;
 
 public class QuestsDAO implements QuestsDAOInterface {
 }
