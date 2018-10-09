@@ -3,7 +3,6 @@ package controllers;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
-import java.util.Map;
 
 public class Logger {
     private View view;
@@ -23,7 +22,7 @@ public class Logger {
     public void logIn(){
         UserController userController = logUser();
         if (!userInDatabase && userController == null) {
-            view.print("User with that email dose not exist");
+            view.print("User with that email does not exist");
         }
         else if (userController != null) {
             userController.welcomeUser();
@@ -34,23 +33,19 @@ public class Logger {
     private UserController logUser(){
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
-        Map loginData = new LoginAccesDAO(connection).getLoginData;
-        int accesLevel = loginData.get(email).get(1);
-        if(loginData.get(email).get(0).equals(password) && accesLevel > 0) {
-            userInDatabase = true;
-            return createUserController(accesLevel, email);
-        }
-        return null;
+        int acessLevel;
+        acessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
+        return createUserController(acessLevel, email);
     }
 
-    private UserController createUserController(int accesLevel, String email){
-        if (accesLevel == 1){
+    private UserController createUserController(int acessLevel, String email){
+        if (acessLevel == 1){
             return new CodecoolerController(email);
         }
-        else if (accesLevel == 2){
+        else if (acessLevel == 2){
             return new MentorController(email);
         }
-        else if (accesLevel == 3){
+        else if (acessLevel == 3){
             return new CreepyGuyController(email);
         }
         return null;
