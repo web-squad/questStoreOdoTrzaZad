@@ -1,5 +1,5 @@
-import controller.Logger;
-import view.View;
+import controllers.Logger;
+import views.View;
 
 public class Main {
     public static void main(String[] args) {
