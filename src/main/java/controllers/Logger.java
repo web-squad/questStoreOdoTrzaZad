@@ -4,6 +4,8 @@ import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logger {
     private View view;
@@ -36,11 +38,11 @@ public class Logger {
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
         int acessLevel;
-        acessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
-        return createUserController(acessLevel, email);
+        List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
+        return createUserController(acessLevel, id);
     }
 
-    private UserController createUserController(int acessLevel, String email){
+    private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
             return new CodecoolerController();
         }
@@ -48,7 +50,7 @@ public class Logger {
             return new MentorController();
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController(email, creepyGuyDAO);
+            return new CreepyGuyController(id, creepyGuyDAO);
         }
         return null;
     }

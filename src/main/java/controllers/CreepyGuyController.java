@@ -1,7 +1,9 @@
 package controllers;
 
 import controllers.dao.CreepyGuyDAO;
+import models.Level;
 import models.MentorModel;
+import models.Room;
 import views.View;
 
 import java.sql.Connection;
@@ -11,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CreepyGuyController extends UserController {
-    String email;
+    int id;
     View view;
     CreepyGuyDAO dao;
     List<String> mentorData;
@@ -19,8 +21,8 @@ public class CreepyGuyController extends UserController {
     Room room;
     Level level;
 
-    public CreepyGuyController(String email, CreepyGuyDAO dao){
-        this.email = email;
+    public CreepyGuyController(Integer id, CreepyGuyDAO dao){
+        this.id = id;
         view = new View();
         this.dao = dao;
     }
