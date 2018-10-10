@@ -1,4 +1,4 @@
 package models;
 
-public class CreepyGuyModel {
+public class CreepyGuyModel extends User{
 }
