@@ -13,7 +13,6 @@ public class Logger {
     private String dbUser;
     private Connection connection;
     private boolean userInDatabase;
-    CreepyGuyDAO creepyGuyDAO;
 
     public Logger() {
         view = new View();
@@ -21,7 +20,6 @@ public class Logger {
         dbUser = view.getInputString("DB User?");
         connection = new Connector().connect(dbUser, dbPass);
         userInDatabase = false;
-        creepyGuyDAO = new CreepyGuyDAO(connection);
     }
 
     public void logIn(){
@@ -37,19 +35,23 @@ public class Logger {
     private UserController logUser(){
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
-        int acessLevel;
         List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
-        return createUserController(acessLevel, id);
+        int accessLevel = loginData.get(0);
+        int id = loginData.get(1);
+        return createUserController(accessLevel, id);
     }
 
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
+            CodecoolerDao codecoolerDao = new CodecoolerDao(connection);
             return new CodecoolerController();
         }
         else if (acessLevel == 2){
-            return new MentorController();
+            MentorDao mentorDao = new MentorDao(connection);
+            return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
+            CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
             return new CreepyGuyController(id, creepyGuyDAO);
         }
         return null;
