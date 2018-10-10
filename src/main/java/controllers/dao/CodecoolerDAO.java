@@ -32,7 +32,37 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     public CodecoolerModel getCodecoolerModel(int codecoolerId){
+        String codecoolerTableQuery = "SELECT * FROM Codecoolers WHERE codecooler_id = " + codecoolerId + ";";
+        String teamsTableQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + codecoolerId + ";";
+        String loginAccesQuery = "SELECT email FROM LoginAccess WHERE id = " + codecoolerId + ";";
+        ResultSet resultSetCodecooler = null;
+        ResultSet resultSetTeams = null;
+        ResultSet resultSetLogin = null;
+        CodecoolerModel codecoolerModel = null;
+        try{
+            resultSetCodecooler = statement.executeQuery(codecoolerTableQuery);
+            resultSetTeams = statement.executeQuery(teamsTableQuery);
+            resultSetLogin = statement.executeQuery(loginAccesQuery);
+        }catch(SQLException e){
+            System.out.println("Couldn't find selected query");
+        }
+        try{
+            int coolcoins = resultSetCodecooler.getInt(2);
+            int expLevel = resultSetCodecooler.getInt(3);//robocza nazwa
+            String room = resultSetCodecooler.getString(4);
+            int coolCoinsEverEarned = resultSetCodecooler.getInt(5);
+            String questInProgress = resultSetCodecooler.getString(6);//robocza nazwa
+            String first_name = resultSetCodecooler.getString(7);
+            String second_name = resultSetCodecooler.getString(8);
+            String nickName = resultSetCodecooler.getString(9);
+            String email = resultSetLogin.getString(1);
+            String teamID = resultSetTeams.getString(1);
+            codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID);
 
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return codecoolerModel;
     }
 
     @Override
