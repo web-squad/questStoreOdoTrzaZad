@@ -1,7 +1,9 @@
 package controllers;
 
+import controllers.dao.CodecoolerDAO;
 import models.CodecoolerModel;
 import views.View;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,10 +12,10 @@ import java.util.ArrayList;
 
 public class CodecoolerController {
     private CodecoolerModel codecoolerModel;
-    private CodecoolerControllerDAO codecoolerControllerDAO;
+    private CodecoolerDAO codecoolerControllerDAO;
     private View view;
 
-    public CodecoolerController(int id, CodecoolerControllerDAO codecoolerController){
+    public CodecoolerController(int id, CodecoolerDAO codecoolerController){
         this.codecoolerControllerDAO = codecoolerController;
         this.codecoolerModel = initiateCodecoolerModel(id);
         view = new View();

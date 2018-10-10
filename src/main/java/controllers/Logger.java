@@ -1,8 +1,11 @@
 package controllers;
 
+import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logger {
     private View view;
@@ -25,7 +28,6 @@ public class Logger {
             view.print("User with that email does not exist");
         }
         else if (userController != null) {
-            userController.welcomeUser();
             userController.startUserSession();
         }
     }
@@ -33,20 +35,24 @@ public class Logger {
     private UserController logUser(){
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
-        int acessLevel;
-        acessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
-        return createUserController(acessLevel, email);
+        List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
+        int accessLevel = loginData.get(0);
+        int id = loginData.get(1);
+        return createUserController(accessLevel, id);
     }
 
-    private UserController createUserController(int acessLevel, String email){
+    private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-            return new CodecoolerController(email);
+            CodecoolerDao codecoolerDao = new CodecoolerDao(connection);
+            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
-            return new MentorController(email);
+            MentorDao mentorDao = new MentorDao(connection);
+            return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController(email);
+            CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
+            return new CreepyGuyController(id, creepyGuyDAO);
         }
         return null;
     }

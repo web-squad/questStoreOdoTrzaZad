@@ -1,4 +1,8 @@
 package controllers;
 
-public class MentorController {
+public class MentorController extends UserController {
+
+    public void startUserSession(){
+        System.out.println("działa");
+    }
 }
