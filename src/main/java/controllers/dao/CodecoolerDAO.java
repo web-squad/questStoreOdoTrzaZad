@@ -133,7 +133,12 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public void addNewPossesion(int codecoolerId, int artefactId) { //musthave
-
+        String addPossesionQuery = "INSERT INTO ArtifactsInPossess (artifact_id, codecooler_id VALUES (\"" + artefactId +"\", \"" + codecoolerId +"\")";
+        try{
+            statement.executeQuery(addPossesionQuery);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
