@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ public class Logger {
     private String dbUser;
     private Connection connection;
     private boolean userInDatabase;
+    CreepyGuyDAO creepyGuyDAO;
 
     public Logger() {
         view = new View();
@@ -17,6 +19,7 @@ public class Logger {
         dbUser = view.getInputString("DB User?");
         connection = new Connector().connect(dbUser, dbPass);
         userInDatabase = false;
+        creepyGuyDAO = new CreepyGuyDAO(connection);
     }
 
     public void logIn(){
@@ -25,7 +28,6 @@ public class Logger {
             view.print("User with that email does not exist");
         }
         else if (userController != null) {
-            userController.welcomeUser();
             userController.startUserSession();
         }
     }
@@ -40,13 +42,13 @@ public class Logger {
 
     private UserController createUserController(int acessLevel, String email){
         if (acessLevel == 1){
-            return new CodecoolerController(email);
+            return new CodecoolerController();
         }
         else if (acessLevel == 2){
-            return new MentorController(email);
+            return new MentorController();
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController(email);
+            return new CreepyGuyController(email, creepyGuyDAO);
         }
         return null;
     }
