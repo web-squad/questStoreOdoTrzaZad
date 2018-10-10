@@ -44,7 +44,7 @@ public class Logger {
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
             CodecoolerDao codecoolerDao = new CodecoolerDao(connection);
-            return new CodecoolerController();
+            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
             MentorDao mentorDao = new MentorDao(connection);
