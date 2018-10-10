@@ -118,7 +118,16 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public int getPriceOfArtefact(int artefactId) {
+        String artefactsTableQuery = "SELECT price FROM Artifacts WHERE artifact_id = " + artefactId + ";";
+        ResultSet resultSetArtefacts = getResultSet(artefactsTableQuery);
+        int price = 0;
+        try{
+            price = resultSetArtefacts.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
+        return price;
 
     } //musthave
 
