@@ -17,7 +17,7 @@ public class CodecoolerController {
 
     public CodecoolerController(int id, CodecoolerDAO codecoolerController){
         this.codecoolerControllerDAO = codecoolerController;
-        this.codecoolerModel = initiateCodecoolerModel(id);
+        this.codecoolerModel =  codecoolerControllerDAO.getCodecoolerModel(id);
         view = new View();
 
     }
@@ -41,13 +41,15 @@ public class CodecoolerController {
                     showWallet();
                     break;
                 case '2':
-                    String artefactId = view.getInputString("Provide artefact id which you want to buy!");
+                    System.out.println("Provide artefact id which you want to buy!");
+                    int artefactId = view.getInputInt();
                     System.out.println(codecoolerControllerDAO.readArtefacts());
                     buyItem(artefactId);
                     break;
 
                 case '3':
-                    String teamArtefactId = view.getInputString("Provide artefact id which you want to buy for your team!");
+                    System.out.println("Provide artefact id which you want to buy for your team!");
+                    int teamArtefactId = view.getInputInt();
                     teamBuyItem(teamArtefactId);
                     break;
                 case '4':
@@ -73,13 +75,13 @@ public class CodecoolerController {
     }
 
 
-    public void buyItem(String artefactID){
+    public void buyItem(int artefactID){
         int artefactPrice = codecoolerControllerDAO.getPriceOfArtefact(artefactID);
-        int codecoolersCoins = codecoolerModel.getCoolcoins();
+
         int id = codecoolerModel.getId();
+        int codecoolersCoins = codecoolerControllerDAO.readCoins(id);
         if(codecoolersCoins >= artefactPrice){
-            codecoolersCoins -= artefactPrice;
-            codecoolerModel.setCodecoolerCoins(codecoolersCoins); //dodaje do modelu dao sie tym pozniej zajmie
+            codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, artefactPrice); //dodaje do modelu dao sie tym pozniej zajmie
             codecoolerControllerDAO.addNewPossesion(id, artefactID);
             System.out.println("You bought that item!");
         }else{
@@ -89,13 +91,13 @@ public class CodecoolerController {
     }
 
 
-    public void teamBuyItem(String artefactId){
+    public void teamBuyItem(int artefactId){
         int id = codecoolerModel.getId();
         ArrayList<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
         int costOfAnArtefact = codecoolerControllerDAO.getPriceOfAnArtefact(artefactId);
         if(checkTeamMembersMoney(teamMembersIds, costOfAnArtefact)){
             for(Integer teamMemberId : teamMembersIds){
-                codecoolerControllerDAO.subtractCodecoolerCoolcoins(costOfAnArtefact/teamMembersIds.size());
+                codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, costOfAnArtefact/teamMembersIds.size());
                 codecoolerControllerDAO.addNewPossesion(teamMemberId, artefactId);
             }
         }
@@ -114,11 +116,6 @@ public class CodecoolerController {
     }
 
 
-    private CodecoolerModel initiateCodecoolerModel(int id){
-
-
-        return new CodecoolerModel(id, nickName, first_name, second_name, email, room, teamID, expLevel, coolcoins, questInProgress);
-    }
 
     private boolean checkTeamMembersMoney(ArrayList<Integer> ids, int costs){
         int costPerPerson = costs/ids.size();

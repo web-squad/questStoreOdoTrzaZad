@@ -20,13 +20,8 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     @Override
     public int readCoins(int codecoolerId) {
         String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
-        ResultSet resultSet = null;
+        ResultSet resultSet = getResultSet(query);
         int coins = 0;
-        try{
-            resultSet = statement.executeQuery(query);
-        }catch(SQLException e){
-            System.out.println("Couldn't find selected query");
-        }
         try{
             coins = resultSet.getInt(1);
         }catch(SQLException e){
@@ -36,39 +31,19 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         return coins;
     }
 
-    public CodecoolerModel getCodecoolerModel(){
-        String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
-        ResultSet resultSet = null;
-        int coins = 0;
-        try{
-            resultSet = statement.executeQuery(query);
-        }catch(SQLException e){
-            System.out.println("Couldn't find selected query");
-        }
-        try{
-            int coolcoins = 
-            int expLevel = //robocza nazwa
-            String questInProgress = //robocza nazwa
-            String room =
-            String teamID =
-            String nickName =
-            String first_name =
-            String second_name =
-            String email =
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
+    public CodecoolerModel getCodecoolerModel(int codecoolerId){
+
     }
 
     @Override
     public int checkCoinsEverOwned(int id) {
         return 0;
-    }
+    } //korzystanie
 
     @Override
     public String checkQuestInProgress(int id) {
         return null;
-    }
+    } //korzystanie
 
     @Override
     public String readCodecoolerClass(int id) {
@@ -78,7 +53,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     @Override
     public String readTeamName(int id) {
         return null;
-    }
+    } //korzystanie
 
     @Override
     public String getNickName(int id) {
@@ -98,35 +73,56 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     @Override
     public String getEmail(int id) {
         return null;
-    }
+    } //korzystanie
 
     @Override
     public String readArtefacts() {
         return null;
-    }
+    } //korzystanie
 
     @Override
     public String readEmailsCoolcoinsAndArtefacts(int codecoolerId) {
+
         return null;
-    }
+    } //korzystnaie
 
     @Override
     public int getPriceOfArtefact(int artefactId) {
-        return 0;
-    }
+
+
+    } //musthave
 
     @Override
-    public void addNewPossesion(int codecoolerId, int artefactId) {
+    public void addNewPossesion(int codecoolerId, int artefactId) { //musthave
+
 
     }
 
     @Override
     public ArrayList<Integer> readTeamMembersId(int artefactId) {
         return null;
-    }
+    } //musthave
 
     @Override
-    public void subtractCodecoolersCoolcoins(int codecoolerId) {
+    public void subtractCodecoolersCoolcoins(int codecoolerId, int artefactPrice) {
+        int coins = readCoins(codecoolerId) - artefactPrice;
+        String updateCoinsQuery = "UPDATE Codecoolers SET coolcoins = " + coins + ";";
+        try{
+            statement.executeQuery(updateCoinsQuery);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
+
+    }
+
+    private ResultSet getResultSet(String query){
+        ResultSet resultSet = null;
+        try{
+            resultSet = statement.executeQuery(query);
+        }catch(SQLException e){
+            System.out.println("Couldn't find selected query");
+        }
+        return resultSet;
     }
 }
