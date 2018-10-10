@@ -2,7 +2,7 @@ package models;
 
 import java.util.Map;
 
-public class Room {
+public class Room extends Model{
     String roomId;
     String roomName;
     String roomDescription;

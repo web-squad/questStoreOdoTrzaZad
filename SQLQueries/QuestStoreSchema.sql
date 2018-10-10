@@ -84,7 +84,8 @@ ALTER SEQUENCE public.artifacts_artifact_id_seq OWNED BY public.artifacts.artifa
 CREATE TABLE public.artifacts_in_possess (
     id integer NOT NULL,
     artifact_id integer,
-    codecooler_id integer
+    codecooler_id integer,
+    used boolean DEFAULT FALSE
 );
 
 
@@ -131,6 +132,15 @@ CREATE TABLE public.codecoolers (
     nickname character varying
 );
 
+CREATE SEQUENCE public.codecooler_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.codecoolers.codecoolers_id;
+
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
 
@@ -141,7 +151,7 @@ ALTER TABLE public.codecoolers OWNER TO queststore;
 
 CREATE TABLE public.experience_level (
     id integer NOT NULL,
-    level integer NOT NULL,
+    level character varying NOT NULL,
     threshold integer
 );
 

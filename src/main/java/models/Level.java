@@ -2,7 +2,7 @@ package models;
 
 import java.util.Map;
 
-public class Level {
+public class Level extends Model{
     String levelId;
     String threshold;
     String name;
