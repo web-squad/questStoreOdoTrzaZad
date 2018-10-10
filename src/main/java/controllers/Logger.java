@@ -45,7 +45,7 @@ public class Logger {
             return new MentorController();
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController();
+            return new CreepyGuyController(email, creepyGuyDAO);
         }
         return null;
     }
