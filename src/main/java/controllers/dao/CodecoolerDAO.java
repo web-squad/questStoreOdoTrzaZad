@@ -139,7 +139,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
-
     }
 
     @Override
