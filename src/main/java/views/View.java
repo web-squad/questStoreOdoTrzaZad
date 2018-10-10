@@ -1,5 +1,8 @@
 package views;
 
+import models.Model;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class View {
@@ -71,5 +74,11 @@ public class View {
 
     public void waitForConfirm(){
         getInputString("Press enter to continue");
+    }
+
+    public void printModelList(List<Model> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
     }
 }

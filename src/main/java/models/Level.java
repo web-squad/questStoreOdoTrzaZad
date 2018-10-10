@@ -1,4 +1,4 @@
 package models;
 
-public class Level {
+public class Level extends Model{
 }
