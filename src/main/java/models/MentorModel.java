@@ -10,6 +10,7 @@ public class MentorModel extends User {
     String name;
     String surname;
     String room;
+    String nickName;
     Map<String, String> collectedData;
 
     public MentorModel(Map<String, String> mentorData){
@@ -18,6 +19,7 @@ public class MentorModel extends User {
         name = mentorData.get("name");
         surname = mentorData.get("surname");
         room = mentorData.get("room");
+        nickName = mentorData.get("nick_name");
         collectedData = mentorData;
     }
 
@@ -31,6 +33,31 @@ public class MentorModel extends User {
 
     public void setId(String id) {
         this.id = id;
+        collectedData.put("id", id);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public String getNickName(){
+        return nickName;
     }
 
 }

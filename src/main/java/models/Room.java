@@ -6,13 +6,11 @@ public class Room {
     String roomId;
     String roomName;
     String roomDescription;
-    String assignedMentor;
     Map<String, String > collectedData;
 
     public Room(Map<String, String> collectedData){
       roomName = collectedData.get("roomName");
       roomDescription = collectedData.get("roomDescription");
-      assignedMentor = collectedData.get("assignedMentor");
       this.collectedData = collectedData;
     }
 
@@ -28,5 +26,11 @@ public class Room {
         this.roomId = id;
     }
 
+    public String getRoomName() {
+        return roomName;
+    }
 
+    public String getRoomDescription() {
+        return roomDescription;
+    }
 }

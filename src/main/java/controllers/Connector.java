@@ -10,7 +10,7 @@ public class Connector {
         try {
             Class.forName("org.postgresql.Driver");
             c = DriverManager
-                    .getConnection("jdbc:postgresql://localhost:5432/QuestStore", dbUser, dbPassword);
+                    .getConnection("jdbc:postgresql://localhost:5432/postgres", dbUser, dbPassword);
             c.setAutoCommit(false);
             System.out.println("Opened database successfully");
         } catch (Exception e) {

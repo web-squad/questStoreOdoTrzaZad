@@ -20,10 +20,12 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
     public List<Integer> readLoginData(String email, String pass) {
         try{
             retriveData(email, pass);
+            return loginData;
         }catch (SQLException e){
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
+        return null;
     }
 
     private void retriveData(String email, String pass) throws SQLException {

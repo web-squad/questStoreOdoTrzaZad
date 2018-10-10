@@ -18,6 +18,14 @@ public class Level {
         return collectedData;
     }
 
+    public String getLevelName() {
+        return name;
+    }
+
+    public String getThreshold() {
+        return threshold;
+    }
+
     public String getId() {
         return levelId;
     }
