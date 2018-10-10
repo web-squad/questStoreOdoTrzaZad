@@ -1,8 +1,7 @@
 package controllers;
 
 import controllers.dao.MentorDAO;
-import models.CodecoolerModel;
-import models.MentorModel;
+import models.*;
 import views.View;
 
 import java.util.ArrayList;
@@ -161,7 +160,7 @@ public class MentorController extends UserController{
 
 
     public void editArtifactInStore() {
-        List<Artifact> artifacts = mentorDAO.listOfArtifactsInShop();
+        List<Model> artifacts = mentorDAO.listOfArtifactsInShop();
 
         for (int i = 0; i < artifacts.size(); i++) {
             view.print(artifacts.get(i).toString());
@@ -180,11 +179,9 @@ public class MentorController extends UserController{
 
 
     public void editExistingQuest() {
-        List<Quest> quests = mentorDAO.listOfQuests();
+        List<Model> quests = mentorDAO.listOfQuests();
 
-        for (int i = 0; i < quests.size(); i++) {
-            view.print(quests.get(i).toString());
-        }
+        view.printModelList(quests);
 
         view.print("Which quest you like to edit? (id)");
         int quest_id = view.getInputInt();
@@ -212,7 +209,7 @@ public class MentorController extends UserController{
 
 
     private void printCodecoolerArtifact(int codecooler_id) {
-        List<ArtifactsInPossess> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
+        List<Model> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
 
         for (int i = 0; i < artifacts.size(); i++) {
             view.print(artifacts.get(i).toString());
