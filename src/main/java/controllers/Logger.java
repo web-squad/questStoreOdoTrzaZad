@@ -4,6 +4,8 @@ import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Logger {
     private View view;
@@ -11,7 +13,6 @@ public class Logger {
     private String dbUser;
     private Connection connection;
     private boolean userInDatabase;
-    CreepyGuyDAO creepyGuyDAO;
 
     public Logger() {
         view = new View();
@@ -19,7 +20,6 @@ public class Logger {
         dbUser = view.getInputString("DB User?");
         connection = new Connector().connect(dbUser, dbPass);
         userInDatabase = false;
-        creepyGuyDAO = new CreepyGuyDAO(connection);
     }
 
     public void logIn(){
@@ -35,20 +35,24 @@ public class Logger {
     private UserController logUser(){
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
-        int accessLevel;
-        accessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
-        return createUserController(accessLevel, email);
+        List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
+        int accessLevel = loginData.get(0);
+        int id = loginData.get(1);
+        return createUserController(accessLevel, id);
     }
 
-    private UserController createUserController(int acessLevel, String email){
+    private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-            return new CodecoolerController();
+            CodecoolerDao codecoolerDao = new CodecoolerDao(connection);
+            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
-            return new MentorController();
+            MentorDao mentorDao = new MentorDao(connection);
+            return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController(email, creepyGuyDAO);
+            CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
+            return new CreepyGuyController(id, creepyGuyDAO);
         }
         return null;
     }
