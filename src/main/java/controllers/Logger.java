@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
+import controllers.dao.MentorDAO;
 import views.View;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -43,11 +44,11 @@ public class Logger {
 
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-            CodecoolerDao codecoolerDao = new CodecoolerDao(connection);
+            CodecooleDAO codecoolerDao = new CodecoolerDao(connection);
             return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
-            MentorDao mentorDao = new MentorDao(connection);
+            MentorDAO mentorDao = new MentorDAO(connection);
             return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
