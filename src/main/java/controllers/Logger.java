@@ -25,7 +25,6 @@ public class Logger {
             view.print("User with that email does not exist");
         }
         else if (userController != null) {
-            userController.welcomeUser();
             userController.startUserSession();
         }
     }
@@ -40,13 +39,13 @@ public class Logger {
 
     private UserController createUserController(int acessLevel, String email){
         if (acessLevel == 1){
-            return new CodecoolerController(email);
+            return new CodecoolerController();
         }
         else if (acessLevel == 2){
-            return new MentorController(email);
+            return new MentorController();
         }
         else if (acessLevel == 3){
-            return new CreepyGuyController(email);
+            return new CreepyGuyController();
         }
         return null;
     }
