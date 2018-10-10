@@ -1,15 +1,26 @@
 package controllers.dao;
 
-import models.Artifact;
-import models.CodecoolerModel;
-import models.Model;
-import models.Quest;
+import models.*;
 
 import java.util.List;
 
 public class MentorDAO implements MentorDAOInterface {
 
     public static void createCodecooler(CodecoolerModel cm) {
+    }
+
+    public void removeCodecooler(int codecoolerID) {
+    }
+
+    public void editCodecooler(int codecoolerID, CodecoolerModel cm) {
+    }
+
+    public List<User> allCodecoolers() {
+        return null;
+    }
+
+    public List<Model> codecoolerArtifacts(int codecooler_id) {
+        return null;
     }
 
     public void editQuest(int quest_id, Quest editedQuest) {
@@ -39,16 +50,7 @@ public class MentorDAO implements MentorDAOInterface {
     public void markItemAsUsed(int codecooler_id, int artifact_id) {
     }
 
-    public void removeCodecooler(int codecoolerID) {
-    }
-
-    public void editCodecooler(int codecoolerID, CodecoolerModel cm) {
-    }
-
-    public List<CodecoolerModel> allCodecoolers() {
-    }
-
-    public List<Model> codecoolerArtifacts(int codecooler_id) {
+    public MentorModel createMentor(int id) {
         return null;
     }
 }

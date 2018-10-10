@@ -48,5 +48,13 @@ public class Quest extends Model{
         this.reward = reward;
     }
 
-
+    @Override
+    public String toString() {
+        return "Quest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", reward=" + reward +
+                '}';
+    }
 }

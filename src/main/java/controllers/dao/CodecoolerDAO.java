@@ -58,6 +58,10 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             String email = resultSetLogin.getString(1);
             String teamID = resultSetTeams.getString(1);
             codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID);
+//            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+//                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID)  uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+
+
 
         }catch(SQLException e){
             e.printStackTrace();
