@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.dao.CreepyGuyDAO;
 import views.View;
 
 import java.sql.Connection;
@@ -7,12 +8,12 @@ import java.sql.Connection;
 public class CreepyGuyController extends UserController {
     String email;
     View view;
-    Connection connection;
+    CreepyGuyDAO dao;
 
-    public CreepyGuyController(String email, Connection connection){
+    public CreepyGuyController(String email, CreepyGuyDAO dao){
         this.email = email;
         view = new View();
-        this.connection = connection;
+        this.dao = dao;
     }
 
     @Override
@@ -50,13 +51,16 @@ public class CreepyGuyController extends UserController {
     }
 
     private void mentorManager(){
+
         boolean isRunning = true;
+        int option;
+
         while (isRunning) {
 
-            view.printMenu("Log out",
-                    "Mentor manager",
-                    "Class manager",
-                    "Experience level manager");
+            view.printMenu("Quit",
+                    "Add Mentor",
+                    "Edit Mentor",
+                    "Delete Mentor");
 
             option = view.getInputInt(0, 3);
 
@@ -66,13 +70,78 @@ public class CreepyGuyController extends UserController {
                     isRunning = false;
                     break;
                 case 1:
-                    mentorManager();
+                    addMentor();
                     break;
                 case 2:
-                    classManager();
+                    editMentor();
                     break;
                 case 3:
-                    experienceLevelManager();
+                    deleteMentor();
+                    break;
+            }
+        }
+
+    }
+
+    private void classManager(){
+
+        boolean isRunning = true;
+        int option;
+
+        while (isRunning) {
+
+            view.printMenu("Quit",
+                    "Add Class",
+                    "Delete Class",
+                    "Edit Class");
+
+            option = view.getInputInt(0, 3);
+
+            switch (option) {
+
+                case 0:
+                    isRunning = false;
+                    break;
+                case 1:
+                    addClass();
+                    break;
+                case 2:
+                    editClass();
+                    break;
+                case 3:
+                    deleteClass();
+                    break;
+            }
+        }
+    }
+
+    private void experienceLevelManager(){
+
+        boolean isRunning = true;
+        int option;
+
+        while (isRunning) {
+
+            view.printMenu("Quit",
+                    "Add Mentor",
+                    "Edit Mentor",
+                    "Delete Mentor");
+
+            option = view.getInputInt(0, 3);
+
+            switch (option) {
+
+                case 0:
+                    isRunning = false;
+                    break;
+                case 1:
+                    addLevel();
+                    break;
+                case 2:
+                    editLevel();
+                    break;
+                case 3:
+                    deleteLevel();
                     break;
             }
         }
