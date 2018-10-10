@@ -21,7 +21,48 @@ public class CodecoolerController {
     }
 
 
+    public void run() {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String answer = "";
+        boolean isRunning = true;
+        while (isRunning) {
+            view.printMenu("(1) Show wallet", "(2) Buy item", "(3) Buy item for your team", "(4) Change team", "(5) Create new Team", "(6) exit");
+            try {
+                answer = bufferedReader.readLine();
+            } catch (IOException e) {
+                System.out.println("Nie mogę nic odebrać!");
+            }
 
+            char charAnswer = answer.charAt(0);
+            switch (charAnswer) {
+                case '1':
+                    showWallet();
+                    break;
+
+                case '2':
+                    String artefactId = view.getInputString("Provide artefact id which you want to buy!");
+                    System.out.println(codecoolerControllerDAO.readArtefacts());
+                    buyItem(artefactId);
+                    break;
+
+                case '3':
+                    String teamArtefactId = view.getInputString("Provide artefact id which you want to buy for your team!");
+                    teamBuyItem(teamArtefactId);
+                    break;
+                case '4':
+                    String newTeamName = view.getInputString("Please provide name of a team you'd like to join");
+                    changeTeam(newTeamName);
+                    break;
+                case '5':
+                    String newlyCreatedTeamName = view.getInputString("Please provide name of a team you want to create!");
+                    createNewTeam(newlyCreatedTeamName);
+                    break;
+                case '6':
+                    isRunning = false;
+                    break;
+            }
+        }
+    }
 
 
 
