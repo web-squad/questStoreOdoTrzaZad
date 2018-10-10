@@ -35,9 +35,9 @@ public class Logger {
     private UserController logUser(){
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password");
-        int acessLevel;
-        acessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
-        return createUserController(acessLevel, email);
+        int accessLevel;
+        accessLevel = new LoginAccesDAO(connection).readLoginData(email, password);
+        return createUserController(accessLevel, email);
     }
 
     private UserController createUserController(int acessLevel, String email){
