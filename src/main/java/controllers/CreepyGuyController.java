@@ -6,17 +6,13 @@ import models.MentorModel;
 import models.Room;
 import views.View;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CreepyGuyController extends UserController {
     int id;
     View view;
     CreepyGuyDAO dao;
-    List<String> mentorData;
     MentorModel mentor;
     Room room;
     Level level;
@@ -174,8 +170,12 @@ public class CreepyGuyController extends UserController {
 
     private void deleteMentor(){
         fetchMentor();
+        if (mentor != null) sendDeleteCommand();
+    }
+
+    private void sendDeleteCommand(){
         String id = view.getInputString("Confirm ID");
-        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id == mentor.getId()) {
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(mentor.getId())) {
             dao.deleteMentor(mentor);
         }
     }
@@ -183,7 +183,8 @@ public class CreepyGuyController extends UserController {
     private void fetchMentor(){
         String id = view.getInputString("Id ?");
         mentor = dao.getMentorById(id);
-        printData(mentor.getCollectedData);
+        if (mentor != null) mentor.setId(id);
+        printData(mentor.getCollectedData());
     }
 
     private void editMentorData(){
@@ -201,33 +202,67 @@ public class CreepyGuyController extends UserController {
 
     private void editRoom(){
         fetchRoom();
+        editRoomData();
         if( room != null){
-            editRoomData();
             dao.editRoom(room);
         }
     }
 
     private void editRoomData(){
-        for (String data : room.getCollectedData()){
-            checkForUpdate(data);
+        Map<String, String> collectedData = room.getCollectedData();
+        for (String key : collectedData.keySet()){
+            collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
+        if (!confirmation()) room = null;
     }
 
     private void deleteRoom(){
         fetchRoom();
         String id = view.getInputString("Confirm ID");
-        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id == room.getId())
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(room.getId()))
             dao.deleteMentor(room);
     }
 
     private void fetchRoom(){
         String id = view.getInputString("Id ?");
-        mentor = dao.getRoomById(id);
-        printData(room.getCollectedData);
+        room = dao.getRoomById(id);
+        if (room != null) room.setId(id);
+        printData(room.getCollectedData());
     }
 
     private void addLevel(){
         level = new Level(collectLevelData());
+        if (level != null) dao.addLevel(level);
+    }
+
+    private void editLevel(){
+        fetchLevel();
+        editLevelData();
+        if (level !=null);{
+            dao.editLevel(level);
+        }
+    }
+
+    private void deleteLevel(){
+        fetchLevel();
+        String id = view.getInputString("Confirm ID");
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(level.getId()))
+            dao.deleteMentor(room);
+    }
+
+    private void fetchLevel(){
+        String id = view.getInputString("Id ?");
+        level = dao.getLevelById(id);
+        if (level != null) level.setId(id);
+        printData(room.getCollectedData());
+    }
+
+    private void editLevelData(){
+        Map<String, String> collectedData = level.getCollectedData();
+        for (String key : collectedData.keySet()){
+            collectedData.put(key, checkForUpdate(collectedData.get(key)));
+        }
+        if (!confirmation()) level = null;
     }
 
     private String checkForUpdate(String column){
@@ -254,6 +289,25 @@ public class CreepyGuyController extends UserController {
         printData(mentorData);
         if (!confirmation()) return null;
         return mentorData;
+    }
+
+    private Map<String, String> collectRoomData(){
+        Map<String, String> roomData = new HashMap<>();
+        roomData.put("roomName", view.getInputString("Room name? "));
+        roomData.put("roomDescription", view.getInputString("Room description? "));
+        roomData.put("assignedMentor", view.getInputString("Assigned Mentor?"));
+        printData(roomData);
+        if (!confirmation()) return null;
+        return roomData;
+    }
+
+    private Map<String, String> collectLevelData(){
+        Map<String, String> roomData = new HashMap<>();
+        roomData.put("levelName", view.getInputString("Level name? "));
+        roomData.put("threshold", view.getInputString("Threshold? "));
+        printData(roomData);
+        if (!confirmation()) return null;
+        return roomData;
     }
 
     private boolean confirmation(){

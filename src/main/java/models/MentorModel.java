@@ -3,6 +3,8 @@ package models;
 import java.util.Map;
 
 public class MentorModel extends User {
+
+    String  id;
     String email;
     String password;
     String name;
@@ -21,6 +23,14 @@ public class MentorModel extends User {
 
     public Map<String, String> getCollectedData() {
         return collectedData;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }
