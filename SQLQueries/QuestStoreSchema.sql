@@ -151,7 +151,7 @@ ALTER TABLE public.codecoolers OWNER TO queststore;
 
 CREATE TABLE public.experience_level (
     id integer NOT NULL,
-    level integer NOT NULL,
+    level character varying NOT NULL,
     threshold integer
 );
 
