@@ -1,5 +1,6 @@
 package controllers;
 
+import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import views.View;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ public class Logger {
     private String dbUser;
     private Connection connection;
     private boolean userInDatabase;
+    CreepyGuyDAO creepyGuyDAO;
 
     public Logger() {
         view = new View();
@@ -17,6 +19,7 @@ public class Logger {
         dbUser = view.getInputString("DB User?");
         connection = new Connector().connect(dbUser, dbPass);
         userInDatabase = false;
+        creepyGuyDAO = new CreepyGuyDAO(connection);
     }
 
     public void logIn(){
