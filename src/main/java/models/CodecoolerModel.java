@@ -1,4 +1,4 @@
 package models;
 
-public class CodecoolerModel {
+public class CodecoolerModel extends User {
 }
