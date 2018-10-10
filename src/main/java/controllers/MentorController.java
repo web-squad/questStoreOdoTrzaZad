@@ -1,4 +1,4 @@
 package controllers;
 
-public class MentorController {
+public class MentorController extends UserController{
 }
