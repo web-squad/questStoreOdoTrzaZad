@@ -3,6 +3,7 @@ package controllers.dao;
 import java.util.ArrayList;
 
 public interface CodecoolerDAOInterface {
+
     int readCoins(int codecoolerId);
     int checkCoinsEverOwned(int id);
     String checkQuestInProgress(int id);

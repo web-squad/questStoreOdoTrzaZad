@@ -40,7 +40,6 @@ public class CodecoolerController {
                 case '1':
                     showWallet();
                     break;
-
                 case '2':
                     String artefactId = view.getInputString("Provide artefact id which you want to buy!");
                     System.out.println(codecoolerControllerDAO.readArtefacts());
@@ -116,15 +115,8 @@ public class CodecoolerController {
 
 
     private CodecoolerModel initiateCodecoolerModel(int id){
-        int coolcoins = codecoolerControllerDAO.readCoins(id);
-        int expLevel = codecoolerControllerDAO.checkCoinsEverOwned(id); //robocza nazwa
-        String questInProgress = codecoolerControllerDAO.checkQuestInProgress(id); //robocza nazwa
-        String room = codecoolerControllerDAO.readCodecoolerClass(id);
-        String teamID = codecoolerControllerDAO.readTeamName(id);
-        String nickName = codecoolerControllerDAO.getNickName(id);
-        String first_name = codecoolerControllerDAO.getFirstName(id);
-        String second_name = codecoolerControllerDAO.getSecondName(id);
-        String email = codecoolerControllerDAO.getEmail(id);
+
+
         return new CodecoolerModel(id, nickName, first_name, second_name, email, room, teamID, expLevel, coolcoins, questInProgress);
     }
 
