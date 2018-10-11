@@ -2,23 +2,22 @@ package controllers.dao;
 
 import models.CodecoolerModel;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import javax.xml.transform.Result;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CodecoolerDAO implements CodecoolerDAOInterface {
     private Connection connection;
     private Statement statement;
 
-    CodecoolerDAO(Connection connection) throws SQLException {
+    CodecoolerDAO(Connection connection){
         this.connection = connection;
-        statement = connection.createStatement();
+        statement = getStatement();
     }
 
     @Override
     public int readCoins(int codecoolerId) {
+
         String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
         ResultSet resultSet = getResultSet(query);
         int coins = 0;
@@ -34,7 +33,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     public CodecoolerModel getCodecoolerModel(int codecoolerId){
         String codecoolerTableQuery = "SELECT * FROM Codecoolers WHERE codecooler_id = " + codecoolerId + ";";
         String teamsTableQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + codecoolerId + ";";
-        String loginAccesQuery = "SELECT email FROM LoginAccess WHERE id = " + codecoolerId + ";";
+        String loginAccesQuery = "SELECT email, password FROM LoginAccess WHERE id = " + codecoolerId + ";";
         ResultSet resultSetCodecooler = null;
         ResultSet resultSetTeams = null;
         ResultSet resultSetLogin = null;
@@ -49,17 +48,18 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         try{
             int coolcoins = resultSetCodecooler.getInt(2);
             int expLevel = resultSetCodecooler.getInt(3);//robocza nazwa
-            String room = resultSetCodecooler.getString(4);
+            int room = resultSetCodecooler.getInt(4);
             int coolCoinsEverEarned = resultSetCodecooler.getInt(5);
-            String questInProgress = resultSetCodecooler.getString(6);//robocza nazwa
+            int questInProgress = resultSetCodecooler.getInt(6);//robocza nazwa
             String first_name = resultSetCodecooler.getString(7);
             String second_name = resultSetCodecooler.getString(8);
             String nickName = resultSetCodecooler.getString(9);
             String email = resultSetLogin.getString(1);
-            String teamID = resultSetTeams.getString(1);
-//            codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID); TWOJE AKTUALNE, ZABITE BO BLOKUJE URUCHOMIENIE APLIKACJI
-//            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
-//                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID)  uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+            String password = resultSetLogin.getString(2);
+            int teamID = resultSetTeams.getInt(1);
+
+            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+                   1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID)  //uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
 
 
 
@@ -71,22 +71,55 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public int checkCoinsEverOwned(int id) {
-        return 0;
+        String coinsEverOwnedQuery = "SELECT coolcoins_ever_earned FROM Codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetCoins = getResultSet(coinsEverOwnedQuery);
+        int coins  = 0;
+        try{
+            coins = resultSetCoins.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return coins;
     } //korzystanie
 
     @Override
-    public String checkQuestInProgress(int id) {
-        return null;
+    public int checkQuestInProgress(int id) {
+        String questInProgressQuery = "SELECT quest_in_progress FROM Codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetQuest = getResultSet(questInProgressQuery);
+        int questId = 0;
+        try{
+            questId = resultSetQuest.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return questId;
     } //korzystanie
 
     @Override
-    public String readCodecoolerClass(int id) {
-        return null;
+    public int readCodecoolerClass(int id) {
+        String codecoolerClassQuery = "SELECT room FROM Codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetClass = getResultSet(codecoolerClassQuery);
+        int classId = 0;
+        try{
+            classId = resultSetClass.getInt(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return classId;
     }
 
     @Override
     public String readTeamName(int id) {
-        return null;
+        String teamNameQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetTeamName = getResultSet(teamNameQuery);
+        String teamName = "";
+        try{
+            teamName = resultSetTeamName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return teamName;
     } //korzystanie
 
     @Override
@@ -111,12 +144,34 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public String readArtefacts() {
-        return null;
+        String artefactsQuery = "SELECT * FROM Artifacts";
+        ResultSet resultSetArtefacts = getResultSet(artefactsQuery);
+        String artefacts = "";
+        ResultSetMetaData resultSetMetaData;
+        try{
+            resultSetMetaData = resultSetArtefacts.getMetaData();
+            int columnsNumber = resultSetMetaData.getColumnCount();
+            for(int i = 1; i <= columnsNumber; i++){
+                artefacts = artefacts + resultSetMetaData.getColumnName(i) + " ";
+            }
+            artefacts = artefacts + "\n";
+            while(resultSetArtefacts.next()){
+                for(int i = 1; i <= columnsNumber; i++){
+                    if(i > 1) artefacts = artefacts + ", ";
+                    artefacts = artefacts + resultSetArtefacts.getString(i);
+                }
+                artefacts = artefacts + "\n";
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return artefacts;
     } //korzystanie
 
     @Override
     public String readEmailsCoolcoinsAndArtefacts(int codecoolerId) {
-
+        
         return null;
     } //korzystnaie
 
@@ -171,5 +226,14 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             System.out.println("Couldn't find selected query");
         }
         return resultSet;
+    }
+
+    private Statement getStatement(){
+        try{
+            statement = connection.createStatement();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
     }
 }
