@@ -15,7 +15,8 @@ public class View {
 
     public String getInputString(String text) {
         print("\n" + text);
-        return scanner.nextLine();
+        return scanner.nextLine().replaceAll("[^A-Za-z0-9]", "");
+
     }
 
     public int getInputInt(int start, int end) {
