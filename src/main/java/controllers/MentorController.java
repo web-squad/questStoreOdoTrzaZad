@@ -115,7 +115,7 @@ public class MentorController extends UserController{
 
     public void addCodecooler() {
         CodecoolerModel cm = createCodecooler();
-        MentorDAO.createCodecooler(cm);
+        mentorDAO.createCodecooler(cm);
     }
 
 
