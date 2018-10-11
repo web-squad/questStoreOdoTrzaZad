@@ -96,16 +96,25 @@ public class MentorDAO implements MentorDAOInterface {
 
     public List<String> codecoolerArtifacts(int codecooler_id) {
         List<String> codecoolerAndArtifacts = new ArrayList<>();
+        List<Integer> artifacts = new ArrayList<>();
         try {
             Statement stmt = connection.createStatement();
-            String sql = String.format("SElECT id, access_level FROM login_access WHERE email = '%s' AND password = '%s' ");
-            ResultSet rs = stmt.executeQuery(sql);
+            String artifactInPosses = String.format("SELECT artifact_id FROM artifact_in_posses WHERE codecooler_id = '%d'", codecooler_id);
+            ResultSet rs = stmt.executeQuery(artifactInPosses);
             while ( rs.next() ) {
-                loginData.add(rs.getInt("access_level"));
-                loginData.add(rs.getInt("id"));
+                artifacts.add(rs.getInt("artifact_id"));
             }
             rs.close();
             stmt.close();
+
+            for(int i = 0; i < artifacts.size(); i++) {
+                stmt = connection.createStatement();
+                String artifactsQuery = String.format("SELECT name FROM artifact_in_posses WHERE artifact_id = '%d'", artifacts.get(i));
+                rs = stmt.executeQuery(artifactsQuery);
+            }
+
+
+
         }catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
