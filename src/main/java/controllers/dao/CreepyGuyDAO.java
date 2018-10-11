@@ -40,7 +40,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
                         + "\n VALUES ('%s', '%s', %d );", mentor.getEmail(), mentor.getPassword(), 1);
         stmt.executeUpdate(sql);
         sql = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)"
-                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 0, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName());
+                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName());
         stmt.executeUpdate(sql);
         connection.commit();
         stmt.close();
@@ -60,12 +60,12 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         stmt = connection.createStatement();
         String sql = String.format("Update login_access"
                         + "\n SET email = '%s', password = '%s'\n" +
-                        "WHERE id = %d;",
+                        " WHERE id = %d;",
                 mentor.getEmail(), mentor.getPassword(), Integer.parseInt(id));
         stmt.executeUpdate(sql);
         sql = String.format("Update codecoolers"
-                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s' WHERE id = %d;)",
-                0, 0, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName(), Integer.parseInt(mentor.getId()));
+                + "\n SET coolcoins = %d, exp_level = %d, actual_room = %d, coolcoins_ever_earned = %d, quest_in_progress = %d, first_name = '%s', last_name = '%s', nickname ='%s' WHERE codecooler_id = %d;",
+                0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName(), Integer.parseInt(id));
         stmt.executeUpdate(sql);
         connection.commit();
         stmt.close();
@@ -110,16 +110,16 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     private void fetchMentor(String id) throws SQLException, NumberFormatException{
         mentorData = new HashMap<>();
         stmt = connection.createStatement();
-        String sql = String.format("SELECT login_access.email, codecoolers.first_name, codecoolers.nick_name," +
-                "codecoolers.last_name,  login_access.password, login_access.actual_room FROM login_access " +
-                "INNER JOIN codecoolers ON login_acces.id = codecoolers.id WHERE id = %d;", Integer.parseInt(id));
+        String sql = String.format("SELECT login_access.email, codecoolers.first_name, codecoolers.nickname, " +
+                "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = %d;", Integer.parseInt(id));
         ResultSet rs = stmt.executeQuery(sql);
         while ( rs.next() ) {
             mentorData.put("firstName", rs.getString("first_name"));
             mentorData.put("surname", rs.getString("last_name"));
             mentorData.put("email", rs.getString("email"));
             mentorData.put("password", rs.getString("password"));
-            mentorData.put("nickName", rs.getString("nick_name"));
+            mentorData.put("nickName", rs.getString("nickname"));
             mentorData.put("room", String.valueOf(rs.getInt("actual_room")));
         }
         rs.close();
