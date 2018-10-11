@@ -103,14 +103,16 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
             System.exit(0);
         } catch (NumberFormatException e){
         view.print("Passed ID is not numerical value");
+        }catch (Exception e){
+            return null;
         }
         return null;
     }
 
-    private void fetchMentor(String id) throws SQLException, NumberFormatException{
+    private void fetchMentor(String id) throws Exception{
         mentorData = new HashMap<>();
         stmt = connection.createStatement();
-        String sql = String.format("SELECT login_access.email, codecoolers.first_name, codecoolers.nickname, " +
+        String sql = String.format("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
                 "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
                 " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = %d;", Integer.parseInt(id));
         ResultSet rs = stmt.executeQuery(sql);
@@ -121,6 +123,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
             mentorData.put("password", rs.getString("password"));
             mentorData.put("nickName", rs.getString("nickname"));
             mentorData.put("room", String.valueOf(rs.getInt("actual_room")));
+            if(rs.getInt("access_level") != 2){
+                throw new Exception();
+            }
         }
         rs.close();
         stmt.close();
