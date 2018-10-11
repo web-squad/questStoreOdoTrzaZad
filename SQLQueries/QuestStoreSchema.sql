@@ -73,6 +73,7 @@ CREATE TABLE public.codecoolers (
     nickname character varying
 );
 
+
 CREATE SEQUENCE public.codecooler_id_seq
     START WITH 1
     INCREMENT BY 1
@@ -82,6 +83,9 @@ CREATE SEQUENCE public.codecooler_id_seq
 
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
+
+
+ALTER SEQUENCE public.quest_codecooler_id_seq OWNER TO queststore;
 
 
 CREATE TABLE public.experience_level (
@@ -212,7 +216,7 @@ ALTER SEQUENCE public.teams_id_seq OWNER TO queststore;
 
 ALTER TABLE ONLY public.artifacts ALTER COLUMN artifact_id SET DEFAULT nextval('public.artifacts_artifact_id_seq'::regclass);
 
-ALTER TABLE public.codecoolers ALTER COLUMN codecooler_id SET DEFAULT nextval('codecooler_id_seq'::regclass);
+ALTER TABLE ONLY public.codecoolers ALTER COLUMN codecooler_id SET DEFAULT nextval('codecooler_id_seq'::regclass);
 
 ALTER TABLE ONLY public.artifacts_in_possess ALTER COLUMN id SET DEFAULT nextval('public.artifacts_in_possess_id_seq'::regclass);
 
