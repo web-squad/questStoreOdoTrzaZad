@@ -159,9 +159,15 @@ public class MentorController extends UserController{
 
 
     public void checkCodecoolerWallet() {
+        listAllCodecoolers();
         int codecooler_id = codecoolerID();
         view.print(String.valueOf(mentorDAO.codecoolerCoins(codecooler_id)));
-        printCodecoolerArtifact(codecooler_id);
+
+        List<String> codecoolerArtifacts = mentorDAO.possessedArtifacts(codecooler_id);
+
+        for (int i = 0; i < codecoolerArtifacts.size(); i++) {
+            view.print("\n" + codecoolerArtifacts.get(i));
+        }
     }
 
 
@@ -221,13 +227,13 @@ public class MentorController extends UserController{
     }
 
 
-    private void printCodecoolerArtifact(int codecooler_id) {
-        List<String> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
-
-        for (int i = 0; i < artifacts.size(); i++) {
-            view.print(artifacts.get(i));
-        }
-    }
+//    private void printCodecoolerArtifact(int codecooler_id) {
+//        List<String> artifacts = mentorDAO.possessedArtifacts(codecooler_id);
+//
+//        for (int i = 0; i < artifacts.size(); i++) {
+//            view.print(artifacts.get(i));
+//        }
+//    }
 
 
     private Artifact newArtifact() {

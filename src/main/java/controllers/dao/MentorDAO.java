@@ -3,10 +3,7 @@ package controllers.dao;
 import models.*;
 import views.View;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +41,15 @@ public class MentorDAO implements MentorDAOInterface {
         try {
             stmt = connection.createStatement();
 
-            String sql = String.format("DELETE FROM codecoolers WHERE codecooler_id = %d;", codecoolerID);
+            String sql = String.format("DELETE FROM teams WHERE codecooler_id = %d;", codecoolerID);
+            stmt.executeUpdate(sql);
+            connection.commit();
+
+            sql = String.format("DELETE FROM artifacts_in_possess WHERE codecooler_id = %d;", codecoolerID);
+            stmt.executeUpdate(sql);
+            connection.commit();
+
+            sql = String.format("DELETE FROM codecoolers WHERE codecooler_id = %d;", codecoolerID);
             stmt.executeUpdate(sql);
             connection.commit();
 
@@ -98,9 +103,6 @@ public class MentorDAO implements MentorDAOInterface {
         return codecoolers;
     }
 
-    public List<String> codecoolerArtifacts(int codecooler_id) {
-        return null;
-    }
 
     public void editQuest(int quest_id, Quest editedQuest) {
         try {
@@ -204,10 +206,12 @@ public class MentorDAO implements MentorDAOInterface {
 
         try{
             stmt = connection.createStatement();
-            String codecoolersQuery = "SELECT coolcoins FROM codecoolers WHERE id = " + codecooler_id + ";";
+            String codecoolersQuery = "SELECT coolcoins FROM codecoolers WHERE codecooler_id = " + codecooler_id + ";";
             resultSet = stmt.executeQuery(codecoolersQuery);
-            int coins = resultSet.getInt(1);
-            return coins;
+            while( resultSet.next() ) {
+                int coins = resultSet.getInt(1);
+                return coins;
+            }
         }catch(SQLException e){
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
