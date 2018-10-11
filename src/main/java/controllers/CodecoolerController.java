@@ -10,19 +10,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class CodecoolerController extends UserController {
+public class CodecoolerController  {
     private CodecoolerModel codecoolerModel;
     private CodecoolerDAO codecoolerControllerDAO;
     private View view;
 
-    public CodecoolerController(int id, CodecoolerDAO codecoolerController){
+    public CodecoolerController(int id, CodecoolerDAO codecoolerController) {
         this.codecoolerControllerDAO = codecoolerController;
-        this.codecoolerModel = initiateCodecoolerModel(id);
         view = new View();
 
     }
 
-
+} /*
     public void startUserSession() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";

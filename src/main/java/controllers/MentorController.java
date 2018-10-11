@@ -5,13 +5,13 @@ import models.*;
 import views.View;
 import java.util.List;
 
-public class MentorController {
+public class MentorController extends UserController{
 
     MentorModel mentor;
     View view;
     MentorDAO mentorDAO;
-}
-/*
+
+
     public MentorController(int id, MentorDAO mentorDAO) {
         this.mentorDAO = mentorDAO;
         this.mentor = mentorDAO.createMentor(id);
@@ -235,4 +235,4 @@ public class MentorController {
         Quest quest = new Quest(questName, questDescription, questReward);
         return quest;
     }
-}/*/
+}
