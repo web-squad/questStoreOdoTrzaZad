@@ -3,7 +3,7 @@ package controllers.dao;
 import models.CodecoolerModel;
 import models.Artifact;
 
-import javax.xml.transform.Result;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -300,8 +300,33 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     @Override
-    public ArrayList<Integer> readTeamMembersId(int artefactId) {
-        return null;
+    public List<Integer> readTeamMembersId(int codecooler_id) {
+        List<Integer> teamMembersId = new ArrayList<>();
+        String teamNameQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + codecooler_id + ";";
+        ResultSet resultSetTeamName = getResultSet(teamNameQuery);
+        String teamName = "";
+        try{
+            teamName = resultSetTeamName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        String codecoolersIdQuery = "SELECT codecooler_id FROM Teams WHERE team_name = " + teamName + ";";
+        ResultSet resultSetCodecoolersId = getResultSet(codecoolersIdQuery);
+        ResultSetMetaData resultSetMetaData;
+        try{
+
+            resultSetMetaData = resultSetCodecoolersId.getMetaData();
+            int columnsNumber = resultSetMetaData.getColumnCount();
+            while(resultSetCodecoolersId.next()){
+                for(int i = 1; i <= columnsNumber; i++){
+                   teamMembersId.add(resultSetCodecoolersId.getInt(1));
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return teamMembersId;
     } //musthave
 
     @Override
@@ -316,6 +341,27 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
 
+    }
+
+    public void editCodecoolerTeam(int id, String teamName){
+        String editTeamQuery = "UPDATE Teams SET team_name = " + teamName + " WHERE codecooler_id = " + id + ";";
+        try{
+            statement.executeQuery(editTeamQuery);
+            connection.commit();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void createNewTeam(int id, String teamName){
+        String createTeamQuery = "INSERT INTO Teams (team_name, codecooler_id) VALUES (" + id + ", " + teamName + ");";
+        try{
+            statement.executeQuery(createTeamQuery);
+            connection.commit();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private ResultSet getResultSet(String query){
