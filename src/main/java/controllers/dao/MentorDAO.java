@@ -43,12 +43,15 @@ public class MentorDAO implements MentorDAOInterface {
     public void removeCodecooler(int codecoolerID) {
         try {
             stmt = connection.createStatement();
-            String sql = String.format("DELETE FROM login_access WHERE id = %d;", codecoolerID);
+
+            String sql = String.format("DELETE FROM codecoolers WHERE codecooler_id = %d;", codecoolerID);
             stmt.executeUpdate(sql);
             connection.commit();
-            sql = String.format("DELETE FROM codecoolers WHERE id = %d;", codecoolerID);
+
+            sql = String.format("DELETE FROM login_access WHERE id = %d;", codecoolerID);
             stmt.executeUpdate(sql);
             connection.commit();
+
             stmt.close();
             view.print("Operation done successfully\n");
         } catch ( SQLException e ) {
@@ -63,8 +66,9 @@ public class MentorDAO implements MentorDAOInterface {
             stmt = connection.createStatement();
             String sql = String.format("UPDATE login_access SET email = '%s', password = '%s' WHERE id = %d;", cm.getEmail(), cm.getPassword(), codecoolerID);
             stmt.executeUpdate(sql);
-            sql = String.format("UPDATE codecoolers VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s' WHERE id = %d;)", cm.getCoolcoins(), cm.getExpLevel(),
-                                cm.getRoom(), cm.getCoolcoinsEverEarned(), cm.getQuestInProgress(), cm.getFirstName(), cm.getLastName(), cm.getNickname());
+            sql = String.format("UPDATE codecoolers SET coolcoins = '%d', exp_level = '%d', actual_room = '%d', coolcoins_ever_earned = '%d',quest_in_progress = '%d'," +
+                            "first_name = '%s', last_name = '%s', nickname = '%s' WHERE codecooler_id = %d;", cm.getCoolcoins(), cm.getExpLevel(),
+                                cm.getRoom(), cm.getCoolcoinsEverEarned(), cm.getQuestInProgress(), cm.getFirstName(), cm.getLastName(), cm.getNickname(), codecoolerID);
             stmt.executeUpdate(sql);
             connection.commit();
             stmt.close();
@@ -79,7 +83,7 @@ public class MentorDAO implements MentorDAOInterface {
         List<String> codecoolers = new ArrayList<>();
         try {
             stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT id, nickname FROM codecoolers;");
+            String codecoolersQuery = String.format("SELECT codecooler_id, nickname FROM codecoolers;");
             ResultSet rs = stmt.executeQuery(codecoolersQuery);
             while ( rs.next() ) {
                 codecoolers.add(rs.getInt(1) + " " + rs.getString(2));
@@ -95,32 +99,7 @@ public class MentorDAO implements MentorDAOInterface {
     }
 
     public List<String> codecoolerArtifacts(int codecooler_id) {
-        List<String> codecoolerAndArtifacts = new ArrayList<>();
-        List<Integer> artifacts = new ArrayList<>();
-        try {
-            Statement stmt = connection.createStatement();
-            String artifactInPosses = String.format("SELECT artifact_id FROM artifact_in_posses WHERE codecooler_id = '%d'", codecooler_id);
-            ResultSet rs = stmt.executeQuery(artifactInPosses);
-            while ( rs.next() ) {
-                artifacts.add(rs.getInt("artifact_id"));
-            }
-            rs.close();
-            stmt.close();
-
-            for(int i = 0; i < artifacts.size(); i++) {
-                stmt = connection.createStatement();
-                String artifactsQuery = String.format("SELECT name FROM artifact_in_posses WHERE artifact_id = '%d'", artifacts.get(i));
-                rs = stmt.executeQuery(artifactsQuery);
-            }
-
-
-
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
-            System.exit(0);
-        }
-
-        return codecoolerAndArtifacts;
+        return null;
     }
 
     public void editQuest(int quest_id, Quest editedQuest) {
@@ -187,14 +166,13 @@ public class MentorDAO implements MentorDAOInterface {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
-
         return artifacts;
     }
 
     public void editArtifact(int artifact_id, Artifact editedArtifact) {
         try {
             stmt = connection.createStatement();
-            String artifactQuery = String.format("UPDATE artifacts SET name = '%s', description = '%s', price = '%d' WHERE quest_id = %d;",
+            String artifactQuery = String.format("UPDATE artifacts SET name = '%s', description = '%s', price = '%d' WHERE artifact_id = %d;",
                     editedArtifact.getName(), editedArtifact.getDescription(), editedArtifact.getPrice(), artifact_id);
             stmt.executeUpdate(artifactQuery);
             connection.commit();
@@ -242,7 +220,7 @@ public class MentorDAO implements MentorDAOInterface {
 
         try {
             stmt = connection.createStatement();
-            String codecoolersQuery = "SELECT quest_in_progress FROM codecoolers WHERE id = " + codecoolerID + ";";
+            String codecoolersQuery = "SELECT quest_in_progress FROM codecoolers WHERE codecooler_id = " + codecoolerID + ";";
             resultSet = stmt.executeQuery(codecoolersQuery);
             int questID = resultSet.getInt(1);
 
@@ -273,10 +251,42 @@ public class MentorDAO implements MentorDAOInterface {
         }
     }
 
-    public void markItemAsUsed(int codecooler_id, int artifact_id) {
+    public List<String> possessedArtifacts(int codecoolerID) {
+        List<String> possessedArtifacts = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            String codecoolersQuery = String.format("SELECT artifacts_in_possess.artifact_id, artifacts.name FROM artifacts_in_possess " +
+                    "INNER JOIN artifacts ON artifacts_in_possess.artifact_id = artifacts.artifact_id WHERE codecooler_id = %d;", codecoolerID);
+            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            while ( rs.next() ) {
+                possessedArtifacts.add("id: " + rs.getInt(1) + " name: " + rs.getString(2));
+            }
+            rs.close();
+            stmt.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+        return possessedArtifacts;
     }
+
+    public void markItemAsUsed(int artifact_id) {
+        try {
+            stmt = connection.createStatement();
+            String artifactQuery = String.format("UPDATE artifacts_in_possess SET used = NOT used WHERE artifact_id = %d;", artifact_id);
+            stmt.executeUpdate(artifactQuery);
+            connection.commit();
+            stmt.close();
+            view.print("Operation done successfully\n");
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+    }
+
 
     public MentorModel createMentor(int id) {
         return null;
     }
+
 }

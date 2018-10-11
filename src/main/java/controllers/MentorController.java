@@ -94,6 +94,7 @@ public class MentorController extends UserController{
                     removeCodecooler();
                     break;
                 case 5:
+                    listAllCodecoolers();
                     markItemAsUsed();
                     break;
                 case 6:
@@ -114,7 +115,7 @@ public class MentorController extends UserController{
         List<String> codecoolers = mentorDAO.allCodecoolers();
 
         for (int i = 0; i < codecoolers.size(); i++) {
-            view.print(codecoolers.get(i));
+            view.print("\n" + codecoolers.get(i));
         }
     }
 
@@ -126,8 +127,9 @@ public class MentorController extends UserController{
 
 
     public void editCodecooler() {
+        int id = codecoolerID();
         CodecoolerModel cm = createCodecooler();
-        mentorDAO.editCodecooler(codecoolerID(), cm);
+        mentorDAO.editCodecooler(id, cm);
     }
 
 
@@ -138,10 +140,16 @@ public class MentorController extends UserController{
 
     public void markItemAsUsed() {
         int codecooler_id = codecoolerID();
-        printCodecoolerArtifact(codecooler_id);
 
+        List<String> codecoolerArtifacts = mentorDAO.possessedArtifacts(codecooler_id);
+
+        for (int i = 0; i < codecoolerArtifacts.size(); i++) {
+            view.print("\n" + codecoolerArtifacts.get(i));
+        }
+
+        view.print("Which artifact you like to mark as used?");
         int artifact_id = view.getInputInt();
-        mentorDAO.markItemAsUsed(codecooler_id, artifact_id);
+        mentorDAO.markItemAsUsed(artifact_id);
     }
 
 
@@ -166,10 +174,10 @@ public class MentorController extends UserController{
         List<String> artifacts = mentorDAO.listOfArtifactsInShop();
 
         for (int i = 0; i < artifacts.size(); i++) {
-            view.print(artifacts.get(i));
+            view.print("\n" + artifacts.get(i));
         }
 
-        view.print("Which artifact you like to edit? (id)");
+        view.print("\nWhich artifact you like to edit? (id)");
         int artifact_id = view.getInputInt();
         Artifact editedArtifact = newArtifact();
         mentorDAO.editArtifact(artifact_id, editedArtifact);
@@ -185,7 +193,7 @@ public class MentorController extends UserController{
         List<String> quests = mentorDAO.listOfQuests();
 
         for (int i = 0; i < quests.size(); i++) {
-            view.print(quests.get(i));
+            view.print("\n" + quests.get(i));
         }
 
         view.print("\nWhich quest you like to edit? (id)");
