@@ -166,8 +166,8 @@ public class CreepyGuyController extends UserController {
 
     private void editMentor(){
         fetchMentor();
-        editMentorData();
         if (mentor != null) {
+            editMentorData();
             dao.editMentor(new MentorModel(collectedData), id);
         }
     }
