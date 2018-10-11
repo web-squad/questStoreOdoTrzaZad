@@ -28,23 +28,28 @@ public class Logger {
         }
     }
 
-    private UserController logUser(){
+    private UserController logUser() {
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password: ");
         List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
-        int accessLevel = 2;
+        int accessLevel = 0;
         int id = 0;
-        if (loginData != null) {
-            accessLevel = loginData.get(0);
-            id = loginData.get(1);
+        try {
+            if (loginData != null) {
+                accessLevel = loginData.get(0);
+                id = loginData.get(1);
+            }
+            return createUserController(accessLevel, id);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("No such user");
         }
-        return createUserController(accessLevel, id);
+        return null;
     }
 
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-//            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
-//            return new CodecoolerController(id, codecoolerDao);
+            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
+            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
             MentorDAO mentorDao = new MentorDAO(connection);

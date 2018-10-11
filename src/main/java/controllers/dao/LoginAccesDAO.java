@@ -28,6 +28,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }catch (PSQLException e){
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.out.println("No such user");
+            return null;
         }catch (SQLException e){
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
