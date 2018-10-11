@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -74,12 +75,43 @@ public class MentorDAO implements MentorDAOInterface {
         }
     }
 
-    public List<User> allCodecoolers() {
-        return null;
+    public List<String> allCodecoolers(){
+        List<String> codecoolers = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            String codecoolersQuery = String.format("SELECT id, nickname FROM codecoolers;");
+            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            while ( rs.next() ) {
+                codecoolers.add(rs.getString(1) + " " + rs.getString(2));
+            }
+            rs.close();
+            stmt.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return codecoolers;
     }
 
-    public List<Model> codecoolerArtifacts(int codecooler_id) {
-        return null;
+    public List<String> codecoolerArtifacts(int codecooler_id) {
+        List<String> codecoolerAndArtifacts = new ArrayList<>();
+        try {
+            Statement stmt = connection.createStatement();
+            String sql = String.format("SElECT id, access_level FROM login_access WHERE email = '%s' AND password = '%s' ");
+            ResultSet rs = stmt.executeQuery(sql);
+            while ( rs.next() ) {
+                loginData.add(rs.getInt("access_level"));
+                loginData.add(rs.getInt("id"));
+            }
+            rs.close();
+            stmt.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return codecoolerAndArtifacts;
     }
 
     public void editQuest(int quest_id, Quest editedQuest) {
