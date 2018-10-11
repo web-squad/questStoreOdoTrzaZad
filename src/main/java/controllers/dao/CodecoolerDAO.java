@@ -12,7 +12,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     private Connection connection;
     private Statement statement;
 
-    CodecoolerDAO(Connection connection){
+    public CodecoolerDAO(Connection connection){
         this.connection = connection;
         getStatement();
     }
@@ -43,31 +43,36 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         resultSetTeams = statement.executeQuery(teamsTableQuery);
         resultSetLogin = statement.executeQuery(loginAccesQuery);
         */
-        String codecoolerModelQuery = "SELECT Codecoolers.*, Teams.team_name, LoginAccess.email, LoginAccess.password FROM Codecoolers INNER JOIN" +
-                " Teams ON Codecoolers.codecooler_id = Teams.codecooler_id INNER JOIN LoginAccess ON Codecoolers.codecooler_id = LoginAccess.id WHERE" +
-                " codecoolerId = " + codecoolerId + ";";
+        String codecoolerModelQuery = "SELECT codecoolers.*, teams.team_name, teams.id as team_id, login_access.email, login_access.password FROM codecoolers INNER JOIN" +
+                " teams ON codecoolers.codecooler_id = teams.codecooler_id INNER JOIN login_access ON codecoolers.codecooler_id = login_access.id WHERE" +
+                " codecoolers.codecooler_id = " + codecoolerId + ";";
         ResultSet resultSetModel = null;
         CodecoolerModel codecoolerModel = null;
         try{
             resultSetModel = statement.executeQuery(codecoolerModelQuery);
         }catch(SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.out.println("Couldn't find selected query");
         }
         try{
-            int coolcoins = resultSetModel.getInt(2);
-            int expLevel = resultSetModel.getInt(3);//robocza nazwa
-            int room = resultSetModel.getInt(4);
-            int coolCoinsEverEarned = resultSetModel.getInt(5);
-            int questInProgress = resultSetModel.getInt(6);//robocza nazwa
-            String first_name = resultSetModel.getString(7);
-            String second_name = resultSetModel.getString(8);
-            String nickName = resultSetModel.getString(9);
-            int teamID = resultSetModel.getInt(10);
-            String email = resultSetModel.getString(11);
-            String password = resultSetModel.getString(12);
+            while(resultSetModel.next()){
+                int coolcoins = resultSetModel.getInt("coolcoins");
+                int expLevel = resultSetModel.getInt("exp_level");//robocza nazwa
+                int room = resultSetModel.getInt("actual_room");
+                int coolCoinsEverEarned = resultSetModel.getInt("coolcoins_ever_earned");
+                int questInProgress = resultSetModel.getInt("quest_in_progress");//robocza nazwa
+                String first_name = resultSetModel.getString("first_name");
+                String second_name = resultSetModel.getString("last_name");
+                String nickName = resultSetModel.getString("nickname");
+                int teamID = resultSetModel.getInt("team_id");
+                String email = resultSetModel.getString("email");
+                String password = resultSetModel.getString("password");
+                codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+                        1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID);
+            }
 
-            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
-                   1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID);  //uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+
+            //uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
 
         }catch(SQLException e){
             e.printStackTrace();

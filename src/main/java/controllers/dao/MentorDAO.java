@@ -100,10 +100,10 @@ public class MentorDAO implements MentorDAOInterface {
             Statement stmt = connection.createStatement();
             String sql = String.format("SElECT id, access_level FROM login_access WHERE email = '%s' AND password = '%s' ");
             ResultSet rs = stmt.executeQuery(sql);
-            while ( rs.next() ) {
-                loginData.add(rs.getInt("access_level"));
-                loginData.add(rs.getInt("id"));
-            }
+//            while ( rs.next() ) {
+//                loginData.add(rs.getInt("access_level"));
+//                loginData.add(rs.getInt("id"));
+//            }
             rs.close();
             stmt.close();
         }catch ( SQLException e ) {

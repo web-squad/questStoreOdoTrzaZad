@@ -212,11 +212,11 @@ public class MentorController {
 
 
     private void printCodecoolerArtifact(int codecooler_id) {
-        List<Model> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
+       // List<Model> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
 
-        for (int i = 0; i < artifacts.size(); i++) {
-            view.print(artifacts.get(i).toString());
-        }
+//        for (int i = 0; i < artifacts.size(); i++) {
+//            view.print(artifacts.get(i).toString());
+//        }
     }
 
 
