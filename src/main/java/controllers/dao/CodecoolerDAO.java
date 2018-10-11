@@ -3,7 +3,7 @@ package controllers.dao;
 import models.CodecoolerModel;
 import models.Artifact;
 
-import javax.xml.transform.Result;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -344,11 +344,24 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     public void editCodecoolerTeam(int id, String teamName){
+        String editTeamQuery = "UPDATE Teams SET team_name = " + teamName + " WHERE codecooler_id = " + id + ";";
+        try{
+            statement.executeQuery(editTeamQuery);
+            connection.commit();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
 
     }
 
-    public void createNewTeam(String teamName){
-
+    public void createNewTeam(int id, String teamName){
+        String createTeamQuery = "INSERT INTO Teams (team_name, codecooler_id) VALUES (" + id + ", " + teamName + ");";
+        try{
+            statement.executeQuery(createTeamQuery);
+            connection.commit();
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
     }
 
     private ResultSet getResultSet(String query){

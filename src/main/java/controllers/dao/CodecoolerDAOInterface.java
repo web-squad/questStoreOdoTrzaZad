@@ -9,22 +9,22 @@ import models.Artifact;
 public interface CodecoolerDAOInterface {
 
     int readCoins(int codecoolerId);
-    int checkCoinsEverOwned(int id);
-    int checkQuestInProgress(int id);
-    int readCodecoolerClass(int id);
-    String readTeamName(int id);
-    String getNickName(int id);
-    String getFirstName(int id);
-    String getSecondName(int id);
-    String getEmail(int id);
+    int checkCoinsEverOwned(int codecoolerId);
+    int checkQuestInProgress(int codecoolerId);
+    int readCodecoolerClass(int codecoolerId);
+    String readTeamName(int codecoolerId);
+    String getNickName(int codecoolerId);
+    String getFirstName(int codecoolerId);
+    String getSecondName(int codecoolerId);
+    String getEmail(int codecoolerId);
     String readArtifacts();
     List<Artifact> readCodecoolersArtifacts(int codecoolerId);
     int getPriceOfArtifact(int artifactId);
     void addNewPossesion(int codecoolerId, int artifactId);
     List<Integer> readTeamMembersId(int artifactId);
     void subtractCodecoolersCoolcoins(int codecoolerId, int artifactPrice);
-    void editCodecoolerTeam(int id, String teamName);
-    void createNewTeam(String newTeam);
+    void editCodecoolerTeam(int codecoolerId, String teamName);
+    void createNewTeam(int codecoolerId, String newTeam);
 
 
 }

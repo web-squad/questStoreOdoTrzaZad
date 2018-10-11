@@ -9,6 +9,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
 public class CodecoolerController{
     private CodecoolerModel codecoolerModel;
@@ -93,7 +94,7 @@ public class CodecoolerController{
 
     public void teamBuyItem(int artefactId){
         int id = codecoolerModel.getId();
-        ArrayList<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
+        List<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
         int costOfAnArtefact = codecoolerControllerDAO.getPriceOfArtifact(artefactId);
         if(checkTeamMembersMoney(teamMembersIds, costOfAnArtefact)){
             for(Integer teamMemberId : teamMembersIds){
@@ -111,13 +112,14 @@ public class CodecoolerController{
     }
 
     public void createNewTeam(String newTeamName){
-        codecoolerControllerDAO.createNewTeam(newTeamName);
+        int id = codecoolerModel.getId();
+        codecoolerControllerDAO.createNewTeam(id, newTeamName);
         System.out.println("You created new team!");
     }
 
 
 
-    private boolean checkTeamMembersMoney(ArrayList<Integer> ids, int costs){
+    private boolean checkTeamMembersMoney(List<Integer> ids, int costs){
         int costPerPerson = costs/ids.size();
         for(Integer memberId : ids){
             int coins = codecoolerControllerDAO.readCoins(memberId);
