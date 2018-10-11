@@ -1,23 +1,30 @@
 package controllers.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import models.Artifact;
+
 
 public interface CodecoolerDAOInterface {
+
     int readCoins(int codecoolerId);
-    int checkCoinsEverOwned(int id);
-    String checkQuestInProgress(int id);
-    String readCodecoolerClass(int id);
-    String readTeamName(int id);
-    String getNickName(int id);
-    String getFirstName(int id);
-    String getSecondName(int id);
-    String getEmail(int id);
-    String readArtefacts();
-    String readEmailsCoolcoinsAndArtefacts(int codecoolerId);
-    int getPriceOfArtefact(int artefactId);
-    void addNewPossesion(int codecoolerId, int artefactId);
-    ArrayList<Integer> readTeamMembersId(int artefactId);
-    void subtractCodecoolersCoolcoins(int codecoolerId);
+    int checkCoinsEverOwned(int codecoolerId);
+    int checkQuestInProgress(int codecoolerId);
+    int readCodecoolerClass(int codecoolerId);
+    String readTeamName(int codecoolerId);
+    String getNickName(int codecoolerId);
+    String getFirstName(int codecoolerId);
+    String getSecondName(int codecoolerId);
+    String getEmail(int codecoolerId);
+    String readArtifacts();
+    List<Artifact> readCodecoolersArtifacts(int codecoolerId);
+    int getPriceOfArtifact(int artifactId);
+    void addNewPossesion(int codecoolerId, int artifactId);
+    List<Integer> readTeamMembersId(int artifactId);
+    void subtractCodecoolersCoolcoins(int codecoolerId, int artifactPrice);
+    void editCodecoolerTeam(int codecoolerId, String teamName);
+    void createNewTeam(int codecoolerId, String newTeam);
 
 
 }

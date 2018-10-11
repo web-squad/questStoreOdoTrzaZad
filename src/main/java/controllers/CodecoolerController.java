@@ -9,21 +9,22 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 
-public class CodecoolerController extends UserController {
+public class CodecoolerController{
     private CodecoolerModel codecoolerModel;
     private CodecoolerDAO codecoolerControllerDAO;
     private View view;
 
     public CodecoolerController(int id, CodecoolerDAO codecoolerController){
         this.codecoolerControllerDAO = codecoolerController;
-        this.codecoolerModel = initiateCodecoolerModel(id);
+        this.codecoolerModel =  codecoolerControllerDAO.getCodecoolerModel(id);
         view = new View();
 
     }
 
 
-    public void startUserSession() {
+    public void run() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";
         boolean isRunning = true;
@@ -32,7 +33,7 @@ public class CodecoolerController extends UserController {
             try {
                 answer = bufferedReader.readLine();
             } catch (IOException e) {
-                System.out.println("Nie mogę nic odebrać!");
+                e.printStackTrace();
             }
 
             char charAnswer = answer.charAt(0);
@@ -40,15 +41,16 @@ public class CodecoolerController extends UserController {
                 case '1':
                     showWallet();
                     break;
-
                 case '2':
-                    String artefactId = view.getInputString("Provide artefact id which you want to buy!");
-                    System.out.println(codecoolerControllerDAO.readArtefacts());
+                    System.out.println("Provide artefact id which you want to buy!");
+                    int artefactId = view.getInputInt();
+                    System.out.println(codecoolerControllerDAO.readArtifacts());
                     buyItem(artefactId);
                     break;
 
                 case '3':
-                    String teamArtefactId = view.getInputString("Provide artefact id which you want to buy for your team!");
+                    System.out.println("Provide artefact id which you want to buy for your team!");
+                    int teamArtefactId = view.getInputInt();
                     teamBuyItem(teamArtefactId);
                     break;
                 case '4':
@@ -70,17 +72,17 @@ public class CodecoolerController extends UserController {
 
     public void showWallet(){
         int id = codecoolerModel.getId();
-        System.out.println(codecoolerControllerDAO.readEmailsCoolcoinsAndArtefacts(id));
+        System.out.println(codecoolerControllerDAO.readCodecoolersArtifacts(id));
     }
 
 
-    public void buyItem(String artefactID){
-        int artefactPrice = codecoolerControllerDAO.getPriceOfArtefact(artefactID);
-        int codecoolersCoins = codecoolerModel.getCoolcoins();
+    public void buyItem(int artefactID){
+        int artefactPrice = codecoolerControllerDAO.getPriceOfArtifact(artefactID);
+
         int id = codecoolerModel.getId();
+        int codecoolersCoins = codecoolerControllerDAO.readCoins(id);
         if(codecoolersCoins >= artefactPrice){
-            codecoolersCoins -= artefactPrice;
-            codecoolerModel.setCodecoolerCoins(codecoolersCoins); //dodaje do modelu dao sie tym pozniej zajmie
+            codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, artefactPrice); //dodaje do modelu dao sie tym pozniej zajmie
             codecoolerControllerDAO.addNewPossesion(id, artefactID);
             System.out.println("You bought that item!");
         }else{
@@ -90,13 +92,13 @@ public class CodecoolerController extends UserController {
     }
 
 
-    public void teamBuyItem(String artefactId){
+    public void teamBuyItem(int artefactId){
         int id = codecoolerModel.getId();
-        ArrayList<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
-        int costOfAnArtefact = codecoolerControllerDAO.getPriceOfAnArtefact(artefactId);
+        List<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
+        int costOfAnArtefact = codecoolerControllerDAO.getPriceOfArtifact(artefactId);
         if(checkTeamMembersMoney(teamMembersIds, costOfAnArtefact)){
             for(Integer teamMemberId : teamMembersIds){
-                codecoolerControllerDAO.subtractCodecoolerCoolcoins(costOfAnArtefact/teamMembersIds.size());
+                codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, costOfAnArtefact/teamMembersIds.size());
                 codecoolerControllerDAO.addNewPossesion(teamMemberId, artefactId);
             }
         }
@@ -110,25 +112,14 @@ public class CodecoolerController extends UserController {
     }
 
     public void createNewTeam(String newTeamName){
-        codecoolerControllerDAO.createNewTeam(newTeamName);
+        int id = codecoolerModel.getId();
+        codecoolerControllerDAO.createNewTeam(id, newTeamName);
         System.out.println("You created new team!");
     }
 
 
-    private CodecoolerModel initiateCodecoolerModel(int id){
-        int coolcoins = codecoolerControllerDAO.readCoins(id);
-        int expLevel = codecoolerControllerDAO.checkCoinsEverOwned(id); //robocza nazwa
-        String questInProgress = codecoolerControllerDAO.checkQuestInProgress(id); //robocza nazwa
-        String room = codecoolerControllerDAO.readCodecoolerClass(id);
-        String teamID = codecoolerControllerDAO.readTeamName(id);
-        String nickName = codecoolerControllerDAO.getNickName(id);
-        String first_name = codecoolerControllerDAO.getFirstName(id);
-        String second_name = codecoolerControllerDAO.getSecondName(id);
-        String email = codecoolerControllerDAO.getEmail(id);
-        return new CodecoolerModel(id, nickName, first_name, second_name, email, room, teamID, expLevel, coolcoins, questInProgress);
-    }
 
-    private boolean checkTeamMembersMoney(ArrayList<Integer> ids, int costs){
+    private boolean checkTeamMembersMoney(List<Integer> ids, int costs){
         int costPerPerson = costs/ids.size();
         for(Integer memberId : ids){
             int coins = codecoolerControllerDAO.readCoins(memberId);

@@ -1,5 +1,7 @@
 package controllers.dao;
 
+import java.util.List;
+
 public interface LoginAccesDAOInterface {
-    int readLoginData(String email, String pass);
+    List<Integer> readLoginData(String email, String pass);
 }

@@ -6,23 +6,19 @@ import models.MentorModel;
 import models.Room;
 import views.View;
 
-import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class CreepyGuyController extends UserController {
-    int id;
+    String id;
     View view;
     CreepyGuyDAO dao;
-    List<String> mentorData;
     MentorModel mentor;
     Room room;
     Level level;
+    Map<String, String> collectedData;
 
     public CreepyGuyController(Integer id, CreepyGuyDAO dao){
-        this.id = id;
         view = new View();
         this.dao = dao;
     }
@@ -117,10 +113,10 @@ public class CreepyGuyController extends UserController {
                     addRoom();
                     break;
                 case 2:
-                    editRoom();
+                    deleteRoom();
                     break;
                 case 3:
-                    deleteRoom();
+                    editRoom();
                     break;
             }
         }
@@ -134,9 +130,9 @@ public class CreepyGuyController extends UserController {
         while (isRunning) {
 
             view.printMenu("Quit",
-                    "Add Mentor",
-                    "Edit Mentor",
-                    "Delete Mentor");
+                    "Add Level",
+                    "Edit Level",
+                    "Delete Level");
 
             option = view.getInputInt(0, 3);
 
@@ -161,33 +157,44 @@ public class CreepyGuyController extends UserController {
 
     private void addMentor(){
         mentor = new MentorModel(collectMentorData());
-        if (mentor != null) dao.addMentor(mentor);
+        try {
+            if (mentor != null) dao.addMentor(mentor);
+        }catch (NumberFormatException e){
+            view.print("Wrong format for room number");
+        }
     }
 
     private void editMentor(){
         fetchMentor();
         editMentorData();
         if (mentor != null) {
-            dao.editMentor(mentor);
+            dao.editMentor(mentor, id);
         }
     }
 
     private void deleteMentor(){
         fetchMentor();
-        String id = view.getInputString("Confirm ID");
-        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id == mentor.getId()) {
+        if (mentor != null) sendDeleteCommand();
+    }
+
+    private void sendDeleteCommand(){
+        id = view.getInputString("Confirm ID");
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(mentor.getId())) {
             dao.deleteMentor(mentor);
         }
     }
 
     private void fetchMentor(){
-        String id = view.getInputString("Id ?");
+        id = view.getInputString("Id ?");
         mentor = dao.getMentorById(id);
-        printData(mentor.getCollectedData);
+        if (mentor != null) {
+            mentor.setId(id);
+            printData(mentor.getCollectedData());
+        }
     }
 
     private void editMentorData(){
-        Map<String, String> collectedData = mentor.getCollectedData();
+        collectedData = mentor.getCollectedData();
         for (String key : collectedData.keySet()){
             collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
@@ -201,37 +208,75 @@ public class CreepyGuyController extends UserController {
 
     private void editRoom(){
         fetchRoom();
+        editRoomData();
         if( room != null){
-            editRoomData();
-            dao.editRoom(room);
+            dao.editRoom(new Room(collectedData), id);
         }
     }
 
     private void editRoomData(){
-        for (String data : room.getCollectedData()){
-            checkForUpdate(data);
+        collectedData = room.getCollectedData();
+        for (String key : collectedData.keySet()){
+            collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
+        if (!confirmation()) room = null;
+
     }
 
     private void deleteRoom(){
         fetchRoom();
-        String id = view.getInputString("Confirm ID");
-        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id == room.getId())
-            dao.deleteMentor(room);
+        id = view.getInputString("Confirm ID");
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(room.getId()))
+            System.out.println();
+            dao.deleteRoom(room);
     }
 
     private void fetchRoom(){
-        String id = view.getInputString("Id ?");
-        mentor = dao.getRoomById(id);
-        printData(room.getCollectedData);
+        id = view.getInputString("Id ?");
+        room = dao.getRoomById(id);
+        if (room != null) room.setId(id);
+        printData(room.getCollectedData());
     }
 
     private void addLevel(){
         level = new Level(collectLevelData());
+        if (level != null) dao.addLevel(level);
+    }
+
+    private void editLevel(){
+        fetchLevel();
+        editLevelData();
+        if (level !=null);{
+            System.out.println();
+            dao.editLevel(level, id);
+        }
+    }
+
+    private void deleteLevel(){
+        fetchLevel();
+        String id = view.getInputString("Confirm ID");
+        if (view.getInputString("Really Confirm Deleting? (Y/N)").toUpperCase().equals("Y") && id.equals(level.getId()))
+            dao.deleteLevel(level);
+    }
+
+    private void fetchLevel(){
+        id = view.getInputString("Id ?");
+        level = dao.getLevelById(id);
+        if (level != null) level.setId(id);
+        printData(room.getCollectedData());
+    }
+
+    private void editLevelData(){
+        collectedData = level.getCollectedData();
+        for (String key : collectedData.keySet()){
+            collectedData.put(key, checkForUpdate(collectedData.get(key)));
+        }
+        if (!confirmation()) level = null;
+
     }
 
     private String checkForUpdate(String column){
-        String option = view.getInputString(column).toUpperCase();
+        String option = view.getInputString(column + "  Update? (Y/N)").toUpperCase();
         if (option.equals("Y")){
             column = view.getInputString("New value?");
         }
@@ -240,7 +285,7 @@ public class CreepyGuyController extends UserController {
 
     private void printData(Map<String, String> stringDataCollection){
         for (String key : stringDataCollection.keySet()){
-            view.print(stringDataCollection.get(key));
+            view.print(stringDataCollection.get(key) + "\n");
         }
     }
 
@@ -250,16 +295,35 @@ public class CreepyGuyController extends UserController {
         mentorData.put("room", view.getInputString("Class?"));
         mentorData.put("name", view.getInputString("Name?"));
         mentorData.put("surname", view.getInputString("Surname?"));
-        mentorData.put("password", view.getInputString("Name?"));
+        mentorData.put("password", view.getInputString("Password?"));
+        mentorData.put("nickName", view.getInputString("Nick Name?"));
         printData(mentorData);
         if (!confirmation()) return null;
         return mentorData;
     }
 
+    private Map<String, String> collectRoomData(){
+        Map<String, String> roomData = new HashMap<>();
+        roomData.put("roomName", view.getInputString("Room name? "));
+        roomData.put("roomDescription", view.getInputString("Room description? "));
+        printData(roomData);
+        if (!confirmation()) return null;
+        return roomData;
+    }
+
+    private Map<String, String> collectLevelData(){
+        Map<String, String> roomData = new HashMap<>();
+        roomData.put("levelName", view.getInputString("Level name? "));
+        roomData.put("threshold", view.getInputString("Threshold? "));
+        printData(roomData);
+        if (!confirmation()) return null;
+        return roomData;
+    }
+
     private boolean confirmation(){
         String option = view.getInputString("Confirm? (Y/N)").toUpperCase();
-        if (option.equals("N")) return false;
-        return true;
+        if (option.equals("Y")) return true;
+        return false;
     }
 
 }
