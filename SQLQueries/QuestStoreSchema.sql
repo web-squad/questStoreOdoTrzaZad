@@ -141,7 +141,7 @@ CREATE SEQUENCE public.codecooler_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.codecoolers.codecoolers_id;
+ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.codecoolers.codecooler_id;
 
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
