@@ -5,7 +5,7 @@ import models.*;
 import views.View;
 import java.util.List;
 
-public class MentorController {
+public class MentorController extends UserController{
 
     MentorModel mentor;
     View view;
@@ -163,10 +163,10 @@ public class MentorController {
 
 
     public void editArtifactInStore() {
-        List<Model> artifacts = mentorDAO.listOfArtifactsInShop();
+        List<String> artifacts = mentorDAO.listOfArtifactsInShop();
 
         for (int i = 0; i < artifacts.size(); i++) {
-            view.print(artifacts.get(i).toString());
+            view.print(artifacts.get(i));
         }
 
         view.print("Which artifact you like to edit? (id)");
@@ -182,11 +182,13 @@ public class MentorController {
 
 
     public void editExistingQuest() {
-        List<Model> quests = mentorDAO.listOfQuests();
+        List<String> quests = mentorDAO.listOfQuests();
 
-        view.printModelList(quests);
+        for (int i = 0; i < quests.size(); i++) {
+            view.print(quests.get(i));
+        }
 
-        view.print("Which quest you like to edit? (id)");
+        view.print("\nWhich quest you like to edit? (id)");
         int quest_id = view.getInputInt();
         Quest editedQuest = newQuest();
         mentorDAO.editQuest(quest_id, editedQuest);
@@ -205,25 +207,25 @@ public class MentorController {
     }
 
     private int codecoolerID() {
-        view.print("codecooler ID? ");
+        view.print("\ncodecooler ID? ");
         int id = view.getInputInt();
         return id;
     }
 
 
     private void printCodecoolerArtifact(int codecooler_id) {
-       // List<Model> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
+        List<String> artifacts = mentorDAO.codecoolerArtifacts(codecooler_id);
 
-//        for (int i = 0; i < artifacts.size(); i++) {
-//            view.print(artifacts.get(i).toString());
-//        }
+        for (int i = 0; i < artifacts.size(); i++) {
+            view.print(artifacts.get(i));
+        }
     }
 
 
     private Artifact newArtifact() {
         String itemName = view.getInputString("Item name");
         String itemDescription = view.getInputString("Item Description");
-        view.print("Item price ");
+        view.print("\nItem price ");
         int itemPrice = view.getInputInt();
         Artifact artifact = new Artifact(itemName, itemDescription, itemPrice);
         return artifact;
@@ -233,7 +235,7 @@ public class MentorController {
     private Quest newQuest() {
         String questName = view.getInputString("Quest name");
         String questDescription = view.getInputString("Quest description");
-        view.print("Quest reward ");
+        view.print("\nQuest reward ");
         int questReward = view.getInputInt();
         Quest quest = new Quest(questName, questDescription, questReward);
         return quest;

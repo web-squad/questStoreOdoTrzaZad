@@ -52,8 +52,8 @@ public class Logger {
             return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
-//            MentorDAO mentorDao = new MentorDAO(connection);
-//            return new MentorController(id, mentorDao);
+            MentorDAO mentorDao = new MentorDAO(connection);
+            return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
             CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
