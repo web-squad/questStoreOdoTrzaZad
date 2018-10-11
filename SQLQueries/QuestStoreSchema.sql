@@ -7,6 +7,8 @@
 
 -- Started on 2018-10-10 12:55:27 CEST
 
+drop owned by queststore;
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
@@ -140,6 +142,7 @@ CREATE SEQUENCE public.codecooler_id_seq
     CACHE 1;
 
 ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.codecoolers.codecooler_id;
+ALTER TABLE public.codecoolers ALTER COLUMN codecooler_id SET DEFAULT nextval('codecooler_id_seq'::regclass);
 
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
@@ -151,7 +154,7 @@ ALTER TABLE public.codecoolers OWNER TO queststore;
 
 CREATE TABLE public.experience_level (
     id integer NOT NULL,
-    level character varying NOT NULL,
+    level_name character varying NOT NULL,
     threshold integer
 );
 
@@ -306,8 +309,7 @@ ALTER SEQUENCE public.quests_quest_id_seq OWNED BY public.quests.quest_id;
 CREATE TABLE public.room (
     room_id integer NOT NULL,
     room_name character varying,
-    room_description character varying,
-    assigned_mentor character varying
+    room_description character varying
 );
 
 

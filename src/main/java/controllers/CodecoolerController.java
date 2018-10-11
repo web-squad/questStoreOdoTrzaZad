@@ -10,19 +10,18 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class CodecoolerController {
+public class CodecoolerController{
     private CodecoolerModel codecoolerModel;
     private CodecoolerDAO codecoolerControllerDAO;
     private View view;
 
-    public CodecoolerController(int id, CodecoolerDAO codecoolerController) {
+    public CodecoolerController(int id, CodecoolerDAO codecoolerController){
         this.codecoolerControllerDAO = codecoolerController;
-        //this.codecoolerModel = codecoolerControllerDAO.getCodecoolerModel(id);
+        this.codecoolerModel =  codecoolerControllerDAO.getCodecoolerModel(id);
         view = new View();
 
     }
-}
-    /*
+
     public void run() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";
@@ -70,8 +69,8 @@ public class CodecoolerController {
 
 
     public void showWallet(){
-        //int id = codecoolerModel.getId();
-        //System.out.println(codecoolerControllerDAO.readEmailsCoolcoinsAndArtefacts(id));
+        int id = codecoolerModel.getId();
+        System.out.println(codecoolerControllerDAO.readEmailsCoolcoinsAndArtefacts(id));
     }
 
 
@@ -127,4 +126,4 @@ public class CodecoolerController {
         }
         return true;
     }
-}/*/
+}

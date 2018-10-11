@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CodecoolerDAO  {
+public class CodecoolerDAO {
     private Connection connection;
     private Statement statement;
 
     CodecoolerDAO(Connection connection) throws SQLException {
         this.connection = connection;
+        statement = connection.createStatement();
     }
 
-} /*
     @Override
     public int readCoins(int codecoolerId) {
         String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
@@ -57,7 +57,10 @@ public class CodecoolerDAO  {
             String nickName = resultSetCodecooler.getString(9);
             String email = resultSetLogin.getString(1);
             String teamID = resultSetTeams.getString(1);
-            codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID);
+            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID);
+
+
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -168,4 +171,4 @@ public class CodecoolerDAO  {
         }
         return resultSet;
     }
-} /*/
+}

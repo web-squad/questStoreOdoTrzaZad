@@ -3,8 +3,6 @@ package controllers;
 import controllers.dao.MentorDAO;
 import models.*;
 import views.View;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class MentorController {
@@ -51,8 +49,10 @@ public class MentorController {
                     break;
                 case 4:
                     addNewQuest();
+                    break;
                 case 5:
                     editExistingQuest();
+                    break;
             }
         }
     }
@@ -108,8 +108,7 @@ public class MentorController {
 
 
     public void listAllCodecoolers() {
-        List<CodecoolerModel> codecoolers = new ArrayList<>();
-        codecoolers = mentorDAO.allCodecoolers();
+        List<User> codecoolers = mentorDAO.allCodecoolers();
 
         for (int i = 0; i < codecoolers.size(); i++) {
             view.print(codecoolers.get(i).toString());
@@ -119,7 +118,7 @@ public class MentorController {
 
     public void addCodecooler() {
         CodecoolerModel cm = createCodecooler();
-        MentorDAO.createCodecooler(cm);
+        mentorDAO.createCodecooler(cm);
     }
 
 
@@ -138,7 +137,7 @@ public class MentorController {
         int codecooler_id = codecoolerID();
         printCodecoolerArtifact(codecooler_id);
 
-        int artifact_id = view.getInputInt(0, artifacts.size());
+        int artifact_id = view.getInputInt();
         mentorDAO.markItemAsUsed(codecooler_id, artifact_id);
     }
 
@@ -150,7 +149,7 @@ public class MentorController {
 
     public void checkCodecoolerWallet() {
         int codecooler_id = codecoolerID();
-        view.print(mentorDAO.codecoolerCoins(codecooler_id));
+        view.print(String.valueOf(mentorDAO.codecoolerCoins(codecooler_id)));
         printCodecoolerArtifact(codecooler_id);
     }
 
