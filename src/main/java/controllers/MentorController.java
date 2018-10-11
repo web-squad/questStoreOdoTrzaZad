@@ -7,12 +7,13 @@ import views.View;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MentorController extends UserController{
+public class MentorController {
 
     MentorModel mentor;
     View view;
     MentorDAO mentorDAO;
-
+}
+/*
     public MentorController(int id, MentorDAO mentorDAO) {
         this.mentorDAO = mentorDAO;
         this.mentor = mentorDAO.createMentor(id);
@@ -235,4 +236,4 @@ public class MentorController extends UserController{
         Quest quest = new Quest(questName, questDescription, questReward);
         return quest;
     }
-}
+}/*/

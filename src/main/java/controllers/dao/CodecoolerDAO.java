@@ -8,15 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CodecoolerDAO implements CodecoolerDAOInterface {
+public class CodecoolerDAO  {
     private Connection connection;
     private Statement statement;
 
     CodecoolerDAO(Connection connection) throws SQLException {
         this.connection = connection;
-        statement = connection.createStatement();
     }
 
+} /*
     @Override
     public int readCoins(int codecoolerId) {
         String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
@@ -168,4 +168,4 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
         return resultSet;
     }
-}
+} /*/

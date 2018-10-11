@@ -8,7 +8,8 @@ import models.Quest;
 import java.util.List;
 
 public class MentorDAO implements MentorDAOInterface {
-
+}
+    /*
     public static void createCodecooler(CodecoolerModel cm) {
     }
 
@@ -52,3 +53,4 @@ public class MentorDAO implements MentorDAOInterface {
         return null;
     }
 }
+*/
