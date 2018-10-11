@@ -3,10 +3,10 @@ package models;
 import java.util.Map;
 
 public class Level extends Model{
-    String levelId;
-    String threshold;
-    String name;
-    Map<String, String > collectedData;
+    private String levelId;
+    private String threshold;
+    private String name;
+    private Map<String, String > collectedData;
 
     public Level(Map<String, String> collectedData){
         name = collectedData.get("levelName");

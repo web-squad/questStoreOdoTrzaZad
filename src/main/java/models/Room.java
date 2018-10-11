@@ -3,10 +3,10 @@ package models;
 import java.util.Map;
 
 public class Room extends Model{
-    String roomId;
-    String roomName;
-    String roomDescription;
-    Map<String, String > collectedData;
+    private String roomId;
+    private String roomName;
+    private String roomDescription;
+    private Map<String, String > collectedData;
 
     public Room(Map<String, String> collectedData){
       roomName = collectedData.get("roomName");

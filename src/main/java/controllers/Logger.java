@@ -10,14 +10,12 @@ import java.util.List;
 
 public class Logger {
     private View view;
-    private String dbPass;
-    private String dbUser;
     private Connection connection;
 
     public Logger() {
         view = new View();
-        dbPass = "quest";
-        dbUser = "queststore";
+        String dbPass = "quest";
+        String dbUser = "queststore";
         connection = new Connector().connect(dbUser, dbPass);
     }
 

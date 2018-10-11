@@ -4,14 +4,14 @@ import java.util.Map;
 
 public class MentorModel extends User {
 
-    String  id;
-    String email;
-    String password;
-    String name;
-    String surname;
-    String room;
-    String nickName;
-    Map<String, String> collectedData;
+    private String  id;
+    private String email;
+    private String password;
+    private String name;
+    private String surname;
+    private String room;
+    private String nickName;
+    private Map<String, String> collectedData;
 
     public MentorModel(Map<String, String> mentorData){
         email = mentorData.get("email");
