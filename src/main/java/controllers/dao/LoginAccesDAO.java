@@ -13,8 +13,8 @@ import java.util.List;
 
 public class LoginAccesDAO implements LoginAccesDAOInterface {
 
-    Connection connection;
-    List<Integer> loginData;
+    private Connection connection;
+    private List<Integer> loginData;
 
     public LoginAccesDAO(Connection connection){
         this.connection = connection;
