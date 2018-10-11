@@ -32,7 +32,7 @@ public class CodecoolerController{
             try {
                 answer = bufferedReader.readLine();
             } catch (IOException e) {
-                System.out.println("Nie mogę nic odebrać!");
+                e.printStackTrace();
             }
 
             char charAnswer = answer.charAt(0);
@@ -43,7 +43,7 @@ public class CodecoolerController{
                 case '2':
                     System.out.println("Provide artefact id which you want to buy!");
                     int artefactId = view.getInputInt();
-                    System.out.println(codecoolerControllerDAO.readArtefacts());
+                    System.out.println(codecoolerControllerDAO.readArtifacts());
                     buyItem(artefactId);
                     break;
 
@@ -71,12 +71,12 @@ public class CodecoolerController{
 
     public void showWallet(){
         int id = codecoolerModel.getId();
-        System.out.println(codecoolerControllerDAO.readEmailsCoolcoinsAndArtefacts(id));
+        System.out.println(codecoolerControllerDAO.readCodecoolersArtifacts(id));
     }
 
 
     public void buyItem(int artefactID){
-        int artefactPrice = codecoolerControllerDAO.getPriceOfArtefact(artefactID);
+        int artefactPrice = codecoolerControllerDAO.getPriceOfArtifact(artefactID);
 
         int id = codecoolerModel.getId();
         int codecoolersCoins = codecoolerControllerDAO.readCoins(id);
@@ -94,7 +94,7 @@ public class CodecoolerController{
     public void teamBuyItem(int artefactId){
         int id = codecoolerModel.getId();
         ArrayList<Integer> teamMembersIds = codecoolerControllerDAO.readTeamMembersId(id);
-        int costOfAnArtefact = codecoolerControllerDAO.getPriceOfAnArtefact(artefactId);
+        int costOfAnArtefact = codecoolerControllerDAO.getPriceOfArtifact(artefactId);
         if(checkTeamMembersMoney(teamMembersIds, costOfAnArtefact)){
             for(Integer teamMemberId : teamMembersIds){
                 codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, costOfAnArtefact/teamMembersIds.size());

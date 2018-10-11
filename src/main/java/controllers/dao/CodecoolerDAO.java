@@ -300,8 +300,33 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     @Override
-    public ArrayList<Integer> readTeamMembersId(int artefactId) {
-        return null;
+    public List<Integer> readTeamMembersId(int codecooler_id) {
+        List<Integer> teamMembersId = new ArrayList<>();
+        String teamNameQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + codecooler_id + ";";
+        ResultSet resultSetTeamName = getResultSet(teamNameQuery);
+        String teamName = "";
+        try{
+            teamName = resultSetTeamName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        String codecoolersIdQuery = "SELECT codecooler_id FROM Teams WHERE team_name = " + teamName + ";";
+        ResultSet resultSetCodecoolersId = getResultSet(codecoolersIdQuery);
+        ResultSetMetaData resultSetMetaData;
+        try{
+
+            resultSetMetaData = resultSetCodecoolersId.getMetaData();
+            int columnsNumber = resultSetMetaData.getColumnCount();
+            while(resultSetCodecoolersId.next()){
+                for(int i = 1; i <= columnsNumber; i++){
+                   teamMembersId.add(resultSetCodecoolersId.getInt(1));
+                }
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+
+        return teamMembersId;
     } //musthave
 
     @Override
@@ -315,6 +340,14 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void editCodecoolerTeam(int id, String teamName){
+
+    }
+
+    public void createNewTeam(String teamName){
 
     }
 

@@ -21,8 +21,10 @@ public interface CodecoolerDAOInterface {
     List<Artifact> readCodecoolersArtifacts(int codecoolerId);
     int getPriceOfArtifact(int artifactId);
     void addNewPossesion(int codecoolerId, int artifactId);
-    ArrayList<Integer> readTeamMembersId(int artifactId);
+    List<Integer> readTeamMembersId(int artifactId);
     void subtractCodecoolersCoolcoins(int codecoolerId, int artifactPrice);
+    void editCodecoolerTeam(int id, String teamName);
+    void createNewTeam(String newTeam);
 
 
 }
