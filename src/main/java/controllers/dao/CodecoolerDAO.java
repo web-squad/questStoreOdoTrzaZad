@@ -130,22 +130,54 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public String getNickName(int id) {
-        return null;
+        String nickNameQuery = "SELECT nickname FROM codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetNickName = getResultSet(nickNameQuery);
+        String nickName = "";
+        try{
+            nickName = resultSetNickName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return nickName;
     }
 
     @Override
     public String getFirstName(int id) {
-        return null;
+        String firstNameQuery = "SELECT name FROM codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetName = getResultSet(firstNameQuery);
+        String firstName = "";
+        try{
+            firstName = resultSetName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return firstName;
     }
 
     @Override
     public String getSecondName(int id) {
-        return null;
+        String secondNameQuery = "SELECT last_name FROM codecoolers WHERE codecooler_id = " + id + ";";
+        ResultSet resultSetSecondName = getResultSet(secondNameQuery);
+        String secondName = "";
+        try{
+            secondName = resultSetSecondName.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return secondName;
     }
 
     @Override
     public String getEmail(int id) {
-        return null;
+        String emailQuery = "SELECT email FROM LoginAccess WHERE id = " + id + ";";
+        ResultSet resultSetEmail = getResultSet(emailQuery);
+        String email = "";
+        try{
+            email = resultSetEmail.getString(1);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return email;
     } //korzystanie
 
     @Override
