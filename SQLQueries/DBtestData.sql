@@ -18,3 +18,7 @@ INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earne
 
 INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 0, 1, 'test', 'test', 'test');
 
+INSERT INTO teams (codecooler_id, team_name) VALUES (1, 'szpoki');
+
+INSERT INTO artifacts_in_possess (artifact_id, codecooler_id, used) VALUES (1, 1, false);
+
