@@ -35,7 +35,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     public CodecoolerModel getCodecoolerModel(int codecoolerId){
-        System.out.println(codecoolerId);
         String codecoolerModelQuery = String.format("SELECT codecoolers.*, teams.id, login_access.email, login_access.password FROM codecoolers INNER JOIN" +
                 " teams ON codecoolers.codecooler_id = teams.codecooler_id INNER JOIN login_access ON codecoolers.codecooler_id = login_access.id WHERE" +
                 " codecoolers.codecooler_id = %d;", codecoolerId);
@@ -222,7 +221,8 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
         artifactsList = createArtifactsList(resultSetArtifacts);
 
-
+        System.out.println(artifactsQuery);
+        System.out.println(artifactsList.size());
         return artifactsList;
     } //korzystnaie
 
@@ -246,24 +246,19 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
+
         return whereClauseIds;
     }
 
     private List<Artifact> createArtifactsList(ResultSet resultSetArtifacts){
         List<Artifact> artifactsList = new ArrayList<>();
-        ResultSetMetaData resultSetArtifactsMetaData;
         try{
-            resultSetArtifactsMetaData = resultSetArtifacts.getMetaData();
-
-            int columnsNumber = resultSetArtifactsMetaData.getColumnCount();
             while(resultSetArtifacts.next()){
-                for(int i = 1; i <= columnsNumber; i++){
-                    int id = resultSetArtifacts.getInt(1);
-                    String name = resultSetArtifacts.getString(2);
-                    String description = resultSetArtifacts.getString(3);
-                    int price = resultSetArtifacts.getInt(4);
-                    artifactsList.add(new Artifact(id,name ,description, price ));
-                }
+                int id = resultSetArtifacts.getInt(1);
+                String name = resultSetArtifacts.getString(2);
+                String description = resultSetArtifacts.getString(3);
+                int price = resultSetArtifacts.getInt(4);
+                artifactsList.add(new Artifact(id,name ,description, price));
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -359,8 +354,9 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     public void createNewTeam(int id, String teamName){
-        String createTeamQuery = "INSERT INTO teams (team_name, codecooler_id) VALUES ('" + teamName + "', " + id + ");";
+        String createTeamQuery = "INSERT INTO teams (team_name, codecooler_id) VALUES (" + "\'" + teamName + "\'," + id + ");";
         try{
+            deleteTeam(id, "teams");
             statement.executeUpdate(createTeamQuery);
             connection.commit();
         }catch(SQLException e){
@@ -383,6 +379,16 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             statement = connection.createStatement();
         }catch(SQLException e){
             e.printStackTrace();
+        }
+
+    }
+
+    private void deleteTeam(int id, String table) throws SQLException{
+        String deleteFromTeamQuery = "DELETE FROM " + table + " WHERE codecooler_id = " + id + ";";
+        try{
+            statement.executeUpdate(deleteFromTeamQuery);
+        }catch(NullPointerException e){
+            System.out.println("Nothing to delete!");
         }
 
     }

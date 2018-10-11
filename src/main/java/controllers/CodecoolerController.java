@@ -1,6 +1,7 @@
 package controllers;
 
 import controllers.dao.CodecoolerDAO;
+import models.Artifact;
 import models.CodecoolerModel;
 import views.View;
 
@@ -19,6 +20,7 @@ public class CodecoolerController extends UserController{
     public CodecoolerController(int id, CodecoolerDAO codecoolerController){
         this.codecoolerControllerDAO = codecoolerController;
         this.codecoolerModel =  codecoolerControllerDAO.getCodecoolerModel(id);
+//        System.out.println("_-------------------------" + codecoolerModel.getId() + "--------------");
         view = new View();
 
     }
@@ -72,7 +74,12 @@ public class CodecoolerController extends UserController{
 
     public void showWallet(){
         int id = codecoolerModel.getId();
-        System.out.println(codecoolerControllerDAO.readCodecoolersArtifacts(id));
+        List<Artifact> wallet = codecoolerControllerDAO.readCodecoolersArtifacts(id);
+        String walletString = "id    name    description     price\n";
+        for(Artifact artifact : wallet){
+            walletString += artifact.getId() + "\t" + artifact.getName() + "\t" + artifact.getDescription() + "\t\t" + artifact.getPrice();
+        }
+        System.out.println(walletString);
     }
 
 
@@ -101,7 +108,9 @@ public class CodecoolerController extends UserController{
                 codecoolerControllerDAO.subtractCodecoolersCoolcoins(id, costOfAnArtefact/teamMembersIds.size());
                 codecoolerControllerDAO.addNewPossesion(teamMemberId, artefactId);
             }
+            System.out.println("You bought that item!");
         }
+
     }
 
 
@@ -124,6 +133,7 @@ public class CodecoolerController extends UserController{
         for(Integer memberId : ids){
             int coins = codecoolerControllerDAO.readCoins(memberId);
             if(coins < costPerPerson){
+                System.out.println("Not everyone can afford that much!");
                 return false;
             }
         }
