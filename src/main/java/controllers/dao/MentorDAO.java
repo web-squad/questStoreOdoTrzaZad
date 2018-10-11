@@ -82,7 +82,7 @@ public class MentorDAO implements MentorDAOInterface {
             String codecoolersQuery = String.format("SELECT id, nickname FROM codecoolers;");
             ResultSet rs = stmt.executeQuery(codecoolersQuery);
             while ( rs.next() ) {
-                codecoolers.add(rs.getString(1) + " " + rs.getString(2));
+                codecoolers.add(rs.getInt(1) + " " + rs.getString(2));
             }
             rs.close();
             stmt.close();
@@ -138,8 +138,23 @@ public class MentorDAO implements MentorDAOInterface {
         }
     }
 
-    public List<Model> listOfQuests() {
-        return null;
+    public List<String> listOfQuests() {
+        List<String> quests = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            String codecoolersQuery = String.format("SELECT * FROM quests;");
+            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            while ( rs.next() ) {
+                quests.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " reward: " + rs.getInt(4));
+            }
+            rs.close();
+            stmt.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return quests;
     }
 
     public void addNewQuest(Quest newQuest) {
@@ -157,8 +172,23 @@ public class MentorDAO implements MentorDAOInterface {
         }
     }
 
-    public List<Model> listOfArtifactsInShop() {
-        return null;
+    public List<String> listOfArtifactsInShop() {
+        List<String> artifacts = new ArrayList<>();
+        try {
+            stmt = connection.createStatement();
+            String codecoolersQuery = String.format("SELECT * FROM artifacts;");
+            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            while ( rs.next() ) {
+                artifacts.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " price: " + rs.getInt(4));
+            }
+            rs.close();
+            stmt.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return artifacts;
     }
 
     public void editArtifact(int artifact_id, Artifact editedArtifact) {
