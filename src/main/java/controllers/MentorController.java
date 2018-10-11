@@ -10,11 +10,11 @@ public class MentorController {
     MentorModel mentor;
     View view;
     MentorDAO mentorDAO;
-}
-/*
+
+
     public MentorController(int id, MentorDAO mentorDAO) {
         this.mentorDAO = mentorDAO;
-        this.mentor = mentorDAO.createMentor(id);
+//        this.mentor = mentorDAO.createMentor(id);
         view = new View();
     }
 
@@ -65,7 +65,7 @@ public class MentorController {
         while (isRunning) {
 
             view.printMenu("Exit",
-                    "List all Mentors",
+                    "List all codecoolers",
                     "Add new codecooler",
                     "Edit existing codecooler",
                     "Remove codecooler",
@@ -74,7 +74,7 @@ public class MentorController {
                     "Mark quest as completed",
                     "Check codecooler wallet");
 
-            option = view.getInputInt(0, 5);
+            option = view.getInputInt(0, 8);
 
             switch (option) {
 
@@ -97,9 +97,12 @@ public class MentorController {
                     markItemAsUsed();
                     break;
                 case 6:
-                    markQuestAsCompleted();
+                    addArtifactToStore();
                     break;
                 case 7:
+                    markQuestAsCompleted();
+                    break;
+                case 8:
                     checkCodecoolerWallet();
                     break;
             }
@@ -108,10 +111,10 @@ public class MentorController {
 
 
     public void listAllCodecoolers() {
-        List<User> codecoolers = mentorDAO.allCodecoolers();
+        List<String> codecoolers = mentorDAO.allCodecoolers();
 
         for (int i = 0; i < codecoolers.size(); i++) {
-            view.print(codecoolers.get(i).toString());
+            view.print(codecoolers.get(i));
         }
     }
 
@@ -235,4 +238,4 @@ public class MentorController {
         Quest quest = new Quest(questName, questDescription, questReward);
         return quest;
     }
-}/*/
+}
