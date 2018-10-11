@@ -1,5 +1,3 @@
-drop owned by queststore;
-
 --
 -- PostgreSQL database dump
 --
@@ -8,6 +6,8 @@ drop owned by queststore;
 -- Dumped by pg_dump version 9.5.14
 
 -- Started on 2018-10-10 12:55:27 CEST
+
+drop owned by queststore;
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -142,6 +142,7 @@ CREATE SEQUENCE public.codecooler_id_seq
     CACHE 1;
 
 ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.codecoolers.codecooler_id;
+ALTER TABLE public.codecoolers ALTER COLUMN codecooler_id SET DEFAULT nextval('codecooler_id_seq'::regclass);
 
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
@@ -308,8 +309,7 @@ ALTER SEQUENCE public.quests_quest_id_seq OWNED BY public.quests.quest_id;
 CREATE TABLE public.room (
     room_id integer NOT NULL,
     room_name character varying,
-    room_description character varying,
-    assigned_mentor character varying
+    room_description character varying
 );
 
 

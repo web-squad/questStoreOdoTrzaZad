@@ -22,7 +22,6 @@ public class CodecoolerController{
 
     }
 
-
     public void run() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";

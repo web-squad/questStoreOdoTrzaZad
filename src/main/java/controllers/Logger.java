@@ -37,15 +37,15 @@ public class Logger {
         //String email = view.getInputString("Enter email: ");
         //String password = view.getInputString("Enter Password");
         //List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
-        int accessLevel = 3;
+        int accessLevel = 2;
         int id = 1;
         return createUserController(accessLevel, id);
     }
 
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
-            return new CodecoolerController(id, codecoolerDao);
+//            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
+//            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
             MentorDAO mentorDao = new MentorDAO(connection);

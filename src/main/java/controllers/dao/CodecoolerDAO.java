@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-public class CodecoolerDAO implements CodecoolerDAOInterface {
+public class CodecoolerDAO {
     private Connection connection;
     private Statement statement;
 
@@ -57,9 +57,8 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             String nickName = resultSetCodecooler.getString(9);
             String email = resultSetLogin.getString(1);
             String teamID = resultSetTeams.getString(1);
-//            codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID); TWOJE AKTUALNE, ZABITE BO BLOKUJE URUCHOMIENIE APLIKACJI
-//            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
-//                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID)  uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID);
 
 
 

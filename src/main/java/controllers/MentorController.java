@@ -48,8 +48,10 @@ public class MentorController extends UserController{
                     break;
                 case 4:
                     addNewQuest();
+                    break;
                 case 5:
                     editExistingQuest();
+                    break;
             }
         }
     }
@@ -146,7 +148,7 @@ public class MentorController extends UserController{
 
     public void checkCodecoolerWallet() {
         int codecooler_id = codecoolerID();
-        view.print(mentorDAO.codecoolerCoins(codecooler_id));
+        view.print(String.valueOf(mentorDAO.codecoolerCoins(codecooler_id)));
         printCodecoolerArtifact(codecooler_id);
     }
 
