@@ -1,3 +1,5 @@
+drop owned by queststore;
+
 --
 -- PostgreSQL database dump
 --
@@ -152,6 +154,7 @@ ALTER TABLE public.codecoolers OWNER TO queststore;
 CREATE TABLE public.experience_level (
     id integer NOT NULL,
     level character varying NOT NULL,
+    level_description character varying,
     threshold integer
 );
 
