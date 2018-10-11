@@ -32,8 +32,8 @@ public class Logger {
         String email = view.getInputString("Enter email: ");
         String password = view.getInputString("Enter Password: ");
         List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(email, password);
-        int accessLevel = 2;
-        int id = 0;
+        int accessLevel = 1;
+        int id = 1;
         if (loginData != null) {
             accessLevel = loginData.get(0);
             id = loginData.get(1);
@@ -43,12 +43,12 @@ public class Logger {
 
     private UserController createUserController(int acessLevel, int id){
         if (acessLevel == 1){
-//            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
-//            return new CodecoolerController(id, codecoolerDao);
+            CodecoolerDAO codecoolerDao = new CodecoolerDAO(connection);
+            return new CodecoolerController(id, codecoolerDao);
         }
         else if (acessLevel == 2){
-            MentorDAO mentorDao = new MentorDAO(connection);
-            return new MentorController(id, mentorDao);
+//            MentorDAO mentorDao = new MentorDAO(connection);
+//            return new MentorController(id, mentorDao);
         }
         else if (acessLevel == 3){
             CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
