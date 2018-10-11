@@ -29,7 +29,7 @@ public class CodecoolerController extends UserController{
         String answer = "";
         boolean isRunning = true;
         while (isRunning) {
-            view.printMenu("(1) Show wallet", "(2) Buy item", "(3) Buy item for your team", "(4) Change team", "(5) Create new Team", "(6) exit");
+            view.printMenu("Quit", "Show Wallet", "Buy item", "Buy item for your team", "Change team", "Create new Team");
             try {
                 answer = bufferedReader.readLine();
             } catch (IOException e) {
@@ -61,7 +61,7 @@ public class CodecoolerController extends UserController{
                     String newlyCreatedTeamName = view.getInputString("Please provide name of a team you want to create!");
                     createNewTeam(newlyCreatedTeamName);
                     break;
-                case '6':
+                case '0':
                     isRunning = false;
                     break;
             }
