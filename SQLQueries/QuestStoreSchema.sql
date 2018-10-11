@@ -36,9 +36,6 @@ CREATE SEQUENCE public.artifacts_artifact_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.artifacts_artifact_id_seq OWNER TO queststore;
-
-
 ALTER SEQUENCE public.artifacts_artifact_id_seq OWNER TO queststore;
 
 
@@ -59,9 +56,6 @@ CREATE SEQUENCE public.artifacts_in_possess_id_seq
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
-
-
-ALTER TABLE public.artifacts_in_possess_id_seq OWNER TO queststore;
 
 
 ALTER SEQUENCE public.artifacts_in_possess_id_seq OWNER TO queststore;
@@ -86,7 +80,6 @@ CREATE SEQUENCE public.codecooler_id_seq
     NO MAXVALUE
     CACHE 1;
 
-ALTER SEQUENCE public.codecooler_id_seq OWNED BY public.queststore;
 
 ALTER TABLE public.codecoolers OWNER TO queststore;
 
@@ -109,10 +102,8 @@ CREATE SEQUENCE public.experience_level_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.experience_level_id_seq OWNER TO queststore;
 
-
-ALTER SEQUENCE public.experience_level_id_seq OWNED BY public.queststore;
+ALTER SEQUENCE public.experience_level_id_seq OWNER TO queststore;
 
 
 CREATE TABLE public.login_access (
@@ -132,9 +123,7 @@ CREATE SEQUENCE public.login_access_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.login_access_id_seq OWNER TO queststore;
-
-ALTER SEQUENCE public.login_access_id_seq OWNED BY queststore;
+ALTER SEQUENCE public.login_access_id_seq OWNER TO queststore;
 
 
 CREATE TABLE public.quest_completed (
@@ -155,10 +144,7 @@ CREATE SEQUENCE public.quest_completed_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.quest_completed_id_seq OWNER TO queststore;
-
-
-ALTER SEQUENCE public.quest_completed_id_seq OWNED BY queststore;
+ALTER SEQUENCE public.quest_completed_id_seq OWNER TO queststore;
 
 CREATE TABLE public.quests (
     quest_id integer NOT NULL,
@@ -178,10 +164,7 @@ CREATE SEQUENCE public.quests_quest_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.quests_quest_id_seq OWNER TO queststore;
-
-
-ALTER SEQUENCE public.quests_quest_id_seq OWNED BY queststore;
+ALTER SEQUENCE public.quests_quest_id_seq OWNER TO queststore;
 
 CREATE TABLE public.room (
     room_id integer NOT NULL,
@@ -201,10 +184,8 @@ CREATE SEQUENCE public.room_room_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.room_room_id_seq OWNER TO queststore;
 
-
-ALTER SEQUENCE public.room_room_id_seq OWNED BY queststore;
+ALTER SEQUENCE public.room_room_id_seq OWNER TO queststore;
 
 
 CREATE TABLE public.teams (
@@ -225,10 +206,8 @@ CREATE SEQUENCE public.teams_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.teams_id_seq OWNER TO queststore;
-
 --
-ALTER SEQUENCE public.teams_id_seq OWNED BY queststore;
+ALTER SEQUENCE public.teams_id_seq OWNER TO queststore;
 
 
 ALTER TABLE ONLY public.artifacts ALTER COLUMN artifact_id SET DEFAULT nextval('public.artifacts_artifact_id_seq'::regclass);

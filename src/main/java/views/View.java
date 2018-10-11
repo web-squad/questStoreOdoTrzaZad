@@ -1,8 +1,5 @@
 package views;
 
-import models.Model;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class View {
@@ -15,7 +12,7 @@ public class View {
 
     public String getInputString(String text) {
         print("\n" + text);
-        return scanner.nextLine().replaceAll("[^A-Za-z0-9]", "");
+        return scanner.nextLine().replaceAll("[^A-Za-z0-9\\s_@]", "");
 
     }
 
@@ -52,7 +49,6 @@ public class View {
 
             }catch(NumberFormatException e) {
                 print("\nThis is not a number. Try again!");
-                continue;
             }
         }
         return input;
@@ -73,13 +69,4 @@ public class View {
         print(String.format("    (0) %s\n", items[0]));
     }
 
-    public void waitForConfirm(){
-        getInputString("Press enter to continue");
-    }
-
-    public void printModelList(List<Model> list) {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i).toString());
-        }
-    }
 }
