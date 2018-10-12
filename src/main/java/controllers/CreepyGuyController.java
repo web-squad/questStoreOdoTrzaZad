@@ -156,11 +156,13 @@ public class CreepyGuyController extends UserController {
     }
 
     private void addMentor(){
-        mentor = new MentorModel(collectMentorData());
         try {
+            mentor = new MentorModel(collectMentorData());
             if (mentor != null) dao.addMentor(mentor);
         }catch (NumberFormatException e){
             view.print("Wrong format for room number");
+        }catch (NullPointerException e){
+            view.print("Adding aborted");
         }
     }
 
@@ -196,7 +198,7 @@ public class CreepyGuyController extends UserController {
     private void editMentorData(){
         collectedData = mentor.getCollectedData();
         for (String key : collectedData.keySet()){
-            collectedData.put(key, checkForUpdate(collectedData.get(key)));
+            if (!key.equals("id")) collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
         if (!confirmation()) mentor = null;
     }
@@ -217,7 +219,7 @@ public class CreepyGuyController extends UserController {
     private void editRoomData(){
         collectedData = room.getCollectedData();
         for (String key : collectedData.keySet()){
-            collectedData.put(key, checkForUpdate(collectedData.get(key)));
+            if (!key.equals("id")) collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
         if (!confirmation()) room = null;
 
@@ -269,7 +271,7 @@ public class CreepyGuyController extends UserController {
     private void editLevelData(){
         collectedData = level.getCollectedData();
         for (String key : collectedData.keySet()){
-            collectedData.put(key, checkForUpdate(collectedData.get(key)));
+            if (!key.equals("id")) collectedData.put(key, checkForUpdate(collectedData.get(key)));
         }
         if (!confirmation()) level = null;
 
@@ -285,7 +287,7 @@ public class CreepyGuyController extends UserController {
 
     private void printData(Map<String, String> stringDataCollection){
         for (String key : stringDataCollection.keySet()){
-            view.print(key + ": " + stringDataCollection.get(key) + "\n");
+            if (!key.equals("id")) view.print(key + ": " + stringDataCollection.get(key) + "\n");
         }
     }
 
