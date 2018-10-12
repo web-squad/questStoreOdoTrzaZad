@@ -156,11 +156,13 @@ public class CreepyGuyController extends UserController {
     }
 
     private void addMentor(){
-        mentor = new MentorModel(collectMentorData());
         try {
+            mentor = new MentorModel(collectMentorData());
             if (mentor != null) dao.addMentor(mentor);
         }catch (NumberFormatException e){
             view.print("Wrong format for room number");
+        }catch (NullPointerException e){
+            view.print("Adding aborted");
         }
     }
 

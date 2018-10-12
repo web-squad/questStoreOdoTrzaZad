@@ -1,23 +1,4 @@
-﻿SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
-
-drop owned by queststore;
-
+﻿DROP OWNED BY queststore;
 CREATE TABLE public.artifacts (
     artifact_id integer NOT NULL,
     name character varying NOT NULL,
@@ -85,7 +66,7 @@ CREATE SEQUENCE public.codecooler_id_seq
 ALTER TABLE public.codecoolers OWNER TO queststore;
 
 
-ALTER SEQUENCE public.quest_codecooler_id_seq OWNER TO queststore;
+ALTER SEQUENCE public.codecooler_id_seq OWNER TO queststore;
 
 
 CREATE TABLE public.experience_level (
@@ -112,7 +93,7 @@ ALTER SEQUENCE public.experience_level_id_seq OWNER TO queststore;
 
 CREATE TABLE public.login_access (
     id integer NOT NULL,
-    email character varying NOT NULL,
+    email character varying NOT NULL UNIQUE,
     password character varying NOT NULL,
     access_level integer NOT NULL
 );

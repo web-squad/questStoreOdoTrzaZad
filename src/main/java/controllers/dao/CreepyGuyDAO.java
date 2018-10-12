@@ -37,7 +37,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     private void addMentorRecord(MentorModel mentor) throws SQLException, NumberFormatException{
         stmt = connection.createStatement();
         String sql = String.format("INSERT INTO login_access (email, password, access_level)"
-                        + "\n VALUES ('%s', '%s', %d );", mentor.getEmail(), mentor.getPassword(), 1);
+                        + "\n VALUES ('%s', '%s', %d );", mentor.getEmail(), mentor.getPassword(), 2);
         stmt.executeUpdate(sql);
         sql = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)"
                 + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 1, Integer.parseInt(mentor.getRoom()), 0, 1, mentor.getName(), mentor.getSurname(), mentor.getNickName());
@@ -84,10 +84,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     private void deleteRecord(MentorModel mentor) throws SQLException{
         stmt = connection.createStatement();
-        String sql = String.format("DELETE FROM login_access WHERE id = %d;", Integer.parseInt(mentor.getId()));
+        String sql = String.format("DELETE FROM codecoolers WHERE codecooler_id = %d;", Integer.parseInt(mentor.getId()));
         stmt.executeUpdate(sql);
-        connection.commit();
-        sql = String.format("DELETE FROM codecoolers WHERE id = %d;", Integer.parseInt(mentor.getId()));
+        sql = String.format("DELETE FROM login_access WHERE id = %d;", Integer.parseInt(mentor.getId()));
         stmt.executeUpdate(sql);
         connection.commit();
         stmt.close();
