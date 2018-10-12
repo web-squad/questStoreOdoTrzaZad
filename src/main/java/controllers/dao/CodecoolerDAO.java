@@ -210,27 +210,30 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     public List<Artifact> readCodecoolersArtifacts(int codecoolerId) {
         String artifactsInPossessQuery = "SELECT artifact_id FROM artifacts_in_possess WHERE codecooler_id = " + codecoolerId + ";";
         String artifactsQuery = "SELECT * FROM artifacts ";
-        List<Artifact> artifactsList;
+        List<Artifact> artifactsList = new ArrayList<>();
         ResultSet resultSetArtifactsPossessed = getResultSet(artifactsInPossessQuery);
+        if(resultSetArtifactsPossessed != null) {
+            String whereClauseIds = createWhereWithPossessedArtifacts(resultSetArtifactsPossessed);
 
-        String whereClauseIds = createWhereWithPossessedArtifacts(resultSetArtifactsPossessed);
+            artifactsQuery += whereClauseIds;
+            System.out.println(artifactsQuery);
+            ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
 
-        artifactsQuery += whereClauseIds;
+            artifactsList = createArtifactsList(resultSetArtifacts);
 
-        ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
+            System.out.println(artifactsQuery);
+            System.out.println(artifactsList.size());
+            return artifactsList;
+        } else {
+            return artifactsList;
+        }
 
-        artifactsList = createArtifactsList(resultSetArtifacts);
-
-        System.out.println(artifactsQuery);
-        System.out.println(artifactsList.size());
-        return artifactsList;
     } //korzystnaie
 
     private String createWhereWithPossessedArtifacts(ResultSet resultSetArtifactsPossessed){
         ResultSetMetaData resultSetMetaData;
         String whereClauseIds = "WHERE";
         try{
-
             resultSetMetaData = resultSetArtifactsPossessed.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtifactsPossessed.next()){
@@ -243,6 +246,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
                 }
             }
+            System.out.println(columnsNumber);
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -253,7 +257,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     private List<Artifact> createArtifactsList(ResultSet resultSetArtifacts){
         List<Artifact> artifactsList = new ArrayList<>();
         try{
-            while(resultSetArtifacts.next()){
+            while(resultSetArtifacts != null && resultSetArtifacts.next()){
                 int id = resultSetArtifacts.getInt(1);
                 String name = resultSetArtifacts.getString(2);
                 String description = resultSetArtifacts.getString(3);
