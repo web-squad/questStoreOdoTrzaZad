@@ -3,7 +3,7 @@ package models;
 import java.util.Map;
 
 public class Level extends Model{
-    private String levelId;
+    private String id;
     private String threshold;
     private String name;
     private Map<String, String > collectedData;
@@ -27,10 +27,10 @@ public class Level extends Model{
     }
 
     public String getId() {
-        return levelId;
+        return id;
     }
 
     public void setId(String id) {
-        this.levelId = id;
+        this.id = id;
     }
 }

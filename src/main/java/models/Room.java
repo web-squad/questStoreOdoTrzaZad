@@ -3,7 +3,7 @@ package models;
 import java.util.Map;
 
 public class Room extends Model{
-    private String roomId;
+    private String id;
     private String roomName;
     private String roomDescription;
     private Map<String, String > collectedData;
@@ -19,11 +19,11 @@ public class Room extends Model{
     }
 
     public String getId() {
-        return roomId;
+        return id;
     }
 
     public void setId(String id) {
-        this.roomId = id;
+        this.id = id;
     }
 
     public String getRoomName() {

@@ -40,7 +40,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
                         + "\n VALUES ('%s', '%s', %d );", mentor.getEmail(), mentor.getPassword(), 1);
         stmt.executeUpdate(sql);
         sql = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)"
-                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName());
+                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 1, Integer.parseInt(mentor.getRoom()), 0, 1, mentor.getName(), mentor.getSurname(), mentor.getNickName());
         stmt.executeUpdate(sql);
         connection.commit();
         stmt.close();
@@ -65,7 +65,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         stmt.executeUpdate(sql);
         sql = String.format("Update codecoolers"
                 + "\n SET coolcoins = %d, exp_level = %d, actual_room = %d, coolcoins_ever_earned = %d, quest_in_progress = %d, first_name = '%s', last_name = '%s', nickname ='%s' WHERE codecooler_id = %d;",
-                0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName(), Integer.parseInt(id));
+                0, 1, Integer.parseInt(mentor.getRoom()), 0, 1, mentor.getName(), mentor.getSurname(), mentor.getNickName(), Integer.parseInt(id));
         stmt.executeUpdate(sql);
         connection.commit();
         stmt.close();

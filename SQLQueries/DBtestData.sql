@@ -12,11 +12,11 @@ INSERT INTO quests (name, description, reward) VALUES ('testQuest', 'testDesc', 
 
 INSERT INTO room (room_name, room_description) VALUES ('testRoom', 'testDesc');
 
-INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 0, 1, 'test', 'test', 'test');
+INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 1, 1, 'test', 'test', 'test');
 
-INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 0, 1, 'test', 'test', 'test');
+INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 1, 1, 'test', 'test', 'test');
 
-INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 0, 1, 'test', 'test', 'test');
+INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname) VALUES (0, 1, 1, 1, 1, 'test', 'test', 'test');
 
 INSERT INTO teams (codecooler_id, team_name) VALUES (1, 'szpoki');
 
