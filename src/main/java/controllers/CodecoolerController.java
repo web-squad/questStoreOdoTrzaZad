@@ -77,7 +77,7 @@ public class CodecoolerController extends UserController{
         List<Artifact> wallet = codecoolerControllerDAO.readCodecoolersArtifacts(id);
         String walletString = "id    name    description     price\n";
         for(Artifact artifact : wallet){
-            walletString += artifact.getId() + "\t" + artifact.getName() + "\t" + artifact.getDescription() + "\t\t" + artifact.getPrice();
+            walletString += artifact.toString() + "\n";
         }
         System.out.println(walletString);
     }
