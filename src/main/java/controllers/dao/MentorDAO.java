@@ -23,11 +23,24 @@ public class MentorDAO implements MentorDAOInterface {
             stmt = connection.createStatement();
             String loginAccessQuery = String.format("INSERT INTO login_access (email, password, access_level) VALUES ('%s', '%s', %d );", cm.getEmail(), cm.getPassword(), 1);
             stmt.executeUpdate(loginAccessQuery);
-            stmt = connection.createStatement();
+//            stmt = connection.createStatement();
             String codecoolerTableQuery = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)" +
                             " VALUES ('%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s');", cm.getCoolcoins(), cm.getExpLevel(), cm.getRoom(), cm.getCoolcoinsEverEarned(), cm.getQuestInProgress(),
                     cm.getFirstName(), cm.getLastName(), cm.getNickname());
             stmt.executeUpdate(codecoolerTableQuery);
+
+//            stmt = connection.createStatement();
+            String codecoolersQuery = String.format("SELECT id FROM login_access WHERE email = '%s';", cm.getEmail());
+            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            int codecooler_id = 0;
+            while( rs.next() ) {
+                codecooler_id = rs.getInt(1);
+            }
+
+//            stmt = connection.createStatement();
+            String teamQuery = String.format("INSERT INTO teams (codecooler_id, team_name) VALUES (%d, '%s')", codecooler_id, "szpoki");
+            stmt.executeUpdate(teamQuery);
+
             view.print("Operation done successfully\n");
             connection.commit();
             stmt.close();
@@ -41,7 +54,11 @@ public class MentorDAO implements MentorDAOInterface {
         try {
             stmt = connection.createStatement();
 
-            String sql = String.format("DELETE FROM teams WHERE codecooler_id = %d;", codecoolerID);
+            String sql = String.format("DELETE FROM quest_completed WHERE codecooler_id = %d;", codecoolerID);
+            stmt.executeUpdate(sql);
+            connection.commit();
+
+            sql = String.format("DELETE FROM teams WHERE codecooler_id = %d;", codecoolerID);
             stmt.executeUpdate(sql);
             connection.commit();
 
