@@ -305,9 +305,29 @@ public class MentorDAO implements MentorDAOInterface {
         }
     }
 
+    public List<String> searchForStudent(String word) {
+        List<String> searchResult = new ArrayList<>();
+        try {
+            PreparedStatement ps = connection.prepareStatement("SELECT codecooler_id, first_name, last_name FROM codecoolers INNER JOIN login_access " +
+                    "ON codecoolers.codecooler_id = login_access.id WHERE (first_name LIKE ? AND access_level = 1) OR (last_name LIKE ? AND access_level = 1) " +
+                    "OR (nickname LIKE ? AND access_level = 1) OR (email LIKE ? AND access_level = 1);");
+            ps.setString(1, '%' + word + '%');
+            ps.setString(2, '%' + word + '%');
+            ps.setString(3, '%' + word + '%');
+            ps.setString(4, '%' + word + '%');
 
-    public MentorModel createMentor(int id) {
-        return null;
+            ResultSet rs = ps.executeQuery();
+            while ( rs.next() ) {
+                searchResult.add("ID:" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(2));
+            }
+            rs.close();
+            ps.close();
+        }catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+
+        return searchResult;
     }
-
 }
+

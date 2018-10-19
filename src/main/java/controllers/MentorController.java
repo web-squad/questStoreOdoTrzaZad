@@ -74,7 +74,7 @@ public class MentorController extends UserController{
                     "Mark quest as completed",
                     "Check codecooler wallet");
 
-            option = view.getInputInt(0, 8);
+            option = view.getInputInt(0, 9);
 
             switch (option) {
 
@@ -106,6 +106,8 @@ public class MentorController extends UserController{
                 case 8:
                     checkCodecoolerWallet();
                     break;
+                case 9:
+                    searchForCodecooler();
             }
         }
     }
@@ -209,6 +211,16 @@ public class MentorController extends UserController{
     }
 
 
+    private void searchForCodecooler() {
+        String word = view.getInputString("Who you looking for?");
+        List<String> searchResult = mentorDAO.searchForStudent(word);
+
+        for (int i = 0; i < searchResult.size(); i++) {
+            view.print(searchResult.get(i));
+        }
+    }
+
+
     private CodecoolerModel createCodecooler() {
         String firstName = view.getInputString("First name");
         String lastName = view.getInputString("Last name");
@@ -220,20 +232,12 @@ public class MentorController extends UserController{
         return cm;
     }
 
+
     private int codecoolerID() {
         view.print("\ncodecooler ID? ");
         int id = view.getInputInt();
         return id;
     }
-
-
-//    private void printCodecoolerArtifact(int codecooler_id) {
-//        List<String> artifacts = mentorDAO.possessedArtifacts(codecooler_id);
-//
-//        for (int i = 0; i < artifacts.size(); i++) {
-//            view.print(artifacts.get(i));
-//        }
-//    }
 
 
     private Artifact newArtifact() {
