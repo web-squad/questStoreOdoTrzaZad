@@ -72,7 +72,8 @@ public class MentorController extends UserController{
                     "Mark item as used",
                     "Add artifact to store",
                     "Mark quest as completed",
-                    "Check codecooler wallet");
+                    "Check codecooler wallet",
+                    "Search for student");
 
             option = view.getInputInt(0, 9);
 
@@ -216,7 +217,7 @@ public class MentorController extends UserController{
         List<String> searchResult = mentorDAO.searchForStudent(word);
 
         for (int i = 0; i < searchResult.size(); i++) {
-            view.print(searchResult.get(i));
+            view.print("\n" + searchResult.get(i));
         }
     }
 
