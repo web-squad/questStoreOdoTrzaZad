@@ -30,6 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
   line-height: 1;
+  
 }
 ol, ul {
   list-style: none;
@@ -75,10 +76,12 @@ Grid
 
   margin: 0 auto;
   width: 100%;
+  background-color: rgb(1, 119, 164);
 }
 .container {
   padding-left: 30px;
   padding-right: 30px;
+  
 }
 .col-1-3,
 .col-2-3  {
@@ -93,6 +96,11 @@ Grid
   float: left;
   width: 60%;
   height: 60%;
+}
+
+.codecool-logo{
+  width: 52vw;
+  height: 40vw;
 }
 
 /*
@@ -127,6 +135,7 @@ Rows
 .row {
   background: #fff;
   padding: 33px 0 40px 0;
+  background-color: rgb(1, 119, 164);
 }
 .row-alt {
   background: #cbe2c1;
@@ -285,6 +294,7 @@ Primary footer
   font-size: 14px;
   padding-bottom: 44px;
   padding-top: 44px;
+  background-color: rgb(1, 119, 164);
 }
 .primary-footer small {
   float: left;
@@ -475,14 +485,20 @@ textarea {
 .register-group textarea {
   height: 78px;
 }
+.label-name{
+  color: #fff;
 
+}
 img{
   max-height: 66%;
   max-width: 66%;
 }
 
 .theme{
-  font-size: 8vw;
+  font-size: 3vw;
+  text-transform: uppercase;
+  padding-left: 5vw;
+  color: #fff;
 }
 
 .modal input[type=text], input[type=password] {
@@ -520,8 +536,8 @@ img{
 /* Modal Content/Box */
 .modal-content {
   background-color: #fefefe;
-  margin: 5% auto /* 5% from the top, 15% from the bottom and centered */
-    border: 2px solid #888;
+  margin: 5% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 2px solid #888;
   width: 100%; /* Could be more or less, depending on screen size */
   height: 100%;
 }

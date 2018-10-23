@@ -32,14 +32,18 @@ header{
     position: relative;
 }
 
-header p{
+header a{
     display: inline-block;
     position: absolute;
     z-index: 2;
-    top: 5%;
+    top: 30%;
     padding-left: 2vw;
     color: #fff;
     text-transform: uppercase;
+    text-decoration: none;
+}
+header a:hover{
+    color: #fff;
 }
 .main{
     z-index: 1;
@@ -49,14 +53,29 @@ header p{
 }
 
 .bar{
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 100%;
     border-top: 0.1vw solid black;
-    border-bottom: 0.1vw solid black;
+
     background-color:rgb(40,42,41);
 }
-
+.bar img{
+    position: absolute;
+    width: 3.2vw;
+    height: 3vw;
+    left: 1%;
+    top: 10%;
+}
+.bar span{
+    position: absolute;
+    left: 5%;
+    top: 20%;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 2vw;
+}
 .primary-nav{
    
     align-self: flex-end;
@@ -71,8 +90,8 @@ header p{
     color: #fff;
 }
 .primary-nav a:hover{
-    background-color: gray;
-    color: green;
+    background-color: rgb(1, 119, 164);
+    color: #fff;
 }
 .main{
     display: flex;
@@ -80,7 +99,7 @@ header p{
     margin: 0;
     padding: 0;
     border: 0;
-
+    font-size: 1.4vw;
     
 }
 
@@ -95,8 +114,7 @@ width: 15%;
 .menu{
 
     height: 40vw;
-    padding-top: 1vw;
-    background-color: lightgray;
+    background-color: rgb(40,42,41);
 }
 .menu ul{
     
@@ -107,13 +125,16 @@ width: 15%;
 }
 
 .menu ul li{
-    padding: 1.5vw;
-    text-transform: uppercase;
+    padding: 1vw;
+    color: #fff;
 
 }
 .menu ul li:hover{
-    background-color: grey;
+    background-color: rgb(1, 119, 164);
     border-right: 0.5vw solid blue;
+    border-top: 0.2vw solid black;
+    border-bottom: 0.2vw solid black;
+    border-left: 0.5vw solid blue;
 }
 .site{
     width: 100%;
@@ -121,15 +142,63 @@ width: 15%;
 }
 
 .footer{
+    position: relative;
+    display: flex;
+    flex-direction: row;
     border: 0;
     margin: 0;
     padding: 0;
     border-style: none;
     width: 100%;
     height: 8vw;
-    background-color: grey;
+    background-color: rgb(40,42,41);
     
 }
+.footer p{
+    text-transform: uppercase;
+    color: #fff;
+    padding-top: 1.5%;
+    padding-left: 15%;
+    font-weight: bold;
+    font-size: 1.8vw;
+}
+.icon-facebook-squared, .icon-twitter-squared, .icon-linkedin-squared{
+    color: #fff;
+    position: absolute;
+    font-size: 6vw;
+}
+
+.icon-facebook-squared{
+    right: 25%;
+    padding-top: 0.5%;
+    
+}
+.icon-facebook-squared:hover{
+    color: #3b5998;
+}
+.icon-twitter-squared{
+    right: 15%;
+    padding-top: 0.5%;
+    
+}
+
+.icon-twitter-squared:hover{
+    color: #00aced;
+}
+.icon-linkedin-squared{
+    right: 5%;
+    padding-top: 0.5%;
+}
+.icon-linkedin-squared:hover{
+    color: #0077B5;
+}
+.icon-floppy, .icon-arrows-cw, .icon-pencil{
+    padding-right: 1vw;
+    font-size: 1.5vw;
+    color: #fff;
+}
+
+
 
 /*
 header table{
