@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CodecoolerController{
+public class CodecoolerController extends UserController{
     private CodecoolerModel codecoolerModel;
     private CodecoolerDAO codecoolerControllerDAO;
     private View view;
@@ -24,7 +24,7 @@ public class CodecoolerController{
     }
 
 
-    public void run() {
+    public void startUserSession() {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String answer = "";
         boolean isRunning = true;

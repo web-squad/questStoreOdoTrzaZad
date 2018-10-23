@@ -5,12 +5,13 @@ import models.*;
 import views.View;
 import java.util.List;
 
-public class MentorController extends UserController{
+public class MentorController {
 
     MentorModel mentor;
     View view;
     MentorDAO mentorDAO;
-
+}
+/*
     public MentorController(int id, MentorDAO mentorDAO) {
         this.mentorDAO = mentorDAO;
         this.mentor = mentorDAO.createMentor(id);
@@ -48,8 +49,10 @@ public class MentorController extends UserController{
                     break;
                 case 4:
                     addNewQuest();
+                    break;
                 case 5:
                     editExistingQuest();
+                    break;
             }
         }
     }
@@ -146,7 +149,7 @@ public class MentorController extends UserController{
 
     public void checkCodecoolerWallet() {
         int codecooler_id = codecoolerID();
-        view.print(mentorDAO.codecoolerCoins(codecooler_id));
+        view.print(String.valueOf(mentorDAO.codecoolerCoins(codecooler_id)));
         printCodecoolerArtifact(codecooler_id);
     }
 
@@ -232,4 +235,4 @@ public class MentorController extends UserController{
         Quest quest = new Quest(questName, questDescription, questReward);
         return quest;
     }
-}
+}/*/

@@ -8,10 +8,10 @@ public class CodecoolerModel extends User {
     private String nickname;
     private int accessLevel = 1;
     private int coolcoins;
-    private int expLevel;
-    private int room;
+    private int expLevel = 1;
+    private int room = 1;
     private int coolcoinsEverEarned;
-    private int questInProgress;
+    private int questInProgress = 1;
     private String firstName;
     private String lastName;
     private int teamID;
@@ -144,5 +144,16 @@ public class CodecoolerModel extends User {
 
     public void setTeamID(int teamID) {
         this.teamID = teamID;
+    }
+
+    @Override
+    public String toString() {
+        return "CodecoolerModel{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", coolcoins=" + coolcoins +
+                ", expLevel=" + expLevel +
+                '}';
     }
 }

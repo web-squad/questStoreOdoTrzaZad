@@ -16,10 +16,10 @@ public class MentorModel extends User {
     public MentorModel(Map<String, String> mentorData){
         email = mentorData.get("email");
         password =mentorData.get("password");
-        name = mentorData.get("name");
+        name = mentorData.get("firstName");
         surname = mentorData.get("surname");
         room = mentorData.get("room");
-        nickName = mentorData.get("nick_name");
+        nickName = mentorData.get("nickName");
         collectedData = mentorData;
     }
 

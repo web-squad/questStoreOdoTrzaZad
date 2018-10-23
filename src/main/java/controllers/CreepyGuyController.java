@@ -168,7 +168,7 @@ public class CreepyGuyController extends UserController {
         fetchMentor();
         editMentorData();
         if (mentor != null) {
-            dao.editMentor(mentor, id);
+            dao.editMentor(new MentorModel(collectedData), id);
         }
     }
 
@@ -248,7 +248,7 @@ public class CreepyGuyController extends UserController {
         editLevelData();
         if (level !=null);{
             System.out.println();
-            dao.editLevel(level, id);
+            dao.editLevel(new Level(collectedData), id);
         }
     }
 
@@ -285,7 +285,7 @@ public class CreepyGuyController extends UserController {
 
     private void printData(Map<String, String> stringDataCollection){
         for (String key : stringDataCollection.keySet()){
-            view.print(stringDataCollection.get(key) + "\n");
+            view.print(key + ": " + stringDataCollection.get(key) + "\n");
         }
     }
 
