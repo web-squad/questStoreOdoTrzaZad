@@ -17,52 +17,129 @@ body{
     font-family: 'Lato', sans-serif;
 }
 header{
+    background-image: url("/home/karol/codecool/SQL/I Teamwork III module/questStoreOdoTrzaZad/HTML/assets/images/indexHeader.jpg");
+    background: cover;
+    background-position: 50% 44%;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 10%;
-    max-height: 10%;
+    height: 10.5vw;
     font-weight: bold;
     font-size: 2.5vw;
     padding: 0.5vw;
     position: relative;
 }
-.codecool-logo{
-    z-index: 1;
-    left: 0%;
-    width: 35vw;
-    height: 18vw;
-}
+
 header p{
     display: inline-block;
     position: absolute;
+    z-index: 2;
     top: 5%;
-    left: 40%;
+    padding-left: 2vw;
+    color: #fff;
     text-transform: uppercase;
 }
 .main{
-    position: absolute;
-
     z-index: 1;
     width: 100%;
-    height: 50vw;
+
     background-color: #fff;
-    top: 20%;
 }
 
-.blue{
-    color:rgb(83, 183, 235);
-
+.bar{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    border-top: 0.1vw solid black;
+    border-bottom: 0.1vw solid black;
+    background-color:rgb(40,42,41);
 }
 
-.red{
-    color: rgb(232, 28, 61);
+.primary-nav{
+   
+    align-self: flex-end;
+    padding-right: 0.5vw;
 }
-header nav {
-align-self: flex-end;
-}
-header nav a{
+.primary-nav a{
     text-transform: uppercase;
     font-size: 1.7vw;
-   
+    display: inline-block;
+    text-align: center;
+    padding: 0.8vw;
+    color: #fff;
 }
+.primary-nav a:hover{
+    background-color: gray;
+    color: green;
+}
+.main{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.col-1-5{
+width: 15%;
+}
+.col-4-5{
+    width: 85%;
+}
+
+.menu{
+
+    height: 40vw;
+    padding-top: 1vw;
+    background-color: lightgray;
+}
+.menu ul{
+    
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.menu ul li{
+    padding: 1.5vw;
+    text-transform: uppercase;
+
+}
+.menu ul li:hover{
+    background-color: grey;
+    border-right: 0.5vw solid blue;
+}
+.site{
+    width: 100%;
+    height: 40vw;
+}
+
+.footer{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 8vw;
+    background-color: grey;
+    
+}
+
+/*
+header table{
+    border-spacing: 2vw 0.5vw;
+    border: 3px solid black;
+    font-size: 1.7vw;
+}
+header table tr{
+border: 1px solid black;
+}
+header table td{
+    background-color: black;
+}
+
+td:hover{
+    background-color: gray;
+}*/
