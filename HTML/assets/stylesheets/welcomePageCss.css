@@ -60,3 +60,15 @@ table{
     margin-top: 5vw;
 }
 
+.separator {
+    display: flex;
+    align-items: center;
+}
+
+.main {
+    z-index: 1;
+    width: 20%;
+
+    background-color: #fff;
+}
+
