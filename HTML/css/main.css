@@ -8,6 +8,9 @@ body{
 *{
     box-sizing: inherit;
 }
+a:hover{
+    cursor: pointer;
+}
 .container{
     display: flex;
     flex-direction: column;
@@ -60,6 +63,7 @@ header a:hover{
     border-top: 0.1vw solid black;
 
     background-color:rgb(40,42,41);
+   
 }
 .bar img{
     position: absolute;
@@ -79,7 +83,7 @@ header a:hover{
 .primary-nav{
    
     align-self: flex-end;
-    padding-right: 0.5vw;
+    padding-right: 3%;
 }
 .primary-nav a{
     text-transform: uppercase;
@@ -92,6 +96,7 @@ header a:hover{
 .primary-nav a:hover{
     background-color: rgb(1, 119, 164);
     color: #fff;
+    transition: 0.4s;
 }
 .main{
     display: flex;
@@ -104,15 +109,18 @@ header a:hover{
 }
 
 .col-1-5{
-width: 15%;
+    width: 15%;
 }
 .col-4-5{
-    width: 85%;
+    width: 82%;
     height: 40vw;
 }
-
+.right-side{
+    width: 3%;
+    background-color: rgb(40,42,41);
+}
 .menu{
-
+    
     height: 40vw;
     background-color: rgb(40,42,41);
 }
@@ -125,16 +133,23 @@ width: 15%;
 }
 
 .menu ul li{
-    padding: 1vw;
+    padding: 0.94vw;
     color: #fff;
+    border-right: 0.5vw solid transparent;
+    border-top: 0.2vw solid transparent;
+    border-bottom: 0.2vw solid transparent;
+    border-left: 0.5vw solid transparent;
 
 }
+
 .menu ul li:hover{
     background-color: rgb(1, 119, 164);
     border-right: 0.5vw solid blue;
     border-top: 0.2vw solid black;
     border-bottom: 0.2vw solid black;
     border-left: 0.5vw solid blue;
+    transition: 0.3s;
+    
 }
 .site{
     width: 100%;
@@ -151,7 +166,8 @@ width: 15%;
     border-style: none;
     width: 100%;
     height: 8vw;
-    background-color: rgb(40,42,41);
+    background-color: rgb(40,42,31);
+    border-top: 0.2vw solid black;
     
 }
 .footer p{
@@ -166,6 +182,7 @@ width: 15%;
     color: #fff;
     position: absolute;
     font-size: 6vw;
+    text-decoration: none;
 }
 
 .icon-facebook-squared{
@@ -175,6 +192,8 @@ width: 15%;
 }
 .icon-facebook-squared:hover{
     color: #3b5998;
+    transition: 0.4s;
+
 }
 .icon-twitter-squared{
     right: 15%;
@@ -184,6 +203,7 @@ width: 15%;
 
 .icon-twitter-squared:hover{
     color: #00aced;
+    transition: 0.4s;
 }
 .icon-linkedin-squared{
     right: 5%;
@@ -191,6 +211,7 @@ width: 15%;
 }
 .icon-linkedin-squared:hover{
     color: #0077B5;
+    transition: 0.4s;
 }
 .icon-floppy, .icon-arrows-cw, .icon-pencil{
     padding-right: 1vw;
