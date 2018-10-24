@@ -1,92 +1,43 @@
-var handlerClicked = false;
-var pageSwitchedAtLastOnce = false;
+var lastPage = "mentorWelcomePage.html";
 
-function addListener(){
-  addClickListeners();
-  
-  addMouseOverListeners();
-  
-  addMouseOutListeners();
-}
+var codecoolerNodes = document.getElementById("codecoolerOptionsList").childNodes;
+for(let i = 0; i < codecoolerNodes.length; i++) {
+    codecoolerNodes[i].onmouseout = function() { 
+    document.getElementById("inner").src = lastPage;
+    }
+    codecoolerNodes[i].onmouseover = function() {
+        document.getElementById("inner").src = codecoolerNodes[i].getAttribute("data-source"); 
+    }
+    codecoolerNodes[i].onclick = function() {
+        document.getElementById("inner").src = codecoolerNodes[i].getAttribute("data-source");
+        lastPage = codecoolerNodes[i].getAttribute("data-source");
+    }
+};
 
-function addClickListeners(){
-  document.getElementById("mentorHandler").addEventListener("click", switchToMentor);
+var shopNodes = document.getElementById("shopOptionsList").childNodes;
+for(let j = 0; shopNodes.length; j++) {
+    shopNodes[j].onmouseout = function() {
+        document.getElementById("inner").src = lastPage;
+    }
+    shopNodes[j].onmouseover = function() {
+        document.getElementById("inner").src = shopNodes[j].getAttribute("data-source");
+    }
+    shopNodes[j].onclick = function() {
+        document.getElementById("inner").src = shopNodes[j].getAttribute("data-source");
+        lastPage = shopNodes[i].getAttribute("data-source");
+    }
+};
 
-  document.getElementById("classHandler").addEventListener("click", switchToClass);
-
-  document.getElementById("expHandler").addEventListener("click", switchToExp);
-}
-
-function addMouseOverListeners(){
-  document.getElementById("mentorHandler").addEventListener("mouseover", showMentor);
-
-  document.getElementById("classHandler").addEventListener("mouseover", showClass);
-
-  document.getElementById("expHandler").addEventListener("mouseover", showExp);
-}
-
-function addMouseOutListeners(){
-  document.getElementById("mentorHandler").addEventListener("mouseout", mouseOutHandling);
-
-  document.getElementById("classHandler").addEventListener("mouseout", mouseOutHandling);
-
-  document.getElementById("expHandler").addEventListener("mouseout", mouseOutHandling);
-}
-
-function switchToMentor(){
-  document.getElementById("inner").src = "mentorHandler.html";
-  if(!handlerClicked){
-  handlerClicked = true;  
-  }
-  else{
-    handlerClicked = false;
-  }
-  pageSwitchedAtLastOnce = true;
-}
-
-function switchToClass(){
-  document.getElementById("inner").src = "classHandler.html";
-  if(!handlerClicked){
-    handlerClicked = true;  
-  }
-  else{
-    handlerClicked = false;
-  }
-  pageSwitchedAtLastOnce = true;
-}
-
-function switchToExp(){
-  document.getElementById("inner").src = "expHandler.html";
-  if(!handlerClicked){
-    handlerClicked = true;  
-  }
-  else{
-    handlerClicked = false;
-  }
-  pageSwitchedAtLastOnce = true;
-}
-
-function showMentor(){
-  if (!window.handlerClicked){
-  document.getElementById("inner").src = "mentorHandler.html";
-  }
-}
-
-function showClass(){
-  if (!window.handlerClicked){
-    document.getElementById("inner").src = "classHandler.html";
-  }
-}
-
-function showExp(){
-  if (!window.handlerClicked){
-    document.getElementById("inner").src = "expHandler.html";
-  }
-}
-
-function mouseOutHandling(){
-  if (!handlerClicked && !pageSwitchedAtLastOnce){
-    document.getElementById("inner").src = "greetAdmin.html";
-  }
-}
-
+var questNodes = document.getElementById("questOptionsList").childNodes;
+for(let k = 0; questNodes.length; k++) {
+    questNodes[k].onmouseout = function() {
+        document.getElementById("inner").src = lastPage;
+    }
+    questNodes[k].onmouseover = function() {
+        document.getElementById("inner").src = questNodes[k].getAttribute("data-source");
+    }
+    questNodes[k].onclick = function() {
+        document.getElementById("inner").src = questNodes[k].getAttribute("data-source");
+        lastPage = questNodes[i].getAttribute("data-source");
+    }
+};

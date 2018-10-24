@@ -2,12 +2,11 @@
 <html>
     <head>
         <title>Codecool Quest Store</title>
-        <link rel = "stylesheet" type="text/css" href = "css/main.css">
-        <link rel = "stylesheet" type = "text/css" href = "assets/stylesheets/css/fontello.css">
+        <link rel = "stylesheet" type="text/css" href = "../css/main.css">
+        <link rel = "stylesheet" type = "text/css" href = "../assets/stylesheets/css/fontello.css">
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
         <meta charset = "UTF-8">
-        <link rel="icon" href="assets/images/faviconCodecool.png">
-        <script src="../assets/scripts/MentorMenuScript.js"></script>
+        <link rel="icon" href="../assets/images/faviconCodecool.png">
     </head>
 
     <body>
@@ -31,20 +30,37 @@
 
             <div class = "main">
 
-                <nav class = "menu col-1-5"><ul>
-                    <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li class = "last-one"><i class="icon-pencil"></i>Wypisz</li></a>
-                </ul></nav>
+                    <nav class = "menu col-1-5"><ul>
+                            <li id="codecoolerHandler" class="dropdown">Codecoolers
+                                <div class="dropdown-content">
+                                <ul id="codecoolerOptionsList">
+                                    <li id="codecoolerAdder" data-source="mentorAddStudent.html">Add Codecooler</li>
+                                    <li id="codecoolerEditor" data-source="mentorEditStudent.html">Edit Codecooler</li>
+                                    <li id="codecoolerDeleter" data-source="mentorRemoveStudent.html">Delete Codecooler</li>
+                                    <li id="codecoolerMarkItem" data-source="mentorMarkItemAsUsed.html">Mark Item as Used</li>
+                                    <li id="codecoolerQuest" data-source="mentorMarkQuestAsCompleted.html">Mark Quest as completed</li>
+                                    <li id="codecoolerWallet" data-source="mentorCheckWallet.html">Check codecooler wallet</li>
+                              </ul>
+                              </div></li>
+                            <li id="shopHandler" class="dropdown">Item shop
+                                <div class="dropdown-content">
+                                <ul id="shopOptionsList">
+                                    <li id="showShop" data-source="mentorShop.html">Show shop</li>
+                                    <li id="editItem" data-source="mentorEditArtifact.html">Edit item</li>
+                                    <li id="addItem" data-source="mentorAddArtifact.html">Add new item</li>
+                                </ul>
+                            </div></li>
+                            <li id="questHandler" class="dropdown">Quests
+                                <div class="dropdown-content">
+                                <ul id="questOptionsList">
+                                    <li id="showQuests" data-source="mentorQuest.html">Show quests</li>
+                                    <li id="editQuest" data-source="mentorEditQuest.html">Edit quest</li>
+                                    <li id="addQuest" data-source="mentorAddQuest.html">Add new quest</li>
+                                </ul>
+                            </div></li>
+                            </ul></nav>
 
-            <div class = "col-4-5"><iframe class = "site" src="codecoolerMain.html" frameBorder = "0"></iframe></div>
+            <div class = "col-4-5"><iframe class = "site" src="mentorWelcomePage.html" id="inner"></iframe></div>
             <div class = "right-side-style"></div>
         
         </div>
@@ -57,6 +73,6 @@
         </span>
         </footer>
          </div>
-         
+    <script src="../assets/scripts/MentorMenuScript.js"></script> 
     </body>
     </html>
