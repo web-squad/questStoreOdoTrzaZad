@@ -8,6 +8,9 @@ body{
 *{
     box-sizing: inherit;
 }
+a:hover{
+    cursor: pointer;
+}
 .container{
     display: flex;
     flex-direction: column;
@@ -80,7 +83,7 @@ header a:hover{
 .primary-nav{
    
     align-self: flex-end;
-    padding-right: 0.5vw;
+    padding-right: 3%;
 }
 .primary-nav a{
     text-transform: uppercase;
@@ -106,13 +109,16 @@ header a:hover{
 }
 
 .col-1-5{
-width: 15%;
+    width: 15%;
 }
 .col-4-5{
-    width: 85%;
+    width: 82%;
     height: 40vw;
 }
-
+.right-side{
+    width: 3%;
+    background-color: rgb(40,42,41);
+}
 .menu{
     
     height: 40vw;
