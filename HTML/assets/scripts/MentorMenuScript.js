@@ -12,10 +12,10 @@ for(let i = 0; i < codecoolerNodes.length; i++) {
         document.getElementById("inner").src = codecoolerNodes[i].getAttribute("data-source");
         lastPage = codecoolerNodes[i].getAttribute("data-source");
     }
-};
+}
 
 var shopNodes = document.getElementById("shopOptionsList").childNodes;
-for(let j = 0; shopNodes.length; j++) {
+for(let j = 0; j < shopNodes.length; j++) {
     shopNodes[j].onmouseout = function() {
         document.getElementById("inner").src = lastPage;
     }
@@ -26,10 +26,10 @@ for(let j = 0; shopNodes.length; j++) {
         document.getElementById("inner").src = shopNodes[j].getAttribute("data-source");
         lastPage = shopNodes[i].getAttribute("data-source");
     }
-};
+}
 
 var questNodes = document.getElementById("questOptionsList").childNodes;
-for(let k = 0; questNodes.length; k++) {
+for(let k = 0; k < questNodes.length; k++) {
     questNodes[k].onmouseout = function() {
         document.getElementById("inner").src = lastPage;
     }
@@ -38,6 +38,6 @@ for(let k = 0; questNodes.length; k++) {
     }
     questNodes[k].onclick = function() {
         document.getElementById("inner").src = questNodes[k].getAttribute("data-source");
-        lastPage = questNodes[i].getAttribute("data-source");
+        lastPage = questNodes[k].getAttribute("data-source");
     }
-};
+}

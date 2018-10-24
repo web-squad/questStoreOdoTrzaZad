@@ -1,25 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/mentor.css">
+        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
         <meta charset = "UTF-8">
     </head>
     <body>
+            <div class="container">
+            <header>
+            <h1>Here you can add new codecooler:</h1>
+            </header>
+            </div>
         <form>
-            <p class="form-description">Here you can add new codecooler:</p><br>
-
-            First name:<br>
-            <input class="input" type="text" name="name"><br>
-            Surname:<br>
-            <input class="input" type="text" name="lastName"><br>
-            Nickname:<br>
-            <input class="input" type"text" name="nickname"><br>
-            Email:<br>
-            <input class="input" type"text" name="email"><br>
-            Password:<br>
-            <input class="input" type"password" name="password"><br>
-            <input type="submit" value="Submit">
+            <div class="column">
+                <fieldset class="first-table menu">
+                    <ul>
+                        <li><label>
+                            First name:
+                            <input class="input" type="text" name="name">
+                        </label></li>
+                        <li><label>
+                            Surname:
+                            <input class="input" type="text" name="lastName">
+                        </label></li>
+                        <li><label>
+                            Nickname:
+                            <input class="input" type"text" name="nickname">
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu">
+                    <ul>
+                        <li><label>
+                            Email:
+                            <input class="input" type"text" name="email">
+                        </label></li>
+                        <li><label>
+                            Password:
+                            <input class="input" type"password" name="password">
+                        </label></li>
+                    </ul>
+                </fieldset>
+            </div>
         </form>
-        
     </body>
 </html>

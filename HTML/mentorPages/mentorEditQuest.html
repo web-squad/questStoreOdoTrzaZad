@@ -1,22 +1,47 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/mentor.css">
+        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
         <meta charset = "UTF-8">
     </head>
     <body>
-        <form>
-                <p class="form-description">Edit quest:<br>
-    
+            <div class="container">
+            <header>
+            <h1>Edit quest:</h1>
+            </header>
+            
+            <div class="search-engine">
                 Quest id:<br>
                 <input class="input" type"text" name="id"><br>
-                New quest name:<br>
-                <input class="input" type"text" name="questName"><br>
-                New quest description:<br>
-                <input class="input" type"text" name="questDesc"><br>
-                New quest reward:<br>
-                <input class="input" type"text" name="questReward"><br>
-                <input type="submit" value="Submit">
-            </form>
+            </div>
+        <form>
+            <div class="column">
+                <fieldset class="first-table menu">
+                    <ul>
+                        <li><label>
+                            New quest name:
+                            <input class="input" type"text" name="questName">
+                        </label></li>
+                        <li><label>
+                            New quest description:
+                            <input class="input" type"text" name="questDesc">
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu">
+                    <ul>
+                        <li><label>
+                            New quest reward:
+                            <input class="input" type"text" name="questReward">
+                        </label></li>
+                        <li><label>
+                            New quest image:
+                            <input class="input" type"text" name="questURL">
+                        </label></li>
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
     </body>
 </html>
