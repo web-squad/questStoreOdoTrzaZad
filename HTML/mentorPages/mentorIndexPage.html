@@ -24,12 +24,6 @@
                  <nav class = "primary-nav">
                         <a onclick="changeToWelcomePage()">My account</a><!--
                         --><a>Log out</a>
-                        
-                        <script>function changeToWelcomePage() {
-                            document.getElementById("inner").src = "mentorWelcomePage.html"
-                        }
-                        </script>
-                        
                      </nav>
                 </section>
 
@@ -78,6 +72,10 @@
         </span>
         </footer>
          </div>
-    <script src="../assets/scripts/MentorMenuScript.js"></script> 
+    <script src="../assets/scripts/MentorMenuScript.js"></script>
+    <script>function changeToWelcomePage() {
+        document.getElementById("inner").src = "mentorWelcomePage.html"
+    }
+    </script> 
     </body>
     </html>
