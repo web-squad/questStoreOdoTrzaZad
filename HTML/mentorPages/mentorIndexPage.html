@@ -22,9 +22,8 @@
                  --><img src = "assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
-                        <a>My account</a><!--
+                        <a onclick="changeToWelcomePage()">My account</a><!--
                         --><a>Log out</a>
-                        
                      </nav>
                 </section>
 
@@ -73,6 +72,10 @@
         </span>
         </footer>
          </div>
-    <script src="../assets/scripts/MentorMenuScript.js"></script> 
+    <script src="../assets/scripts/MentorMenuScript.js"></script>
+    <script>function changeToWelcomePage() {
+        document.getElementById("inner").src = "mentorWelcomePage.html"
+    }
+    </script> 
     </body>
     </html>
