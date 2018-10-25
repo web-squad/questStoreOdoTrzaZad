@@ -22,8 +22,13 @@
                  --><img src = "assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
-                        <a>My account</a><!--
+                        <a onclick="changeToWelcomePage()">My account</a><!--
                         --><a>Log out</a>
+                        
+                        <script>function changeToWelcomePage() {
+                            document.getElementById("inner").src = "mentorWelcomePage.html"
+                        }
+                        </script>
                         
                      </nav>
                 </section>
