@@ -1,26 +1,34 @@
 package controllers.dao;
 
 import models.CodecoolerModel;
-import models.Artifact;
 
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.List;
 
 public class CodecoolerDAO implements CodecoolerDAOInterface {
     private Connection connection;
     private Statement statement;
 
+<<<<<<< HEAD
+    CodecoolerDAO(Connection connection) throws SQLException {
+=======
     public CodecoolerDAO(Connection connection){
+>>>>>>> dev
         this.connection = connection;
-        getStatement();
+        statement = connection.createStatement();
     }
 
     @Override
     public int readCoins(int codecoolerId) {
+<<<<<<< HEAD
+        String query = "SELECT coolcoins FROM codecoolers WHERE id = " + codecoolerId + ";";
+=======
 
         String query = "SELECT coolcoins FROM codecoolers WHERE codecooler_id = " + codecoolerId + ";";
+>>>>>>> dev
         ResultSet resultSet = getResultSet(query);
         int coins = 0;
         try{
@@ -35,19 +43,47 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
     public CodecoolerModel getCodecoolerModel(int codecoolerId){
+<<<<<<< HEAD
+        String codecoolerTableQuery = "SELECT * FROM Codecoolers WHERE codecooler_id = " + codecoolerId + ";";
+        String teamsTableQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + codecoolerId + ";";
+        String loginAccesQuery = "SELECT email FROM LoginAccess WHERE id = " + codecoolerId + ";";
+        ResultSet resultSetCodecooler = null;
+        ResultSet resultSetTeams = null;
+        ResultSet resultSetLogin = null;
+=======
         String codecoolerModelQuery = String.format("SELECT codecoolers.*, teams.id, login_access.email, login_access.password FROM codecoolers INNER JOIN" +
                 " teams ON codecoolers.codecooler_id = teams.codecooler_id INNER JOIN login_access ON codecoolers.codecooler_id = login_access.id WHERE" +
                 " codecoolers.codecooler_id = %d;", codecoolerId);
         ResultSet resultSetModel = null;
+>>>>>>> dev
         CodecoolerModel codecoolerModel = null;
 
         try{
-            resultSetModel = statement.executeQuery(codecoolerModelQuery);
+            resultSetCodecooler = statement.executeQuery(codecoolerTableQuery);
+            resultSetTeams = statement.executeQuery(teamsTableQuery);
+            resultSetLogin = statement.executeQuery(loginAccesQuery);
         }catch(SQLException e){
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.out.println("Couldn't find selected query");
         }
         try{
+<<<<<<< HEAD
+            int coolcoins = resultSetCodecooler.getInt(2);
+            int expLevel = resultSetCodecooler.getInt(3);//robocza nazwa
+            String room = resultSetCodecooler.getString(4);
+            int coolCoinsEverEarned = resultSetCodecooler.getInt(5);
+            String questInProgress = resultSetCodecooler.getString(6);//robocza nazwa
+            String first_name = resultSetCodecooler.getString(7);
+            String second_name = resultSetCodecooler.getString(8);
+            String nickName = resultSetCodecooler.getString(9);
+            String email = resultSetLogin.getString(1);
+            String teamID = resultSetTeams.getString(1);
+//            codecoolerModel = new CodecoolerModel(codecoolerId, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, first_name, second_name, nickName, email,teamID); TWOJE AKTUALNE, ZABITE BO BLOKUJE URUCHOMIENIE APLIKACJI
+//            codecoolerModel = new CodecoolerModel(codecoolerId, first_name, second_name, email, nickName, password,
+//                    1, coolcoins, expLevel, room, coolCoinsEverEarned, questInProgress, teamID)  uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+
+
+=======
             while(resultSetModel.next()){
                 int coolcoins = resultSetModel.getInt("coolcoins");
                 int expLevel = resultSetModel.getInt("exp_level");//robocza nazwa
@@ -67,6 +103,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
 
             //uporządkowane, z passwordem, chcemy password w sumie tutaj trzymać czy nie? 1 = access level
+>>>>>>> dev
 
         }catch(SQLException e){
             e.printStackTrace();
@@ -76,137 +113,57 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     @Override
     public int checkCoinsEverOwned(int id) {
-        String coinsEverOwnedQuery = "SELECT coolcoins_ever_earned FROM Codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetCoins = getResultSet(coinsEverOwnedQuery);
-        int coins  = 0;
-        try{
-            coins = resultSetCoins.getInt(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return coins;
+        return 0;
     } //korzystanie
 
     @Override
-    public int checkQuestInProgress(int id) {
-        String questInProgressQuery = "SELECT quest_in_progress FROM Codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetQuest = getResultSet(questInProgressQuery);
-        int questId = 0;
-        try{
-            questId = resultSetQuest.getInt(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return questId;
+    public String checkQuestInProgress(int id) {
+        return null;
     } //korzystanie
 
     @Override
-    public int readCodecoolerClass(int id) {
-        String codecoolerClassQuery = "SELECT room FROM Codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetClass = getResultSet(codecoolerClassQuery);
-        int classId = 0;
-        try{
-            classId = resultSetClass.getInt(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return classId;
+    public String readCodecoolerClass(int id) {
+        return null;
     }
 
     @Override
     public String readTeamName(int id) {
-        String teamNameQuery = "SELECT team_name FROM Teams WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetTeamName = getResultSet(teamNameQuery);
-        String teamName = "";
-        try{
-            teamName = resultSetTeamName.getString(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return teamName;
+        return null;
     } //korzystanie
 
     @Override
     public String getNickName(int id) {
-        String nickNameQuery = "SELECT nickname FROM codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetNickName = getResultSet(nickNameQuery);
-        String nickName = "";
-        try{
-            nickName = resultSetNickName.getString(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return nickName;
+        return null;
     }
 
     @Override
     public String getFirstName(int id) {
-        String firstNameQuery = "SELECT name FROM codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetName = getResultSet(firstNameQuery);
-        String firstName = "";
-        try{
-            firstName = resultSetName.getString(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return firstName;
+        return null;
     }
 
     @Override
     public String getSecondName(int id) {
-        String secondNameQuery = "SELECT last_name FROM codecoolers WHERE codecooler_id = " + id + ";";
-        ResultSet resultSetSecondName = getResultSet(secondNameQuery);
-        String secondName = "";
-        try{
-            secondName = resultSetSecondName.getString(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return secondName;
+        return null;
     }
 
     @Override
     public String getEmail(int id) {
-        String emailQuery = "SELECT email FROM LoginAccess WHERE id = " + id + ";";
-        ResultSet resultSetEmail = getResultSet(emailQuery);
-        String email = "";
-        try{
-            email = resultSetEmail.getString(1);
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        return email;
+        return null;
     } //korzystanie
 
     @Override
-    public String readArtifacts() {
-        String artifactsQuery = "SELECT * FROM Artifacts";
-        ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
-        String artifacts = "";
-        ResultSetMetaData resultSetMetaData;
-        try{
-            resultSetMetaData = resultSetArtefacts.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
-            for(int i = 1; i <= columnsNumber; i++){
-                artifacts = artifacts + resultSetMetaData.getColumnName(i) + " ";
-            }
-            artifacts = artifacts + "\n";
-            while(resultSetArtefacts.next()){
-                for(int i = 1; i <= columnsNumber; i++){
-                    if(i > 1) artifacts = artifacts + ", ";
-                    artifacts = artifacts + resultSetArtefacts.getString(i);
-                }
-                artifacts = artifacts + "\n";
-            }
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-
-        return artifacts;
+    public String readArtefacts() {
+        return null;
     } //korzystanie
 
     @Override
+<<<<<<< HEAD
+    public String readEmailsCoolcoinsAndArtefacts(int codecoolerId) {
+
+        return null;
+    } //korzystnaie
+
+=======
     public List<Artifact> readCodecoolersArtifacts(int codecoolerId) {
         String artifactsInPossessQuery = "SELECT artifact_id FROM artifacts_in_possess WHERE codecooler_id = " + codecoolerId + ";";
         String artifactsQuery = "SELECT * FROM artifacts ";
@@ -271,15 +228,20 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     }
 
 
+>>>>>>> dev
     @Override
-    public int getPriceOfArtifact(int artifactId) {
-        String artifactsTableQuery = "SELECT price FROM Artifacts WHERE artifact_id = " + artifactId + ";";
-        ResultSet resultSetArtifacts = getResultSet(artifactsTableQuery);
+    public int getPriceOfArtefact(int artefactId) {
+        String artefactsTableQuery = "SELECT price FROM Artifacts WHERE artifact_id = " + artefactId + ";";
+        ResultSet resultSetArtefacts = getResultSet(artefactsTableQuery);
         int price = 0;
         try{
+<<<<<<< HEAD
+            price = resultSetArtefacts.getInt(1);
+=======
             while (resultSetArtifacts.next()) {
                 price = resultSetArtifacts.getInt(1);
             }
+>>>>>>> dev
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -289,18 +251,36 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     } //musthave
 
     @Override
+<<<<<<< HEAD
+    public void addNewPossesion(int codecoolerId, int artefactId) { //musthave
+        String addPossesionQuery = "INSERT INTO ArtifactsInPossess (artifact_id, codecooler_id VALUES (\"" + artefactId +"\", \"" + codecoolerId +"\")";
+        try{
+            statement.executeQuery(addPossesionQuery);
+=======
     public void addNewPossesion(int codecoolerId, int artifactId) { //musthave
         String addPossesionQuery = String.format("INSERT INTO artifacts_in_possess (artifact_id, codecooler_id) VALUES (%d, %d)", artifactId, codecoolerId );
         try{
             statement.executeUpdate(addPossesionQuery);
             connection.commit();
+>>>>>>> dev
         }catch(SQLException e){
             e.printStackTrace();
         }
-
     }
 
     @Override
+<<<<<<< HEAD
+    public ArrayList<Integer> readTeamMembersId(int artefactId) {
+        return null;
+    } //musthave
+
+    @Override
+    public void subtractCodecoolersCoolcoins(int codecoolerId, int artefactPrice) {
+        int coins = readCoins(codecoolerId) - artefactPrice;
+        String updateCoinsQuery = "UPDATE Codecoolers SET coolcoins = " + coins + ";";
+        try{
+            statement.executeQuery(updateCoinsQuery);
+=======
     public List<Integer> readTeamMembersId(int codecooler_id) {
         List<Integer> teamMembersId = new ArrayList<>();
         String teamNameQuery = "SELECT team_name FROM teams WHERE codecooler_id = " + codecooler_id + ";";
@@ -339,6 +319,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         try{
             statement.executeUpdate(updateCoinsQuery);
             connection.commit();
+>>>>>>> dev
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -346,6 +327,8 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     }
 
+<<<<<<< HEAD
+=======
     public void editCodecoolerTeam(int id, String teamName){
         String editTeamQuery = "UPDATE teams SET team_name = '" + teamName + "' WHERE codecooler_id = " + id + ";";
         try{
@@ -368,6 +351,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
     }
 
+>>>>>>> dev
     private ResultSet getResultSet(String query){
         ResultSet resultSet = null;
         try{
@@ -377,6 +361,8 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
         return resultSet;
     }
+<<<<<<< HEAD
+=======
 
     private void getStatement(){
         try{
@@ -396,4 +382,5 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
+>>>>>>> dev
 }

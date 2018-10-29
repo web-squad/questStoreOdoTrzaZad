@@ -32,6 +32,15 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     }
 
     private void addMentorRecord(MentorModel mentor) throws SQLException, NumberFormatException{
+<<<<<<< HEAD
+        stmt = connection.createStatement();
+        String sql = String.format("INSERT INTO login_access (email, password, access_level)"
+                        + "\n VALUES ('%s', '%s', %d );", mentor.getEmail(), mentor.getPassword(), 1);
+        stmt.executeUpdate(sql);
+        sql = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)"
+                + "\n VALUES (%d, %d, %d, %d, %d, '%s', '%s', '%s');", 0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName());
+        stmt.executeUpdate(sql);
+=======
         ps = connection.prepareStatement("INSERT INTO login_access (email, password, access_level)"
                         + "\n VALUES (?, ?, ?);");
         ps.setString(1, mentor.getEmail());
@@ -50,6 +59,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.setString(7, mentor.getSurname());
         ps.setString(8, mentor.getNickName());
         ps.executeUpdate();
+>>>>>>> dev
         connection.commit();
         ps.close();
     }
@@ -65,6 +75,18 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     }
 
     private void mentorUpdateProcessing(MentorModel mentor, String id)throws SQLException{
+<<<<<<< HEAD
+        stmt = connection.createStatement();
+        String sql = String.format("Update login_access"
+                        + "\n SET email = '%s', password = '%s'\n" +
+                        " WHERE id = %d;",
+                mentor.getEmail(), mentor.getPassword(), Integer.parseInt(id));
+        stmt.executeUpdate(sql);
+        sql = String.format("Update codecoolers"
+                + "\n SET coolcoins = %d, exp_level = %d, actual_room = %d, coolcoins_ever_earned = %d, quest_in_progress = %d, first_name = '%s', last_name = '%s', nickname ='%s' WHERE codecooler_id = %d;",
+                0, 1, Integer.parseInt(mentor.getRoom()), 0, 0, mentor.getName(), mentor.getSurname(), mentor.getNickName(), Integer.parseInt(id));
+        stmt.executeUpdate(sql);
+=======
         ps = connection.prepareStatement("Update login_access SET email = ?, password = ? WHERE id = ?;");
         ps.setString(1, mentor.getEmail());
         ps.setString(2, mentor.getPassword());
@@ -83,6 +105,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.setString(8, mentor.getNickName());
         ps.setInt(9, Integer.parseInt(id));
         ps.executeUpdate();
+>>>>>>> dev
         connection.commit();
         ps.close();
     }
@@ -128,11 +151,19 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     private void fetchMentor(String id) throws Exception{
         mentorData = new HashMap<>();
+<<<<<<< HEAD
+        stmt = connection.createStatement();
+        String sql = String.format("SELECT login_access.email, codecoolers.first_name, codecoolers.nickname, " +
+                "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = %d;", Integer.parseInt(id));
+        ResultSet rs = stmt.executeQuery(sql);
+=======
         ps = connection.prepareStatement("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
                 "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
                 " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = ?;");
         ps.setInt(1, Integer.parseInt(id));
         ResultSet rs = ps.executeQuery();
+>>>>>>> dev
         while ( rs.next() ) {
             mentorData.put("firstName", rs.getString("first_name"));
             mentorData.put("surname", rs.getString("last_name"));

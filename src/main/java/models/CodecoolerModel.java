@@ -14,7 +14,7 @@ public class CodecoolerModel extends User {
     private int questInProgress = 1;
     private String firstName;
     private String lastName;
-    private int teamID;
+    private int teamID = 1;
 
 
     public CodecoolerModel(String firstName, String lastName, String email, String nickname, String password) {
