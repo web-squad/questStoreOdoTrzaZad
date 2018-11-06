@@ -6,6 +6,8 @@ body{
     width: 100%;
     height: auto;
     font-family: 'Lato', sans-serif;
+    
+    
 }
 
 .container{
@@ -14,5 +16,6 @@ body{
     justify-content: space-between;
     width: 100%;
     font-family: 'Lato', sans-serif;
+    color: rgb(0,0,0);
 }
 

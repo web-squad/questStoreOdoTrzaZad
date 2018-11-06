@@ -5,13 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Made with Thimble</title>
     <link href = "../assets/stylesheets/internalPage.css" rel = "stylesheet">
+    <link href = "../assets/stylesheets/user.css" rel = "stylesheet">
   </head>
   <body>
     <section class = "container">
+        <div class = "coin-picker">
+            <img src = "../assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">Notarian</span>
+        </div>
       <header>
         <h1>Adding</h1>
         <h3>New Class</h3>
       </header>
+      <div class = "main">
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
           <fieldset class="first-table menu">
@@ -24,9 +30,7 @@
             </ul>
           </fieldset>
           <!--
---><div class = "separator">
-          <input class="btn" id="submit" type="submit" name="submit" value="Submit">
-          </div><!--
+-->
 --><div class = "column">
 
           <fieldset class="second-table menu">
@@ -39,6 +43,7 @@
           </fieldset>
           </div></div>
       </form>
+    </div>
     </section>
   </body>
 </html>

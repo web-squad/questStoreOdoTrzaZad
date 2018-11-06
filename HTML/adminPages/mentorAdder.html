@@ -5,12 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Made with Thimble</title>
     <link href = "../assets/stylesheets/internalPage.css" rel = "stylesheet">
+    <link href = "../assets/stylesheets/user.css" rel = "stylesheet">
   </head>
   <body>
     <section class = "container">
-      <header>
-        <h1>Adding</h1>
-        <h3>New Mentor</h3>
+        <div class = "coin-picker">
+            <img src = "../assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">Notarian</span>
+        </div>
+     <header>
+        <h3>Add Mentor</h3>
       </header>
       <form class="submit-form" method="post" name="myForm">
       <div class = "column">
@@ -32,28 +36,7 @@
             </label></li>
           </ul>
         </fieldset>
-        <!--
---><div class = "separator">
-        <input class="btn btn-default" id="submit" type="submit" name="submit" value="Submit">
-        </div><!--
-  --><fieldset class="second-table menu">
-          <ul>
-            <li><label>
-              Name
-              <input type="text" name="name" placeholder="Full name" value="">
-              </label></li>
-
-            <li><label>
-              Email
-              <input type="text" name="email" placeholder="Email address" value="">
-              </label></li>
-
-            <li><label>
-              Class
-              <input type="text" name="email" placeholder="Email address" value="">
-              </label></li>
-          </ul>
-        </fieldset>
+        <button type ="button" class = "submit-button">Add Mentor</button>
         </div>
       </form>
     </section>
