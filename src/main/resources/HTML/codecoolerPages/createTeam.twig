@@ -1,41 +1,25 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Codecool Quest Store</title>
-        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
-        <meta charset = "UTF-8">
-        <link rel="icon" href="../assets/images/faviconCodecool.png">
-        <link href = "../assets/stylesheets/framePagesMain.css" rel = "stylesheet">
-        <link href = "../assets/stylesheets/user.css" rel = "stylesheet">
-        <link href = "../assets/stylesheets/editTeam.css" rel = "stylesheet">
-        
-        <style>
-            .create-team{
-                margin: auto;
-                margin-top: 10%;
-            }
+{% extends "codecoolerIndex.twig" %}
 
-        </style>
-    </head>
-    <body>
-        <section class = "container">
+{% block content %}
+
+        <section class = "container-internal">
             <div class = "coin-picker">
-                <span class = "nickname">Notarian</span>
+                <span class = "nickname">{{ nickname }}</span>
                 <img src = "../assets/images/coolcoin.png" class = "coolcoinIcon">
                 <div class = "coins">
-                    <span class = "coins-now">Your coolcoins: 3232</span>
-                    <span class = "coins-ever-owned">Coolcoins ever owned: 2321</span>
+                    <span class = "coins-now">Your coolcoins: {{ coolcoins }}</span>
+                    <span class = "coins-ever-owned">Coolcoins ever owned: {{ coolcoins_ever_owned }}</span>
                 </div>
 
                 <img src = "../assets/images/questIcon.png" class = "questIcon">
                 <div class = "quest-in-progress">
-                    <span class = "quest">Quest in progress: VanillaJS</span>
+                    <span class = "quest">Quest in progress: {{ quest }}</span>
                 </div>
 
                 <img src = "../assets/images/teamIcon.png" class = "teamIcon">
                 <div class = "team-class">
-                    <span class = "class">Your class: Java</span>
-                    <span class = "team">Your team: Border</span>
+                    <span class = "class">Your class: {{ room }}</span>
+                    <span class = "team">Your team: {{ team }}</span>
                 </div>
             </div>
             <div class = "main">
@@ -50,7 +34,4 @@
                             
                     </div>
             </div>
-        </section>
-    </body>
-
-</html>
+{% endblock %}

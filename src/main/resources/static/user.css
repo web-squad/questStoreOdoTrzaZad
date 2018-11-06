@@ -1,17 +1,15 @@
-body{
-    font-size: 1.5vw;
-    color: rgb(0,0,0);
-    margin: 0;
-    padding: 0;
-}
 .nickname{
     margin-top: 2%;
     padding-right: 2%;
     padding-left: 2%;
 }
-.container{
+.container-internal{
     display: flex;
     flex-direction: column;
+    font-size: 1.5vw;
+    color: rgb(0,0,0);
+    margin: 0;
+    padding: 0;
 }
 
 .coin-picker{
