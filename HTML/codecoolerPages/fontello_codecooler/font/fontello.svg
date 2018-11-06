@@ -1,0 +1,18 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg">
+<metadata>Copyright (C) 2018 by original authors @ fontello.com</metadata>
+<defs>
+<font id="fontello" horiz-adv-x="1000" >
+<font-face font-family="fontello" font-weight="400" font-stretch="normal" units-per-em="1000" ascent="850" descent="-150" />
+<missing-glyph horiz-adv-x="1000" />
+<glyph glyph-name="basket" unicode="&#xe800;" d="M2 791q8 20 27 29t38 4l150-48q32-10 35-43l10-84 686-77q23-5 35-22t10-38l-43-238q-8-43-49-43l-608 0-11-69 578 0q21 0 36-14t15-36q-2-22-17-37t-34-14l-641 0q-25 2-39 19t-12 41l28 149-41 418-119 39q-45 17-34 64z m217-839q0 32 24 56t55 23 56-23 23-56-23-55-56-24-55 24-24 55z m469 0q0 32 23 56t56 23 56-23 23-56-23-55-56-24-56 24-23 55z" horiz-adv-x="993" />
+
+<glyph glyph-name="pencil" unicode="&#xe801;" d="M203-7l50 51-131 131-51-51v-60h72v-71h60z m291 518q0 12-12 12-5 0-9-4l-303-302q-4-4-4-10 0-12 13-12 5 0 9 4l303 302q3 4 3 10z m-30 107l232-232-464-465h-232v233z m381-54q0-29-20-50l-93-93-232 233 93 92q20 21 50 21 29 0 51-21l131-131q20-22 20-51z" horiz-adv-x="857.1" />
+
+<glyph glyph-name="magic" unicode="&#xf0d0;" d="M664 526l164 163-60 60-164-163z m250 163q0-15-10-25l-718-718q-10-10-25-10t-25 10l-111 111q-10 10-10 25t10 25l718 718q10 10 25 10t25-10l111-111q10-10 10-25z m-754 106l54-16-54-17-17-55-17 55-55 17 55 16 17 55z m195-90l109-34-109-33-34-109-33 109-109 33 109 34 33 109z m519-267l55-17-55-16-17-55-17 55-54 16 54 17 17 55z m-357 357l54-16-54-17-17-55-17 55-54 17 54 16 17 55z" horiz-adv-x="928.6" />
+
+<glyph glyph-name="shopping-bag" unicode="&#xf290;" d="M981 64l19-174q2-16-9-28-10-12-27-12h-928q-16 0-27 12-11 12-9 28l20 174h961z m-52 469l48-433h-954l48 433q2 13 12 22t24 9h143v-71q0-30 21-51t50-21 51 21 21 51v71h214v-71q0-30 21-51t51-21 50 21 21 51v71h143q14 0 24-9t12-22z m-215 103v-143q0-15-10-25t-25-11-25 11-11 25v143q0 59-42 101t-101 42-101-42-42-101v-143q0-15-10-25t-26-11-25 11-10 25v143q0 88 63 151t151 63 152-63 62-151z" horiz-adv-x="1000" />
+</font>
+</defs>
+</svg>

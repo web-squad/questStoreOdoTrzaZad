@@ -30,7 +30,7 @@ a:hover {
 header {
     background-image: url("/home/karol/codecool/SQL/I Teamwork III module/questStoreOdoTrzaZad/HTML/assets/images/indexHeader.jpg");
     background: cover;
-    background-position: 50% 44%;
+    background-position: 50% 50%;
     background-repeat: no-repeat;
     background-size: 100% auto;
     display: flex;
@@ -219,8 +219,9 @@ header a:hover {
 }
 
 .dropdown {
+    margin: 0;
     position: relative;
-    display: inline-block;
+
 }
 
 /* Dropdown Content (Hidden by Default) */
