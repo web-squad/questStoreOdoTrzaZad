@@ -22,9 +22,8 @@
                  --><img src = "assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
-                        <a>My account</a><!--
+                        <a onclick="changeToWelcomePage()">My account</a><!--
                         --><a>Log out</a>
-                        
                      </nav>
                 </section>
 
@@ -60,7 +59,7 @@
                             </div></li>
                             </ul></nav>
 
-            <div class = "col-4-5"><iframe class = "site" src="mentorWelcomePage.html" id="inner"></iframe></div>
+            <div class = "col-4-5"><iframe class = "site" src="mentorWelcomePage.html" frameBorder = "0" id="inner"></iframe></div>
             <div class = "right-side-style"></div>
         
         </div>
@@ -73,6 +72,10 @@
         </span>
         </footer>
          </div>
-    <script src="../assets/scripts/MentorMenuScript.js"></script> 
+    <script src="../assets/scripts/MentorMenuScript.js"></script>
+    <script>function changeToWelcomePage() {
+        document.getElementById("inner").src = "mentorWelcomePage.html"
+    }
+    </script> 
     </body>
     </html>
