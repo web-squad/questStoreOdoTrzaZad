@@ -9,28 +9,7 @@
         <link href = "assets/stylesheets/user.css" rel = "stylesheet">
         <link href = "assets/stylesheets/store.css" rel = "stylesheet">
         
-        <script>
-            /*
-    function checkIfFilled(){
-        var allFilled = true;
-
-        var inputs = document.getElementById('artifact-id');
-        if(inputs[i].type == "text" && inputs[i].value == ''){
-            allFilled = false;
-        }
-        
-        document.getElementById("mysubmit").disabled = !allFilled;
-    };
-
-    window.onload = function(){
-        var inputs = document.getElementById('mysubmit');
-        if(inputs.type == "text"){
-            inputs.onkeyup = checkIfFilled;
-            inputs.onblur = checkIfFilled;
-        }
-        
-    };*/
-</script>
+ 
     </head>
     <body>
         <section class = "container">
@@ -58,18 +37,19 @@
                 <button type = "button" class = "read-button">Read Artifacts</button>
                 <table class = "table-artifacts">
                     <tr>
-                        <td>Artifacts:</td>
+                        <td style = "color: #fff">Artifacts:</td>
                     </tr>
-                    <tr class = "item"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
-                    <tr class = "item"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
-                    <tr class = "item"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
-                    <tr class = "item"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
+                    <tr class = "first-row"><th>Item</th><th>Cost</th></tr>
+                    <tr class = "item second-row"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
+                    <tr class = "item first-row"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
+                    <tr class = "item second-row"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
+                    <tr class = "item first-row"><td>Chleb</td><td class = "price">30 coolcoins</td></tr>
                 </table>
 
                 </div>
                 <div class = "buy-artifacts">
                     <form method = "post" enctype="text/plain">
-                        <p>Artifact ID</p>
+                        <p style = "color: #fff">Artifact ID</p>
                         <input type="text" name="artifact-id" placeholder = "ID" id = "artifact-id"><br>
                         <input type="submit" value="Buy"  class = "button" id = "mysubmit">
                     </form>

@@ -7,7 +7,7 @@
     margin-left: 5%;
     margin-top: 10%;
     height: 30vw;
-    background-color: rgba(83, 80, 80, 0.9);
+    background-color: rgba(5, 27, 40, 1);
     border-radius: 1vw;
     text-align: center;
     text-transform: uppercase;
@@ -32,8 +32,17 @@
 }
 .table-team{
 
-    padding-left: 5%;
+    padding-left: 15%;
     padding-top: 5%;
+    
+    width: 30vw;
+    height: 23vw;
+    border-collapse: collapse;
+    
+}
+
+.table-team .right-cell{
+    
 }
 .price{
     padding-left: 10vw;
@@ -48,4 +57,14 @@
     
 }
 
-
+.first-row{
+    background-color: rgba(255,255,255, 0.6);
+    width: 100%;
+}
+.second-row{
+    background-color: rgba(83, 80, 80, 0.9);
+    background-color: rgba(255,255,255, 0.8);
+}
+.your-team{
+    color: #fff;
+}

@@ -9,33 +9,13 @@
         <link href = "assets/stylesheets/user.css" rel = "stylesheet">
         <link href = "assets/stylesheets/editTeam.css" rel = "stylesheet">
         
-        <script>
-            /*
-    function checkIfFilled(){
-        var allFilled = true;
 
-        var inputs = document.getElementById('artifact-id');
-        if(inputs[i].type == "text" && inputs[i].value == ''){
-            allFilled = false;
-        }
-        
-        document.getElementById("mysubmit").disabled = !allFilled;
-    };
-
-    window.onload = function(){
-        var inputs = document.getElementById('mysubmit');
-        if(inputs.type == "text"){
-            inputs.onkeyup = checkIfFilled;
-            inputs.onblur = checkIfFilled;
-        }
-        
-    };*/
-</script>
     <style>
         .read-artifacts{
             margin-left: auto;
             margin-right: auto;
         }
+     
     </style>
     </head>
     <body>
@@ -66,28 +46,28 @@
 
                 <button type = "button" class = "read-button">Read All Teams</button>
                 <table class = "table-team">
-                    <tr>
+                    <tr class = "first-row">
                         <th>ID</th>
-                        <th>Team Name</th>
+                        <th class = "right-cell">Team Name</th>
                     </tr>
-                    <tr>
+                    <tr class = "second-row">
                         <td>1</td>
-                        <td>Bułka</td>
+                        <td class = "right-cell">Bułka</td>
                     </tr>
-                    <tr>
+                    <tr class = "first-row">
                         <td>2</td>
-                        <td>Chleb</td>
+                        <td class = "right-cell">Chleb</td>
                     </tr>
 
-                    <tr>
+                    <tr class = "second-row">
                         <td>3</td>
-                        <td>Pączek</td>
+                        <td class = "right-cell">Pączek</td>
                     </tr>
                 </table>
                 </div>
                 <div class = "change-team">
                         <form method = "post" enctype="text/plain">
-                            <p>TEAM ID</p>
+                            <p style = "color: #fff">TEAM ID</p>
                             <input type="text" name="team-id" placeholder = "ID" id = "artifact-id"><br>
                             <input type="submit" value="Change Team"  class = "button" id = "mysubmit">
                         </form>
