@@ -1,24 +1,19 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
-            <header>
-            <h1>Here you can add new artifact to shop:</h1>
-            </header>
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+        <h1>Here you can add new quest to shop:</h1>
         <form>
             <div class="column">
                 <fieldset class="first-table menu">
                     <ul>
                         <li><label>
-                            Artifact name:<br>
+                            Quest name:
                             <input class="input" type="text" name="name">
                         </label></li>
                         <li><label>
-                            Artifact description:<br>
+                            Quest description:
                             <input class="input" type="text" name="description">
                         </label></li>
                     </ul>
@@ -27,16 +22,16 @@
                 </div><fieldset class="second-table menu">
                     <ul>
                         <li><label>
-                            Artifact price:<br>
+                            Quest reward:
                             <input class="input" type="text" name="price">
                         </label></li>
                         <li><label>
-                            Artifact image:<br>
-                            <input class="input" type="text" name="artifactURL"><br>
+                            Quest image:
+                            <input class="input" type="text" name="questURL">
                         </label></li>
                     </ul>
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}

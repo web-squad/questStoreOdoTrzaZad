@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
-            <header>
-            <h1>Super cool header for our shop!
-            </header>
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+                <h1>Super cool header for our shop!</h1>
 
         <form>
             <div class="column">
@@ -20,5 +15,5 @@
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}

@@ -1,32 +1,19 @@
-body{
-  margin: 0;
-  padding: 0;
-  background: url("../images/iframeBackground.jpg");
-  background-size: cover;
-  width: 100%;
-  height: auto;
-  font-family: 'Lato', sans-serif;
-}
 
-.container{
+.container-internal{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 100%;
   font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url("../images/iframeBackground.jpg");
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    font-family: 'Lato', sans-serif;
 }
 
-header{
-  background-color: rgba(83, 80, 80, 0.9);
-  align-self: center;
-  border: 0.3vw solid transparent;
-  padding-left: 8vw;
-  padding-right: 8vw;
-  border-radius: 1vw;
-  margin-top: 0.3vw;
-  margin-left: auto;
-  margin-right: auto;
-}
 header h1{
   margin-left: auto;
   margin-right: auto;
@@ -40,7 +27,7 @@ header h3{
 
 .column{
   display: flex;
-  flex-direction: column; /* row */
+  flex-direction: row; /* row */
   justify-content: space-between;
 }
 
@@ -77,14 +64,14 @@ table, fieldset{
   margin-top: 5vw;
 }
 
-.menu ul{
+.menu-internal{
   text-align: center;
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.menu ul li{
+.menu-internal{
   padding: 0.94vw;
   color: #fff;
   border-right: 0.5vw solid transparent;

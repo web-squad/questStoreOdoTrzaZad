@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
-            <header>
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
             <h1>Edit quest:</h1>
-            </header>
             
             <div class="search-engine">
                 Quest id:<br>
-                <input class="input" type"text" name="id"><br>
+                <input class="input" type="text" name="id"><br>
             </div>
         <form>
             <div class="column">
@@ -20,11 +15,11 @@
                     <ul>
                         <li><label>
                             New quest name:
-                            <input class="input" type"text" name="questName">
+                            <input class="input" type="text" name="questName">
                         </label></li>
                         <li><label>
                             New quest description:
-                            <input class="input" type"text" name="questDesc">
+                            <input class="input" type="text" name="questDesc">
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
@@ -33,15 +28,15 @@
                     <ul>
                         <li><label>
                             New quest reward:
-                            <input class="input" type"text" name="questReward">
+                            <input class="input" type="text" name="questReward">
                         </label></li>
                         <li><label>
                             New quest image:
-                            <input class="input" type"text" name="questURL">
+                            <input class="input" type="text" name="questURL">
                         </label></li>
                     </ul>
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}
