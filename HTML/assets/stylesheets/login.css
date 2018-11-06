@@ -102,15 +102,23 @@ body, html {
 }
 .icon-mail-alt {
     position: absolute;
+    font-size: 3vh;
     left: 10%;
     top: 20%;
 }
 
 .icon-key {
     position: absolute;
+    font-size: 3vh;
     left: 10%;
     top: 20%;
 }
-.validate-input:focus icon-mail-alt{
+.validate-input:focus-within .icon-key {
+    transition: 0.5s;
+    color: green;
+}
+
+.validate-input:focus-within .icon-mail-alt {
+    transition: 0.5s;
     color: green;
 }
