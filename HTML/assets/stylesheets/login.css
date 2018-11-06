@@ -1,0 +1,124 @@
+* {
+	margin: 0px; 
+	padding: 0px; 
+	box-sizing: border-box;
+}
+body, html {
+	height: 100%;
+    font-family: "Lato", sans-serif;
+    background: radial-gradient(#3d8bb3, #1c4154);
+
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../images/indexHeader.jpg");
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    animation-name:img-ani;
+    animation-duration: 1.5s;   
+    animation-timing-function: ease-in;
+}
+
+  @keyframes img-ani {
+    from{opacity:0;}
+    to{opacity: 1;}
+  }
+.name {
+    position: absolute;
+    left: 40%;
+    top: 10%;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 5vh;
+}
+.login-form {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-radius: 3%;
+    width: 70%;
+    height: 90%;
+}
+.form-interior {
+    display: flex;
+    flex-direction: row;
+    padding-top: 15%;
+    padding-left: 10%;
+}
+.inputs-interior {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15%;
+}
+
+.codecool-logo {
+    width: 75%;
+    height: 75%;  
+}
+.login-form-title {
+    font-size: 150%;
+    font-weight: bold;
+}
+.login-form-title{
+    margin-bottom: 10%;
+}
+.input100 {
+    color: #666666;
+    border: none;
+    font-size: 120%;
+    background: #e6e6e6;
+    height: 9vh;
+    width: 20vw;
+    line-height: 1.5;
+    border-radius: 5vw;
+    margin-bottom: 12%;
+    padding: 0 4vw 0 5vw;
+}
+
+.login-form-btn {
+    color: #fff;
+    border: none;
+    font-size: 120%;
+    background: #112836;
+    height: 9vh;
+    width: 20vw;
+    line-height: 1.5;
+    border-radius: 5vw;
+}
+.login-form-btn:hover {
+    cursor: pointer;
+    background-color: #414e9d;
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+.validate-input {
+    position: relative;
+}
+.icon-mail-alt {
+    position: absolute;
+    font-size: 3vh;
+    left: 10%;
+    top: 20%;
+}
+
+.icon-key {
+    position: absolute;
+    font-size: 3vh;
+    left: 10%;
+    top: 20%;
+}
+.validate-input:focus-within .icon-key {
+    transition: 0.5s;
+    color: green;
+}
+
+.validate-input:focus-within .icon-mail-alt {
+    transition: 0.5s;
+    color: green;
+}
