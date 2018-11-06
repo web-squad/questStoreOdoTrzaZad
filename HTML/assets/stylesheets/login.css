@@ -44,6 +44,7 @@ body, html {
     border-radius: 3%;
     width: 70%;
     height: 90%;
+    box-shadow: 1vw 1vw 2vw 2vw black;
 }
 .form-interior {
     display: flex;
