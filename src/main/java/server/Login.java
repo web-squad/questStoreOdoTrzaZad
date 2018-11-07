@@ -13,6 +13,7 @@ import java.net.HttpCookie;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,7 +57,7 @@ public class Login implements HttpHandler {
             if (!loginData.isEmpty()) {
                 int accessLevel = loginData.get(0);
                 int id = loginData.get(1);
-                String sessionId = String.valueOf(counter); // This isn't a good way to create sessionId. Find a better one!
+                String sessionId = String.valueOf(hash(providedMail + providedPassword + LocalDateTime.now().toString()));
                 cookie = Optional.of(new HttpCookie(SESSION_COOKIE_NAME, sessionId));
                 activeSession = sessionId;
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
@@ -119,5 +120,15 @@ public class Login implements HttpHandler {
         BufferedReader br = new BufferedReader(isr);
         String formData = br.readLine();
         return parseFormData(formData);
+    }
+
+    private long hash(String string) {
+        long h = 1125899906842597L; // prime
+        int len = string.length();
+
+        for (int i = 0; i < len; i++) {
+            h = 31*h + string.charAt(i);
+        }
+        return h;
     }
 }
