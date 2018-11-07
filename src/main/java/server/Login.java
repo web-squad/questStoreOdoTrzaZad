@@ -38,6 +38,7 @@ public class Login implements HttpHandler {
         Optional<HttpCookie> cookie;
 
         if(method.equals("GET")) {
+
             JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
 
             // create a model that will be passed to a template
@@ -53,18 +54,21 @@ public class Login implements HttpHandler {
             String providedPassword = inputs.get("pass").toString();
             List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(providedMail, providedPassword);
             if (!loginData.isEmpty()) {
+                int accessLevel = loginData.get(0);
+                int id = loginData.get(1);
                 String sessionId = String.valueOf(counter); // This isn't a good way to create sessionId. Find a better one!
                 cookie = Optional.of(new HttpCookie(SESSION_COOKIE_NAME, sessionId));
                 activeSession = sessionId;
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
-                response = "<html><body>" +
-                        "<h1>Hello " +
-                        providedMail + " " + providedPassword +
-                        "!</h1>" +
-                        "<form method=\"GET\" action=\"login\">\n" +
-                        "<input type=\"submit\" value=\"Logout\">\n" +
-                        "</form> " +
-                        "</body><html>";
+                if (accessLevel == 1){
+                    httpExchange.getResponseHeaders().set("Location", "/codecoolerIndex");
+                }
+                if (accessLevel == 3){
+                    httpExchange.getResponseHeaders().set("Location", "/adminMainPage");
+                }
+                if (accessLevel == 2){
+                    httpExchange.getResponseHeaders().set("Location", "/mentorMainPage");
+                }
             }
             else {
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
@@ -85,7 +89,7 @@ public class Login implements HttpHandler {
      * See: https://en.wikipedia.org/wiki/POST_(HTTP)
      */
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(301, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
