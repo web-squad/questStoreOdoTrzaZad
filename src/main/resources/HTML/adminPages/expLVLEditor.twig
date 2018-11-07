@@ -1,33 +1,25 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Made with Thimble</title>
-    <link href = "../assets/stylesheets/internalPage.css" rel = "stylesheet">
-    <link href = "../assets/stylesheets/user.css" rel = "stylesheet">
-  </head>
-  <body>
-    <section class = "container">
+{% extends "adminMain.twig" %}
+
+{% block content %}
+
+    <section class = "container-internal">
         <div class = "coin-picker">
-            <img src = "../assets/images/teamIcon.png" class = "teamIcon">
-            <span class = "nickname">Notarian</span>
+            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
         </div>
       <header>
-        <h1>Editing</h1>
-        <h3>Class Data</h3>
+        <h3>Edit Experience Level</h3>
       </header>
-      
       <label class="search-engine">
-        Name
+        Search
         <input type="text" name="name" placeholder="Full name" value="">
       </label>
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
-          <fieldset class="first-table menu">
+          <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
-                Room Name
+                Level Name
                 <input type="text" name="name" placeholder="Full name" value="">
                 </label></li>
 
@@ -39,10 +31,10 @@
           </div><!--
 --><div class = "column">
 
-          <fieldset class="second-table menu">
+          <fieldset class="second-table menu-internal">
             <ul>
               <li><label>
-                Room Description
+                Level Description
                 <input type="text" name="name" placeholder="Full name" value="">
                 </label></li>
             </ul>
@@ -50,5 +42,4 @@
           </div></div>
       </form>
     </section>
-  </body>
-</html>
+{% endblock %}

@@ -1,17 +1,11 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Made with Thimble</title>
-    <link href = "../assets/stylesheets/internalPage.css" rel = "stylesheet">
-    <link href = "../assets/stylesheets/user.css" rel = "stylesheet">
-  </head>
-  <body>
+{% extends "adminMain.twig" %}
+
+{% block content %}
+
     <section class = "container">
         <div class = "coin-picker">
-            <img src = "../assets/images/teamIcon.png" class = "teamIcon">
-            <span class = "nickname">Notarian</span>
+            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
         </div>
       <header>
         <h1>Deleting</h1>
@@ -24,11 +18,11 @@
       </label>
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
-          <fieldset class="first-table menu">
+          <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
                 Room Name
-                <input type="text" name="name" placeholder="Full name" value="">
+                <input type="text" name="name" placeholder="Room name" value="">
                 </label></li>
 
             </ul>
@@ -39,7 +33,7 @@
           </div><!--
 --><div class = "column">
 
-          <fieldset class="second-table menu">
+          <fieldset class="second-table menu-internal">
             <ul>
               <li><label>
                 Room Description
@@ -50,5 +44,4 @@
           </div></div>
       </form>
     </section>
-  </body>
-</html>
+{% endblock %}
