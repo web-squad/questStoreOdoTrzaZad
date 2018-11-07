@@ -26,9 +26,11 @@ public class Login implements HttpHandler {
     int counter = 0;
     CookieHelper cookieHelper = new CookieHelper();
     Connection connection;
+    LoginAccesDAO loginAccesDAO;
 
     public Login(Connection connection) {
         this.connection = connection;
+        this.loginAccesDAO = new LoginAccesDAO(connection);
     }
 
     @Override
@@ -39,7 +41,9 @@ public class Login implements HttpHandler {
         Optional<HttpCookie> cookie;
 
         if(method.equals("GET")) {
-
+            cookie = getSessionIdCookie(httpExchange);
+            loginAccesDAO.deleteSessionID(cookie.get().getValue());
+            System.out.println("dupa");
             JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
 
             // create a model that will be passed to a template
@@ -47,19 +51,21 @@ public class Login implements HttpHandler {
 
             // render a template to a string
             response = template.render(model);
+
         }
 
         if (method.equals("POST") ) {
             Map inputs = getData(httpExchange);
             String providedMail = inputs.get("email").toString();
             String providedPassword = inputs.get("pass").toString();
-            List<Integer> loginData = new LoginAccesDAO(connection).readLoginData(providedMail, providedPassword);
+            List<Integer> loginData = loginAccesDAO.readLoginData(providedMail, providedPassword);
             if (!loginData.isEmpty()) {
                 int accessLevel = loginData.get(0);
                 int id = loginData.get(1);
                 String sessionId = String.valueOf(hash(providedMail + providedPassword + LocalDateTime.now().toString()));
                 cookie = Optional.of(new HttpCookie(SESSION_COOKIE_NAME, sessionId));
                 activeSession = sessionId;
+                loginAccesDAO.saveSessionId(sessionId, providedMail);
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
                 if (accessLevel == 1){
                     httpExchange.getResponseHeaders().set("Location", "/codecoolerIndex");

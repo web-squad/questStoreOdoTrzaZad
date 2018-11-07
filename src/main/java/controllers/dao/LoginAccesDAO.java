@@ -4,15 +4,12 @@ package controllers.dao;
 import org.postgresql.util.PSQLException;
 import views.View;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoginAccesDAO implements LoginAccesDAOInterface {
-
+    private PreparedStatement ps;
     private Connection connection;
     private List<Integer> loginData;
 
@@ -47,5 +44,34 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
         rs.close();
         stmt.close();
+    }
+
+    public void saveSessionId(String sessionId, String email){
+        try {
+            ps = connection.prepareStatement("UPDATE login_access SET session_id = ? WHERE email = ?;");
+            ps.setString(1, sessionId);
+            ps.setString(2, email);
+            ps.executeUpdate();
+            connection.commit();
+            ps.close();
+        } catch (SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+    }
+
+    public void deleteSessionID(String sessionId){
+        try {
+            System.out.println(sessionId);
+            ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id LIKE '% ? %';");
+            ps.setString(1, sessionId);
+            int i = ps.executeUpdate();
+            System.out.println(i);
+            connection.commit();
+            ps.close();
+        } catch (SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
     }
 }
