@@ -2,12 +2,10 @@
 <html>
   <head>
     <title>Codecool Quest Store</title>
-    <link rel = "stylesheet" type="text/css" href = "static/main.css">
+    <link rel="stylesheet" type="text/css" href="static/main.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
     <link rel = "stylesheet" type = "text/css" href = "static/fontello.css">
-    <link href = "static/internalPage.css" rel = "stylesheet">
-    <link href = "static/user.css" rel = "stylesheet">
-    <link href = "static/framePagesMain.css" rel = "stylesheet">
+    <link href="static/internalPage.css" rel="stylesheet">
     <meta charset = "UTF-8">
     <script src="../assets/scripts/adminScripts.js"></script>
   </head>
@@ -23,7 +21,7 @@
     --><img src="static/assets/images/logoBar.jpg"><!--
     --><span>Codecool Poland</span>    
         <nav class = "primary-nav" id="nav">
-          <a onclick ="openMainPage()">My account</a><!--
+          <a href="GreetAdmin">My account</a><!--
 --><a>Log out</a>
         </nav></section>
       <div class = "main">
@@ -31,27 +29,27 @@
           <li id="mentorHandler" class="dropdown">Mentor Handler<div >
             <div class="dropdown-content">
             <ul>
-              <li id="mentorAdder">Add Mentor</li>
-              <li id="mentorEditor">Edit Mentor</li>
-              <li id="mentorDeleter">Delete Mentor</li>
+              <li><a href="MentorAdder">Add Mentor</a></li>
+              <li><a href="MentorEditor">Edit Mentor</a></li>
+              <li><a href="MentorDeleter">Delete Mentor</a></li>
             </ul>
             </div>
             </div></li>
           <li id="classHandler" class="dropdown">Class Handler<div >
             <div class="dropdown-content">
               <ul>
-                <li id="classAdder">Add Class</li>
-                <li id="classEditor">Edit Class</li>
-                <li id="classDeleter">Delete Class</li>
+                <li><a href="ClassAdder">Add Class</a></li>
+                <li><a href="ClassAdder">Edit Class</a></li>
+                <li><a href="ClassDeleter">Delete Class</a></li>
               </ul>
             </div>
             </div></li>
           <li id="expHandler" class="dropdown">Exp Handle<div >
             <div class="dropdown-content">
               <ul>
-                <li id="expLVLAdder">Add ExpLVL</li>
-                <li id="expLVLEditor">Edit ExpLVL</li>
-                <li id="expLVLDeleter">Delete ExpLVL</li>
+                <li><a href="ExpLVLAdder">Add ExpLVL</a></li>
+                <li><a href="ExpLVLEditor">Edit ExpLVL</a></li>
+                <li><a href="ExpLVLDeleter">Delete ExpLVL</a></li>
               </ul>
             </div>
             </div></li>
