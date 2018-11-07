@@ -1,0 +1,16 @@
+.container-internal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+    color: rgb(0,0,0);
+    margin: 0;
+    padding: 0;
+    background: url("/home/karol/codecool/SQL/I Teamwork III module/questStoreOdoTrzaZad/HTML/assets/images/iframeBackground.jpg");
+    background-size: cover;
+    width: 100%;
+    height: auto;
+    font-family: 'Lato', sans-serif;
+}
+
