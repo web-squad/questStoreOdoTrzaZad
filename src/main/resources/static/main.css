@@ -36,7 +36,7 @@ header {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 10.5vw;
+    height: 15%; /* zmienione */
     font-weight: bold;
     font-size: 2.5vw;
     padding: 0.5vw;
@@ -105,7 +105,7 @@ header a:hover {
     padding: 0;
     border: 0;
     font-size: 1.4vw;
-    
+
 }
 .col-1-5 {
     width: 15%;
@@ -245,3 +245,209 @@ header a:hover {
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
+
+
+/* ------------------------------------------------
+---------------**USER ARTIFACTS HTML ------------------- */
+
+
+.read-artifacts{
+    width: 33%;
+    margin-left: 10%;
+    margin-top: 7%;
+    height: 30vw;
+    background-color: rgba(5, 27, 40, 1);
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+.read-button{
+    margin-top: 2vw;
+}
+.table-artifacts{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 2vw; /* it wasn't in store css <- if something crashes look at this */
+    padding-left: 5%;
+    border-collapse: collapse;
+    width: 100%;
+    height: 85%;
+
+}
+.first-row{
+    background-color: rgba(255,255,255, 0.6);
+    width: 100%;
+}
+.second-row{
+    background-color: rgba(83, 80, 80, 0.9);
+    background-color: rgba(255,255,255, 0.8);
+}
+.price{
+    padding-left: 10vw;
+}
+
+.buy-artifacts{
+    text-transform: uppercase;
+    font-size: 3vw;
+    margin-top: 10vw;
+    margin-left: 5vw; /* this wasn't in editTeam.css */
+}
+
+.read-artifacts{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ------------------_ EDIT TEAM CSS --------------- */
+
+.teams{
+    width: 30vw;
+    margin-left: 5%;
+    margin-top: 10%;
+    height: 30vw;
+    background-color: rgba(5, 27, 40, 1);
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.change-team{
+    width: 10vw;
+    margin-left: 2%;
+    margin-top: 10%;
+    height: 30vw;
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.your-team{
+    text-transform: uppercase;
+    color: #fff /* it was in editTeam css */
+    font-size: 2vw;
+
+}
+
+
+.table-team{
+
+    padding-left: 15%;
+    padding-top: 5%;
+
+    width: 30vw;
+    height: 23vw;
+    border-collapse: collapse;
+
+}
+
+
+
+.create-team {
+    margin: auto;
+    margin-top: 10%;
+}
+
+
+/*
+.read-artifacts{
+        margin-left: auto;
+        margin-right: auto;
+    } edit team css*/
+
+
+/* ----------------------------FIRST PAGE CSS --------------------------- */
+
+
+.first-table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40vw;
+    height: 30vw;
+    border-collapse: collapse;
+
+}
+.first-table th{
+    color: #fff;
+    font-size: 3vw;
+
+}
+.first-table td{
+    font-size: 2vw;
+}
+
+
+/* ---------------------- USER CSS ------------------------------*/
+.nickname{
+    margin-top: 2%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+
+.container-internal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.5vw;
+    color: rgb(0,0,0);
+    margin: 0;
+    padding: 0;
+    background-image: url("assets/images/iframeBackground.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+
+.coin-picker{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255,255,255, 0.4);
+    width: 100%;
+    height: 7vw;
+}
+
+
+
+.coins{
+    display: flex;
+    flex-direction: column;
+
+}
+.coin-picker .coolcoinIcon{
+    margin-top: 0.5%;
+
+    height: 6vw;
+}
+.coins-now, .coins-ever-owned {
+    color: rgb(0,0,0);
+    text-transform: uppercase;
+    padding-left: 2vw;
+    margin-top: 4%;
+}
+.quest-in-progress{
+    margin-top: 2%;
+    text-transform: uppercase;
+    margin-left: 1%;
+}
+.questIcon{
+    margin-top: 0.5%;
+    height: 6vw;
+    margin-left: 5%;
+}
+
+.teamIcon{
+    padding-left: 2%;
+    margin-top: 0.5%;
+    height: 6vw;
+    width: 5vw
+}
+.team-class{
+    display: flex;
+    flex-direction: column;
+    line-height: 2vw;
+    margin-top: 1.5%;
+    text-transform: uppercase;
+    margin-left: 2%;
+}
