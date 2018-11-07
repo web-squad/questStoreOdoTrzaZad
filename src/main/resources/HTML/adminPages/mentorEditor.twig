@@ -1,0 +1,42 @@
+{% extends "adminMain.twig" %}
+
+{% block content %}
+
+    <section class = "container-internal">
+
+        <div class = "coin-picker">
+            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
+        </div>
+
+      <header>
+        <h3>Choose Mentor to edit</h3>
+      </header>
+
+      <label class="search-engine">
+      <span>Name</span>
+      <input type="text" name="name" placeholder="Full name" value="">
+      </label>
+
+      <form class="submit-form" method="post" name="myForm">
+        <div class = "column">
+          <fieldset class="first-table menu-internal">
+            <ul>
+              <li><label>
+                <span>Name</span>
+                <input type="text" name="name" placeholder="Full name" value="">
+                </label></li>
+
+              <li><label>
+                <span>Email</span>
+                <input type="text" name="email" placeholder="Email address" value="">
+                </label></li>
+
+              <li><label>
+                <span>Class</span>
+                <input type="text" name="class" placeholder="Class name" value="">
+                </label></li>
+            </ul>
+          </fieldset><button type ="button" class = "submit-button">Edit Mentor</button></div></form>
+    </section>
+{% endblock %}

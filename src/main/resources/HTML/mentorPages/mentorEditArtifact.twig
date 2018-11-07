@@ -1,47 +1,44 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
             <header>
             <h1>Edit artifact:</h1>
             </header>
             
             <div class="search-engine">
                 artifact id:
-                <input class="input" type"text" name="id">
+                <input class="input" type="text" name="id">
             </div>
         <form>
             <div class="column">
-                <fieldset class="first-table menu">
+                <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
                             New artifact name:
-                            <input class="input" type"text" name="artifactName">
+                            <input class="input" type="text" name="artifactName">
                         </label></li>
                         <li><label>
                             New artifact description:
-                            <input class="input" type"text" name="artifactDesc">
+                            <input class="input" type="text" name="artifactDesc">
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
                 <input class="btn" type="submit" value="Submit">
-                </div><fieldset class="second-table menu">
+                </div><fieldset class="second-table menu-internal">
                     <ul>
                         <li><label>
                             New artifact price:
-                            <input class="input" type"text" name="artifactPrice">
+                            <input class="input" type="text" name="artifactPrice">
                         </label></li>
                         <li><label>
                             New artifact image:
-                            <input class="input" type"text" name="artifactURL">
+                            <input class="input" type="text" name="artifactURL">
                         </label></li>
                     </ul>
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}

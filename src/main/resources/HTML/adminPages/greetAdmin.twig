@@ -1,0 +1,29 @@
+{% extends "adminMain.twig" %}
+
+{% block content %}
+  
+  <link rel="icon" href="static/assets/images/faviconCodecool.png">
+    <section class = "container-internal">
+        <div class = "coin-picker">
+            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
+        </div>
+      <header>
+        <h1>Welcome</h1>
+        <h3>{{ nickname }}</h3>
+      </header>
+      <div class = "column">
+        <table class = "first-table">
+          <tr>
+            <td>Name:</td>
+            <td>{{ name }} {{ surname }}</td>
+          </tr>
+          <tr>
+            <td>Email:</td>
+            <td>{{ email }}</td>
+          </tr>
+        </table>
+        
+        </div>
+    </section>
+{% endblock %}

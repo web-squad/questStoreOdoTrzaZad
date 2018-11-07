@@ -2,9 +2,12 @@
 <html>
   <head>
     <title>Codecool Quest Store</title>
-    <link rel = "stylesheet" type="text/css" href = "../css/main.css">
+    <link rel = "stylesheet" type="text/css" href = "static/main.css">
     <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
-    <link rel = "stylesheet" type = "text/css" href = "css/fontello.css">
+    <link rel = "stylesheet" type = "text/css" href = "static/fontello.css">
+    <link href = "static/internalPage.css" rel = "stylesheet">
+    <link href = "static/user.css" rel = "stylesheet">
+    <link href = "static/framePagesMain.css" rel = "stylesheet">
     <meta charset = "UTF-8">
     <script src="../assets/scripts/adminScripts.js"></script>
   </head>
@@ -15,9 +18,9 @@
         <a href = "index.html">Quest Store</a>
 
       </header>
-      <section class ="bar">            
+      <section class ="bar">
           <!--
-    --><img src = "../assets/images/logoBar.jpg"><!--
+    --><img src="static/assets/images/logoBar.jpg"><!--
     --><span>Codecool Poland</span>    
         <nav class = "primary-nav" id="nav">
           <a onclick ="openMainPage()">My account</a><!--
@@ -53,7 +56,7 @@
             </div>
             </div></li>
           </ul></nav>
-        <div class = "col-4-5"><iframe class = "site" src="greetAdmin.html" id="inner"></iframe></div>
+        <div class = "col-4-5">{% block content %}{% endblock %}</div>
         <div class = "right-side-style"></div>
       </div>
       <footer class = "container footer">

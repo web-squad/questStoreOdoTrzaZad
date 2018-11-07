@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
-            <header>
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+        <div class="container-internal">
             <h1>Here you can add new codecooler:</h1>
-            </header>
             </div>
         <form>
             <div class="column">
-                <fieldset class="first-table menu">
+                <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
                             First name:
@@ -24,24 +19,24 @@
                         </label></li>
                         <li><label>
                             Nickname:
-                            <input class="input" type"text" name="nickname">
+                            <input class="input" type="text" name="nickname">
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
                 <input class="btn" type="submit" value="Submit">
-                </div><fieldset class="second-table menu">
+                </div><fieldset class="second-table menu-internal">
                     <ul>
                         <li><label>
                             Email:
-                            <input class="input" type"text" name="email">
+                            <input class="input" type="text" name="email">
                         </label></li>
                         <li><label>
                             Password:
-                            <input class="input" type"password" name="password">
+                            <input class="input" type="password" name="password">
                         </label></li>
                     </ul>
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}

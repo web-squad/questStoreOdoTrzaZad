@@ -1,42 +1,36 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <link rel = "stylesheet" type = "text/css" href = "../css/internalPage.css">
-        <meta charset = "UTF-8">
-    </head>
-    <body>
-            <div class="container">
-            <header>
-            <h1>Here you can add new quest to shop:</h1>
-            </header>
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+    <div class="container-internal">
+        <h1>Here you can add new artifact to shop:</h1>
         <form>
             <div class="column">
-                <fieldset class="first-table menu">
+                <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
-                            Quest name:
+                            Artifact name:<br>
                             <input class="input" type="text" name="name">
                         </label></li>
                         <li><label>
-                            Quest description:
+                            Artifact description:<br>
                             <input class="input" type="text" name="description">
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
                 <input class="btn" type="submit" value="Submit">
-                </div><fieldset class="second-table menu">
+                </div><fieldset class="second-table menu-internal">
                     <ul>
                         <li><label>
-                            Quest reward:
-                            <input class="input" type"text" name="price">
+                            Artifact price:<br>
+                            <input class="input" type="text" name="price">
                         </label></li>
                         <li><label>
-                            Quest image:
-                            <input class="input" type"text" name="questURL">
+                            Artifact image:<br>
+                            <input class="input" type="text" name="artifactURL"><br>
                         </label></li>
                     </ul>
                 </fieldset>
             </div>
         </form>
-    </body>
-</html>
+    </div>
+{% endblock %}
