@@ -15,11 +15,12 @@ body, html {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-image: url("../images/indexHeader.jpg");
+    background-image: url("assets/images/indexHeader.jpg");
     background-size: cover;
     width: 100%;
     height: 100%;
     margin: 0 auto;
+
     animation-name:img-ani;
     animation-duration: 1.5s;   
     animation-timing-function: ease-in;
@@ -44,6 +45,7 @@ body, html {
     border-radius: 3%;
     width: 70%;
     height: 90%;
+    box-shadow: 0vw 0vw 4vw 4vw;
 }
 .form-interior {
     display: flex;

@@ -15,7 +15,7 @@ public class CodecoolerIndex implements HttpHandler {
 
 
         // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/CodecoolerIndex.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/store.twig");
 
         // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();

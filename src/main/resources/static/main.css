@@ -28,7 +28,7 @@ a:hover {
     font-family: 'Lato', sans-serif;
 }
 header {
-    background-image: url("/home/kodoj/codecool/Databases/TW1/questStoreOdoTrzaZad/src/main/resources/HTML/assets/images/indexHeader.jpg");
+    background-image: url("assets/images/indexHeader.jpg");
     background: cover;
     background-position: 50% 50%;
     background-repeat: no-repeat;
@@ -55,10 +55,10 @@ header a:hover {
     color: #fff;
 }
 .main {
-    z-index: 1;
+  /*  z-index: 1;
     width: 100%;
 
-    background-color: #fff;
+    background-color: #fff;*/
 }
 
 .bar {
