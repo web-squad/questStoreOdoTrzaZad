@@ -31,16 +31,17 @@ public class CodecoolerMain implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
         int userId = 0;
-        String coins = "30";
-        String coinsEverOwned = "210";
-        String level = "11";
-        String quest = "Vanilla";
-        String room = "Java";
-        String team = "Siurki";
-        String nickname = "Notarian";
-        String name = "Karol";
-        String surname = "Trzaska";
+        String coins = "";
+        String coinsEverOwned = "";
+        String level = "";
+        String quest = "";
+        String room = "";
+        String team = "";
+        String nickname = "";
+        String name = "";
+        String surname = "";
         String sessionId = httpCookie.get().getValue().replace("\"", "");
+
         try{
             userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
         }catch(SQLException e){
