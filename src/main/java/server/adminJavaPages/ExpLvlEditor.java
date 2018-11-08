@@ -66,7 +66,6 @@ public class ExpLvlEditor implements HttpHandler {
                         response = generatePage();
                     }
                     if (inputs.containsKey("add")){
-                        inputs = formDataParser.getData(httpExchange);
                         creepyGuyDAO.addLevel(new Level(fillData(inputs)));
                         response = generatePage();
                     }

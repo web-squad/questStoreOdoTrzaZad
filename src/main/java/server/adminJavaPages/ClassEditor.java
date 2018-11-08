@@ -66,7 +66,6 @@ public class ClassEditor implements HttpHandler {
                         response = generatePage();
                     }
                     if (inputs.containsKey("add")){
-                        inputs = formDataParser.getData(httpExchange);
                         creepyGuyDAO.addRoom(new Room(fillData(inputs)));
                         response = generatePage();
                     }

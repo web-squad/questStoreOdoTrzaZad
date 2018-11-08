@@ -29,7 +29,6 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     public void addMentor(MentorModel mentor) throws NumberFormatException{
         try {
             addMentorRecord(mentor);
-            view.print("Operation done successfully\n");
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
@@ -309,7 +308,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     }
 
     private void editLevelRecord(Level level, String id) throws SQLException, NumberFormatException{
-        ps = connection.prepareStatement("Update experience_level SET level = ?, threshold = ? WHERE id = ?;");
+        ps = connection.prepareStatement("Update experience_level SET level_name = ?, threshold = ? WHERE id = ?;");
         ps.setString(1, level.getLevelName());
         ps.setInt(2, Integer.parseInt(level.getThreshold()));
         ps.setInt(3, Integer.parseInt(id));
