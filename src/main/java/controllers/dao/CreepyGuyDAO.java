@@ -4,6 +4,7 @@ import models.CreepyGuyModel;
 import models.Level;
 import models.MentorModel;
 import models.Room;
+import server.helpers.CookieHelper;
 import views.View;
 
 import java.sql.*;
@@ -150,7 +151,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.close();
     }
 
-    public CreepyGuyModel getAdminById(String id){
+    public CreepyGuyModel getAdminBySessionId(String id){
         try {
             fetchAdmin(id);
             view.print("Operation done successfully\n");
@@ -166,12 +167,12 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         return null;
     }
 
-    private void fetchAdmin(String id) throws Exception{
+    private void fetchAdmin(String sessionId) throws Exception{
         creepyGuyData = new HashMap<>();
         ps = connection.prepareStatement("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
-                "codecoolers.last_name, login_access.password, FROM login_access " +
-                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = ?;");
-        ps.setInt(1, Integer.parseInt(id));
+                "codecoolers.last_name, login_access.password FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE session_id = ?;");
+        ps.setString(1, sessionId);
         ResultSet rs = ps.executeQuery();
         while ( rs.next() ) {
             creepyGuyData.put("firstName", rs.getString("first_name"));

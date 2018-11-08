@@ -18,17 +18,18 @@ import models.Artifact;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 public class MentorAddArtifact implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private MentorDAO mentorDAO;
-    private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
+    FormDataParser formDataParser;
 
-    public MentorAddArtifact(MentorDAO mentorDAO, LoginAccesDAO loginAccesDAO) {
+    public MentorAddArtifact(MentorDAO mentorDAO) {
         this.mentorDAO = mentorDAO;
         this.cookieHelper = new CookieHelper();
-        this.loginAccesDAO = loginAccesDAO;
+        formDataParser = new FormDataParser();
     }
 
 
@@ -38,53 +39,45 @@ public class MentorAddArtifact implements HttpHandler {
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
         String sessionId = httpCookie.get().getValue().replace("\"", "");
         System.out.println(sessionId);
+        String response = "";
 
-        // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorAddArtifact.twig");
 
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/MentorAddArtifact.twig");
+
+        // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();
+
         // render a template to a string
-        String response = template.render(model);
-
-        // send the results to a the client
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+        response = template.render(model);
 
 
+        System.out.println("weszło do posta");
         if (method.equals("POST")) {
-            Map inputs = getData(httpExchange);
+
+            Map inputs = formDataParser.getData(httpExchange);
             String providedArtifactName = inputs.get("name").toString();
             String providedArtifactDescription = inputs.get("description").toString();
             String providedArtifactPrice = inputs.get("price").toString();
             Artifact newArtifact = new Artifact(providedArtifactName, providedArtifactDescription, Integer.parseInt(providedArtifactPrice));
             mentorDAO.addArtifactToStore(newArtifact);
+
+            httpExchange.getResponseHeaders().set("Location", "/MentorAddArtifact");
         }
+
+        sendResponse(httpExchange, response);
+    }
+
+    private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
+        httpExchange.sendResponseHeaders(200, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
+
     }
 
     private Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
         return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
-    }
-
-    private Map<String, String> getData(HttpExchange httpExchange) throws IOException{
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
-        return parseFormData(formData);
-    }
-
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = URLDecoder.decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
     }
 }

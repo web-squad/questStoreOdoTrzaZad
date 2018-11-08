@@ -42,12 +42,12 @@ public class CodecoolerMain implements HttpHandler {
         String surname = "Trzaska";
         String sessionId = httpCookie.get().getValue().replace("\"", "");
         System.out.println(sessionId);
-        try{
-            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-            System.out.println(userId);
-        }catch(SQLException e){
-            e.printStackTrace(); //temporary
-        }
+//        try{
+//            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
+//            System.out.println(userId);
+//        }catch(SQLException e){
+//            e.printStackTrace(); //temporary
+//        }
         CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
         if(userId != 0){
             coins = String.valueOf(codecoolerModel.getCoolcoins());

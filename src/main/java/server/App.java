@@ -35,7 +35,7 @@ public class App {
         server.createContext("/codecoolerJavaPages/Store", new Store());
         server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts());
 
-        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(mentorDAO, loginAccesDAO));
+        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(mentorDAO));
         server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest());
         server.createContext("/mentorJavaPages/MentorAddStudent", new MentorAddStudent());
         server.createContext("/mentorJavaPages/MentorCheckWallet", new MentorCheckWallet());
@@ -48,7 +48,7 @@ public class App {
         server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests());
         server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent());
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
-        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(creepyGuyDAO, loginAccesDAO));
+        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(mentorDAO));
 
         server.createContext("/adminJavaPages/ClassAdder", new ClassAdder());
         server.createContext("/adminJavaPages/ClassDeleter", new ClassDeleter());

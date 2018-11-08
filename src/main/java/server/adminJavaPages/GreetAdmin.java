@@ -31,28 +31,36 @@ public class GreetAdmin implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-//        String response = "";
-//        cookie = cookieHelper.getSessionIdCookie(httpExchange);
-//
-//        if (cookie.isPresent()) {
-//            if (loginAccesDAO.checkSessionPresent(cookie.get().getValue())){
-//                // get a template file
-//                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
-//
-//                // create a model that will be passed to a template
-//                JtwigModel model = JtwigModel.newModel();
-//
-//                // render a template to a string
-//                response = template.render(model);
-//
-//            }
-//            else{
-//                httpExchange.getResponseHeaders().set("Location", "/login");
-//            }
-//        }
-//        httpExchange.sendResponseHeaders(301, response.length());
-//        OutputStream os = httpExchange.getResponseBody();
-//        os.write(response.getBytes());
-//        os.close();
+        String response = "";
+        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
+        if (cookie.isPresent()) {
+            if (loginAccesDAO.checkSessionPresent(sessionId)){
+
+                creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
+                // get a template file
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
+
+                // create a model that will be passed to a template
+                JtwigModel model = JtwigModel.newModel();
+
+                model.with("nickname", creepyGuyModel.getNickName());
+                model.with("second_nickname", creepyGuyModel.getNickName());
+                model.with("name", creepyGuyModel.getName());
+                model.with("surname", creepyGuyModel.getSurname());
+                model.with("email", creepyGuyModel.getEmail());
+
+                // render a template to a string
+                response = template.render(model);
+
+            }
+            else{
+                httpExchange.getResponseHeaders().set("Location", "/login");
+            }
+        }
+        httpExchange.sendResponseHeaders(301, response.length());
+        OutputStream os = httpExchange.getResponseBody();
+        os.write(response.getBytes());
+        os.close();
     }
 }
