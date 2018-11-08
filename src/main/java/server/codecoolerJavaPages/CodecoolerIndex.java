@@ -2,6 +2,12 @@ package server.codecoolerJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controllers.dao.CodecoolerDAO;
+import controllers.dao.LoginAccesDAO;
+import models.CodecoolerModel;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -10,13 +16,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-
-import controllers.dao.CodecoolerDAO;
-import controllers.dao.LoginAccesDAO;
-import models.CodecoolerModel;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
-import server.helpers.CookieHelper;
 
 public class CodecoolerIndex implements HttpHandler {
 
@@ -45,10 +44,8 @@ public class CodecoolerIndex implements HttpHandler {
         String name = "Karol";
         String surname = "Trzaska";
         String sessionId = httpCookie.get().getValue().replace("\"", "");
-        System.out.println(sessionId);
         try{
             userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-            System.out.println(userId);
         }catch(SQLException e){
             e.printStackTrace(); //temporary
         }

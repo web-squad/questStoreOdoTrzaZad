@@ -2,6 +2,13 @@ package server.codecoolerJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controllers.dao.CodecoolerDAO;
+import controllers.dao.LoginAccesDAO;
+import models.CodecoolerModel;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,14 +18,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
-import controllers.dao.CodecoolerDAO;
-import controllers.dao.LoginAccesDAO;
-import models.CodecoolerModel;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
-import server.helpers.CookieHelper;
-import server.helpers.FormDataParser;
 
 public class CreateTeam implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
@@ -38,20 +37,19 @@ public class CreateTeam implements HttpHandler {
         String method = httpExchange.getRequestMethod();
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
         int userId = 0;
-        String coins = "30";
-        String coinsEverOwned = "210";
-        String level = "11";
-        String quest = "Vanilla";
-        String room = "Java";
-        String team = "Siurki";
-        String nickname = "Notarian";
-        String name = "Karol";
-        String surname = "Trzaska";
+        String coins = "";
+        String coinsEverOwned = "";
+        String level = "";
+        String quest = "";
+        String room = "";
+        String team = "";
+        String nickname = "";
+        String name = "";
+        String surname = "";
         String sessionId = httpCookie.get().getValue().replace("\"", "");
-        System.out.println(sessionId);
+
         try{
             userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-            System.out.println(userId);
         }catch(SQLException e){
             e.printStackTrace(); //temporary
         }

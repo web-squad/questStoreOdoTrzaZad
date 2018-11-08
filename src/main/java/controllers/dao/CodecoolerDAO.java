@@ -1,8 +1,7 @@
 package controllers.dao;
 
-import models.CodecoolerModel;
 import models.Artifact;
-
+import models.CodecoolerModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -199,7 +198,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        System.out.println(artifacts);
         return artifacts;
     } //korzystanie
 
@@ -214,13 +212,10 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
             artifactsQuery += whereClauseIds;
             artifactsQuery = artifactsQuery.substring(0, artifactsQuery.indexOf(';'));
-            System.out.println(artifactsQuery);
             ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
 
             artifactsList = createArtifactsList(resultSetArtifacts);
 
-            System.out.println(artifactsQuery);
-            System.out.println(artifactsList.size());
             return artifactsList;
         } else {
             return artifactsList;
@@ -244,7 +239,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
                 }
             }
-            System.out.println(columnsNumber);
         }catch(SQLException e){
             e.printStackTrace();
         }
