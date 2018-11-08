@@ -13,59 +13,77 @@ import java.util.Optional;
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import controllers.dao.MentorDAO;
+import models.CodecoolerModel;
+import models.CreepyGuyModel;
 import models.MentorModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 
 public class MentorWelcomePage implements HttpHandler {
-        private static final String SESSION_COOKIE_NAME = "sessionId";
-        private MentorDAO mentorDAO;
-        private CreepyGuyDAO creepyGuyDAO;
-        private LoginAccesDAO loginAccesDAO;
-        private CookieHelper cookieHelper;
+    private static final String SESSION_COOKIE_NAME = "sessionId";
+    private MentorDAO mentorDAO;
+    private CreepyGuyDAO creepyGuyDAO;
+    private LoginAccesDAO loginAccesDAO;
+    private CookieHelper cookieHelper;
 
-        public MentorWelcomePage(MentorDAO mentorDAO, CreepyGuyDAO creepyGuyDAO, LoginAccesDAO loginAccesDAO) {
-            this.mentorDAO = mentorDAO;
-            this.creepyGuyDAO = creepyGuyDAO;
-            this.cookieHelper = new CookieHelper();
-            this.loginAccesDAO = loginAccesDAO;
+    public MentorWelcomePage(MentorDAO mentorDAO, CreepyGuyDAO creepyGuyDAO, LoginAccesDAO loginAccesDAO) {
+        this.mentorDAO = mentorDAO;
+        this.creepyGuyDAO = creepyGuyDAO;
+        this.cookieHelper = new CookieHelper();
+        this.loginAccesDAO = loginAccesDAO;
+    }
+
+
+    @Override
+    public void handle(HttpExchange httpExchange) throws IOException {
+        Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
+        int id = 0;
+        String room = "";
+        String nickname = "";
+        String name = "";
+        String surname = "";
+        String email = "";
+        String sessionId = httpCookie.get().getValue().replace("\"", "");
+        System.out.println(sessionId);
+        try{
+            id = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
+            System.out.println(id);
+        }catch(SQLException e){
+            e.printStackTrace(); //temporary
+        }
+        MentorModel mentorModel = creepyGuyDAO.getMentorById(String.valueOf(id));
+        if(id != 0){
+            nickname = mentorModel.getNickName();
+            name = mentorModel.getName();
+            surname = mentorModel.getSurname();
+            email = mentorModel.getEmail();
+            room = mentorModel.getRoom();
         }
 
 
-        @Override
-        public void handle(HttpExchange httpExchange) throws IOException {
-            Optional<HttpCookie> httpCookie = cookieHelper.getSessionIdCookie(httpExchange);
-            int id;
-            String email;
-            String name;
-            String surname;
-            String room;
-            String nickName;
-            String sessionId = httpCookie.get().getValue().replace("\"", "");
-            MentorModel mentorModel = creepyGuyDAO.getMentorById(String.valueOf(id));
-            if(id != 0)
-                nickName = mentorModel.getNickName();
-                name = mentorModel.getName();
-                surname = mentorModel.getSurname();
-                email = mentorModel.getEmail();
-                room = mentorModel.getRoom();
-            }
+    // get a template file
+    JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorWelcomePage.twig");
 
+    JtwigModel model = JtwigModel.newModel();
+            model.with("nickname",nickname);
+            model.with("room",room);
+            model.with("name",name);
+            model.with("surname",surname);
+            model.with("email",email);
+    // render a template to a string
+    String response = template.render(model);
 
-        // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorWelcomePage.twig");
+    // send the results to a the client
+            httpExchange.sendResponseHeaders(200,response.length());
+    OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+}
 
-        // create a model that will be passed to a template
-        JtwigModel model = JtwigModel.newModel();
-
-        // render a template to a string
-        String response = template.render(model);
-
-        // send the results to a the client
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+    private Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
+        return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
     }
 }

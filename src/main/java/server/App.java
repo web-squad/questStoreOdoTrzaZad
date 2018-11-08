@@ -4,7 +4,9 @@ import com.sun.net.httpserver.HttpServer;
 import controllers.Connector;
 import controllers.Connector;
 import controllers.dao.CodecoolerDAO;
+import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
+import controllers.dao.MentorDAO;
 import server.codecoolerJavaPages.*;
 import server.adminJavaPages.*;
 import server.mentorJavaPages.*;
@@ -22,6 +24,8 @@ public class App {
         Connector connector = new Connector();
         Connection connection = connector.connect("karol", "4313284");
         CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
+        MentorDAO mentorDAO = new MentorDAO(connection);
+        CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
         LoginAccesDAO loginAccesDAO = new LoginAccesDAO(connection);
         // set routes
         server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
@@ -44,7 +48,7 @@ public class App {
         server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests());
         server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent());
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
-        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage());
+        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(mentorDAO, creepyGuyDAO, loginAccesDAO));
 
         server.createContext("/adminJavaPages/ClassAdder", new ClassAdder());
         server.createContext("/adminJavaPages/ClassDeleter", new ClassDeleter());
