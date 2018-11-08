@@ -4,22 +4,18 @@
 
     <div class="container-internal">
             <h1>Edit quest:</h1>
-            
-            <div class="search-engine">
-                Quest id:<br>
-                <input class="input" type="text" name="id"><br>
-            </div>
-        <form>
+
+        <form method="post">
             <div class="column">
                 <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
-                            New quest name:
-                            <input class="input" type="text" name="questName">
+                            Quest id:<br>
+                            <input class="input" type="text" name="questId"><br>
                         </label></li>
                         <li><label>
-                            New quest description:
-                            <input class="input" type="text" name="questDesc">
+                            New quest name:
+                            <input class="input" type="text" name="questName">
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
@@ -27,13 +23,14 @@
                 </div><fieldset class="second-table menu-internal">
                     <ul>
                         <li><label>
+                            New quest description:
+                            <input class="input" type="text" name="questDesc">
+                        </label></li>
+                        <li><label>
                             New quest reward:
                             <input class="input" type="text" name="questReward">
                         </label></li>
-                        <li><label>
-                            New quest image:
-                            <input class="input" type="text" name="questURL">
-                        </label></li>
+
                     </ul>
                 </fieldset>
             </div>

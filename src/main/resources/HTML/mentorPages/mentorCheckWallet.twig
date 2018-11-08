@@ -7,13 +7,20 @@
                 enter codecooler id to see his wallet:</h1>
             
             <div class="search-engine">
+                <form method="post">
                 Search for codecooler:<br>
                 <input class="input" type="text" name="search"><br>
-                <input class="btn" type="submit" value="Submit">
-    
+                <input class="btn" type="submit" value="Submit" name="searchButton">
+                {{ searchResult }}
+                </form>
+
+                <form method="post">
                 Codecooler id:<br>
                 <input class="input" type="text" name="codecoolerWallet"><br>
-                <input class="btn" type="submit" value="Submit">
+                <input class="btn" type="submit" value="Submit" name="showWalletButton">
+                {{ coins }}
+                {{ wallet }}
+                </form>
             </div>
     </div>
 {% endblock %}
