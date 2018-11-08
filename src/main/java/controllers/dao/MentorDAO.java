@@ -5,6 +5,7 @@ import views.View;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class MentorDAO implements MentorDAOInterface {
     PreparedStatement ps;
     View view = new View();
 
-    public MentorDAO(Connection connection){
+    public MentorDAO(Connection connection) {
         this.connection = connection;
     }
 
@@ -27,7 +28,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps.executeUpdate();
 
             ps = connection.prepareStatement("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)" +
-                            " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
             ps.setInt(1, cm.getCoolcoins());
             ps.setInt(2, cm.getExpLevel());
             ps.setInt(3, cm.getRoom());
@@ -42,7 +43,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps.setString(1, cm.getEmail());
             ResultSet rs = ps.executeQuery();
             int codecooler_id = 0;
-            while( rs.next() ) {
+            while (rs.next()) {
                 codecooler_id = rs.getInt(1);
             }
 
@@ -54,8 +55,8 @@ public class MentorDAO implements MentorDAOInterface {
             view.print("Operation done successfully\n");
             connection.commit();
             ps.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -85,8 +86,8 @@ public class MentorDAO implements MentorDAOInterface {
 
             ps.close();
             view.print("Operation done successfully\n");
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -100,7 +101,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps.setInt(3, codecoolerID);
             ps.executeUpdate();
             ps = connection.prepareStatement("UPDATE codecoolers SET coolcoins = ?, exp_level = ?, actual_room = ?, coolcoins_ever_earned = ?,quest_in_progress = ?," +
-                            "first_name = ?, last_name = ?, nickname = ? WHERE codecooler_id = ?;");
+                    "first_name = ?, last_name = ?, nickname = ? WHERE codecooler_id = ?;");
             ps.setInt(1, cm.getCoolcoins());
             ps.setInt(2, cm.getExpLevel());
             ps.setInt(3, cm.getRoom());
@@ -114,24 +115,24 @@ public class MentorDAO implements MentorDAOInterface {
             connection.commit();
             ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
-    public List<String> allCodecoolers(){
+    public List<String> allCodecoolers() {
         List<String> codecoolers = new ArrayList<>();
         try {
             ps = connection.prepareStatement("SELECT codecooler_id, nickname FROM codecoolers;");
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
+            while (rs.next()) {
                 codecoolers.add(rs.getInt(1) + " " + rs.getString(2));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -150,8 +151,8 @@ public class MentorDAO implements MentorDAOInterface {
             connection.commit();
             ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -161,13 +162,13 @@ public class MentorDAO implements MentorDAOInterface {
         try {
             ps = connection.prepareStatement("SELECT * FROM quests;");
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
+            while (rs.next()) {
                 quests.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " reward: " + rs.getInt(4));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -184,8 +185,8 @@ public class MentorDAO implements MentorDAOInterface {
             view.print("Operation done successfully\n");
             connection.commit();
             ps.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -195,13 +196,13 @@ public class MentorDAO implements MentorDAOInterface {
         try {
             ps = connection.prepareStatement("SELECT * FROM artifacts;");
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
+            while (rs.next()) {
                 artifacts.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " price: " + rs.getInt(4));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return artifacts;
@@ -218,8 +219,8 @@ public class MentorDAO implements MentorDAOInterface {
             connection.commit();
             ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -234,8 +235,8 @@ public class MentorDAO implements MentorDAOInterface {
             view.print("Operation done successfully\n");
             connection.commit();
             ps.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -243,33 +244,34 @@ public class MentorDAO implements MentorDAOInterface {
     public int codecoolerCoins(int codecooler_id) {
         ResultSet resultSet;
 
-        try{
+        try {
             ps = connection.prepareStatement("SELECT coolcoins FROM codecoolers WHERE codecooler_id = ?;");
             ps.setInt(1, codecooler_id);
             resultSet = ps.executeQuery();
-            while( resultSet.next() ) {
+            while (resultSet.next()) {
                 int coins = resultSet.getInt(1);
                 return coins;
             }
             resultSet.close();
             ps.close();
-        }catch(SQLException e){
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return 0;
     }
 
     public void markQuestAsCompleted(int codecoolerID) {
-        ResultSet resultSet;
+        ResultSet resultSet = null;
 
         try {
             ps = connection.prepareStatement("SELECT quest_in_progress FROM codecoolers WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             resultSet = ps.executeQuery();
-            int questID = resultSet.getInt(1);
+            int questID = getFirstIntFromRS(resultSet);
 
             ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 0 WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
             ps.executeUpdate();
 
             ps = connection.prepareStatement("INSERT INTO quest_completed (quest_id, codecooler_id) VALUES (?, ?);");
@@ -280,7 +282,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps = connection.prepareStatement("SELECT reward FROM quests WHERE quest_id = ?;");
             ps.setInt(1, questID);
             resultSet = ps.executeQuery();
-            int questReward = resultSet.getInt(1);
+            int questReward = getFirstIntFromRS(resultSet);
 
             ps = connection.prepareStatement("UPDATE codecoolers SET coolcoins = coolcoins + ? WHERE codecooler_id = ?;");
             ps.setInt(1, questReward);
@@ -292,10 +294,17 @@ public class MentorDAO implements MentorDAOInterface {
             connection.commit();
             resultSet.close();
             ps.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
+
+    private int getFirstIntFromRS(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
     public List<String> possessedArtifacts(int codecoolerID) {
@@ -305,13 +314,13 @@ public class MentorDAO implements MentorDAOInterface {
                     "INNER JOIN artifacts ON artifacts_in_possess.artifact_id = artifacts.artifact_id WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
+            while (rs.next()) {
                 possessedArtifacts.add("id: " + rs.getInt(1) + " name: " + rs.getString(2));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return possessedArtifacts;
@@ -325,8 +334,8 @@ public class MentorDAO implements MentorDAOInterface {
             connection.commit();
             ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -343,17 +352,56 @@ public class MentorDAO implements MentorDAOInterface {
             ps.setString(4, '%' + word + '%');
 
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
+            while (rs.next()) {
                 searchResult.add("ID:" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(2));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
         return searchResult;
+    }
+
+
+    public MentorModel getMentorBySessionId(String sessionId) {
+        try {
+            return new MentorModel(fetchMentor(sessionId));
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        } catch (NumberFormatException e) {
+            view.print("Passed ID is not numerical value");
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    private Map<String, String> fetchMentor(String id) throws Exception {
+        Map<String, String> mentorData = new HashMap<>();
+        ps = connection.prepareStatement("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
+                "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE session_id = ?;");
+        ps.setString(1, id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            mentorData.put("firstName", rs.getString("first_name"));
+            mentorData.put("surname", rs.getString("last_name"));
+            mentorData.put("email", rs.getString("email"));
+            mentorData.put("password", rs.getString("password"));
+            mentorData.put("nickName", rs.getString("nickname"));
+            mentorData.put("room", String.valueOf(rs.getInt("actual_room")));
+            if (rs.getInt("access_level") != 2) {
+                throw new Exception();
+            }
+        }
+        rs.close();
+        ps.close();
+
+        return mentorData;
     }
 }
 

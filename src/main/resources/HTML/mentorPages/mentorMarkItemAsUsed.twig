@@ -6,17 +6,18 @@
             <h1>Mark someone's artifact as used:</h1>
             
             <div class="search-engine">
-                Search for codecooler:
-                <input class="input" type="text" name="search">
-                <input class="btn" type="submit" value="Submit">
-            
-                codecooler id:
-                <input class="input" type="text" name="id">
-                <input class="btn" type="submit" value="Submit">
+                <form method="post">
+                Search for codecooler wallet:<br>
+                <input class="input" type="number" name="search" required><br>
+                <input class="btn" type="submit" value="Submit" name="searchButton">
+                {{ searchResult }}
+                </form>
+                <form method="post">
+                Artifact id:
+                <input class="input" type="number" name="id" required>
+                <input class="btn" type="submit" value="Submit" name="itemToMarkButton">
+                </form>
 
-                artifact id:
-                <input class="input" type="text" name="artifactId">
-                <input class="btn" type="submit" value="Submit">
             </div>
     </div>
 {% endblock %}

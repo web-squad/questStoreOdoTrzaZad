@@ -107,7 +107,7 @@ public class Login implements HttpHandler {
                 return "/adminJavaPages/GreetAdmin";
             }
             if (accessLevel == 2){
-                return "/mentorJavaPages/mentorMainPage";
+                return "/mentorJavaPages/MentorWelcomePage";
             }
         }
         return "null";

@@ -74,16 +74,6 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
     }
 
-    public String getIdBySessionId(String sessionId) throws SQLException {
-        String id = "";
-        Statement stmt = connection.createStatement();
-        String idQuery = "SELECT id FROM login_access WHERE session_id = '" + sessionId + "';";
-        ResultSet resultSet = stmt.executeQuery(idQuery);
-        while(resultSet.next()){
-            id = resultSet.getString("id");
-        }
-        return id;
-    }
 
     public boolean checkSessionPresent(String sessionId){
         boolean sessionPresent = false;
@@ -100,6 +90,18 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             System.exit(0);
         }
         return sessionPresent;
+    }
+
+    public String getIdBySessionId(String sessionId) throws SQLException {
+        String id = "";
+        Statement stmt = connection.createStatement();
+        System.out.println(sessionId);
+        String idQuery = "SELECT id FROM login_access WHERE session_id = '" + sessionId + "';";
+        ResultSet resultSet = stmt.executeQuery(idQuery);
+        while(resultSet.next()){
+            id = resultSet.getString("id");
+        }
+        return id;
     }
 
 }

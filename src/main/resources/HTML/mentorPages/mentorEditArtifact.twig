@@ -6,22 +6,18 @@
             <header>
             <h1>Edit artifact:</h1>
             </header>
-            
-            <div class="search-engine">
-                artifact id:
-                <input class="input" type="text" name="id">
-            </div>
-        <form>
+
+        <form method="post">
             <div class="column">
                 <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
-                            New artifact name:
-                            <input class="input" type="text" name="artifactName">
+                            Old artifact ID:
+                            <input class="input" type="number" name="artifactId" required>
                         </label></li>
                         <li><label>
                             New artifact description:
-                            <input class="input" type="text" name="artifactDesc">
+                            <input class="input" type="text" name="artifactName" required>
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
@@ -29,12 +25,12 @@
                 </div><fieldset class="second-table menu-internal">
                     <ul>
                         <li><label>
-                            New artifact price:
-                            <input class="input" type="text" name="artifactPrice">
+                            New artifact description:
+                            <input class="input" type="text" name="artifactDesc" required>
                         </label></li>
                         <li><label>
-                            New artifact image:
-                            <input class="input" type="text" name="artifactURL">
+                            New artifact price:
+                            <input class="input" type="number" name="artifactPrice" required>
                         </label></li>
                     </ul>
                 </fieldset>

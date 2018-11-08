@@ -5,21 +5,21 @@
         <div class="container-internal">
             <h1>Here you can add new codecooler:</h1>
             </div>
-        <form>
+        <form method="post">
             <div class="column">
                 <fieldset class="first-table menu-internal">
                     <ul>
                         <li><label>
                             First name:
-                            <input class="input" type="text" name="name">
+                            <input class="input" type="text" name="name" required>
                         </label></li>
                         <li><label>
                             Surname:
-                            <input class="input" type="text" name="lastName">
+                            <input class="input" type="text" name="lastName" required>
                         </label></li>
                         <li><label>
                             Nickname:
-                            <input class="input" type="text" name="nickname">
+                            <input class="input" type="text" name="nickname" required>
                         </label></li>
                     </ul>
                 </fieldset><div class="separator">
@@ -28,11 +28,11 @@
                     <ul>
                         <li><label>
                             Email:
-                            <input class="input" type="text" name="email">
+                            <input class="input" type="text" name="email" required>
                         </label></li>
                         <li><label>
                             Password:
-                            <input class="input" type="password" name="password">
+                            <input class="input" type="password" name="password" required>
                         </label></li>
                     </ul>
                 </fieldset>

@@ -6,13 +6,17 @@
             <h1>Mark someone's quest as completed:</h1>
             
             <div class="search-engine">
+                <form method="post">
                 Search for codecooler:
-                <input class="input" type="text" name="search">
-                <input class="btn" type="submit" value="Submit">
-            
+                <input class="input" type="text" name="search" required>
+                <input class="btn" type="submit" value="searchButton">
+                </form>
+
+                <form method="post">
                 codecooler id:
-                <input class="input" type="text" name="id">
-                <input class="btn" type="submit" value="Submit">
+                <input class="input" type="number" name="id" required>
+                <input class="btn" type="submit" value="markButton">
+                </form>
             </div>
     </div>
 {% endblock %}
