@@ -5,36 +5,54 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpCookie;
 import java.sql.Connection;
+import java.util.Optional;
 
+import controllers.dao.CreepyGuyDAO;
+import controllers.dao.LoginAccesDAO;
+import models.CreepyGuyModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
 
 public class GreetAdmin implements HttpHandler {
-    Connection connection;
+    CreepyGuyDAO creepyGuyDAO;
+    CreepyGuyModel creepyGuyModel;
+    Optional<HttpCookie> cookie;
+    CookieHelper cookieHelper;
+    LoginAccesDAO loginAccesDAO;
 
     public GreetAdmin(Connection connection){
-        this.connection = connection;
+        creepyGuyDAO = new CreepyGuyDAO(connection);
+        cookieHelper = new CookieHelper();
+        loginAccesDAO = new LoginAccesDAO(connection);
     }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        String response = "";
+        cookie = cookieHelper.getSessionIdCookie(httpExchange);
 
+        if (cookie.isPresent()) {
+            if (loginAccesDAO.checkSessionPresent(cookie.get().getValue())){
+                // get a template file
+                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
 
-        // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
+                // create a model that will be passed to a template
+                JtwigModel model = JtwigModel.newModel();
 
-        // create a model that will be passed to a template
-        JtwigModel model = JtwigModel.newModel();
+                // render a template to a string
+                response = template.render(model);
 
-        // render a template to a string
-        String response = template.render(model);
-
-        // send the results to a the client
-        httpExchange.sendResponseHeaders(200, response.length());
+            }
+            else{
+                httpExchange.getResponseHeaders().set("Location", "/login");
+            }
+        }
+        httpExchange.sendResponseHeaders(301, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
-
     }
 }

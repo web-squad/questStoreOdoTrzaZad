@@ -1,11 +1,14 @@
 package server.helpers;
 
+import com.sun.net.httpserver.HttpExchange;
+
 import java.net.HttpCookie;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class CookieHelper {
+    private static final String SESSION_COOKIE_NAME = "sessionId";
 
     public List<HttpCookie> parseCookies(String cookieString){
         List<HttpCookie> cookies = new ArrayList<>();
@@ -27,5 +30,15 @@ public class CookieHelper {
                 return Optional.ofNullable(cookie);
         }
         return Optional.empty();
+    }
+
+    public Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookies = parseCookies(cookieStr);
+        return findCookieByName(SESSION_COOKIE_NAME, cookies);
+    }
+
+    public static String getSessionCookieName() {
+        return SESSION_COOKIE_NAME;
     }
 }

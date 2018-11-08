@@ -5,12 +5,6 @@ import org.postgresql.util.PSQLException;
 import views.View;
 
 import java.sql.*;
-import java.sql.*;
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +65,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             sessionId = sessionId.substring(1, sessionId.length()-1);
             ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id = ? ;");
             ps.setString(1, sessionId);
+            ps.executeUpdate();
             connection.commit();
             ps.close();
         } catch (SQLException e){
@@ -79,14 +74,23 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
     }
 
-    public String getIdBySessionId(String sessionId) throws SQLException {
-        String id = "";
-        Statement stmt = connection.createStatement();
-        String idQuery = "SELECT id FROM login_access WHERE session_id = '" + sessionId + "';";
-        ResultSet resultSet = stmt.executeQuery(idQuery);
-        while(resultSet.next()){
-            id = resultSet.getString("id");
+    public boolean checkSessionPresent(String sessionId){
+        boolean sessionPresent = false;
+        try{
+            sessionId = sessionId.substring(1, sessionId.length() - 1);
+            ps = connection.prepareStatement("SELECT session_id FROM public.login_access WHERE session_id = ?");
+            ps.setString(1, sessionId);
+            ResultSet rs = ps.executeQuery();
+            System.out.println(rs.next());
+            while (rs.next()) {
+                sessionPresent = true;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
         }
-        return id;
+        return sessionPresent;
     }
+
 }

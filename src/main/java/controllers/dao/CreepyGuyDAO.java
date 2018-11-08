@@ -1,5 +1,6 @@
 package controllers.dao;
 
+import models.CreepyGuyModel;
 import models.Level;
 import models.MentorModel;
 import models.Room;
@@ -16,6 +17,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
     Map<String, String> mentorData;
     Map<String, String> roomData;
     Map<String, String> levelData;
+    Map<String, String> creepyGuyData;
 
     public CreepyGuyDAO(Connection connection){
         this.connection = connection;
@@ -141,6 +143,43 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
             mentorData.put("nickName", rs.getString("nickname"));
             mentorData.put("room", String.valueOf(rs.getInt("actual_room")));
             if(rs.getInt("access_level") != 2){
+                throw new Exception();
+            }
+        }
+        rs.close();
+        ps.close();
+    }
+
+    public CreepyGuyModel getAdminById(String id){
+        try {
+            fetchAdmin(id);
+            view.print("Operation done successfully\n");
+            return new CreepyGuyModel(creepyGuyData);
+        } catch ( SQLException e ) {
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        } catch (NumberFormatException e){
+            view.print("Passed ID is not numerical value");
+        }catch (Exception e){
+            return null;
+        }
+        return null;
+    }
+
+    private void fetchAdmin(String id) throws Exception{
+        creepyGuyData = new HashMap<>();
+        ps = connection.prepareStatement("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
+                "codecoolers.last_name, login_access.password, FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE id = ?;");
+        ps.setInt(1, Integer.parseInt(id));
+        ResultSet rs = ps.executeQuery();
+        while ( rs.next() ) {
+            creepyGuyData.put("firstName", rs.getString("first_name"));
+            creepyGuyData.put("surname", rs.getString("last_name"));
+            creepyGuyData.put("email", rs.getString("email"));
+            creepyGuyData.put("password", rs.getString("password"));
+            creepyGuyData.put("nickName", rs.getString("nickname"));
+            if(rs.getInt("access_level") != 3){
                 throw new Exception();
             }
         }
