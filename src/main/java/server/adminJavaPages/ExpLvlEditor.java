@@ -2,6 +2,14 @@ package server.adminJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controllers.dao.CreepyGuyDAO;
+import controllers.dao.LoginAccesDAO;
+import models.CreepyGuyModel;
+import models.Level;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,20 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import controllers.dao.CreepyGuyDAO;
-import controllers.dao.LoginAccesDAO;
-import models.CreepyGuyModel;
-import models.Level;
-import models.Room;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
-import server.helpers.CookieHelper;
-import server.helpers.FormDataParser;
-
 public class ExpLvlEditor implements HttpHandler {
 
     private CreepyGuyDAO creepyGuyDAO;
-    private Optional<HttpCookie> cookie;
     private CookieHelper cookieHelper;
     private LoginAccesDAO loginAccesDAO;
     private FormDataParser formDataParser;
@@ -42,7 +39,7 @@ public class ExpLvlEditor implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie> cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         String method = httpExchange.getRequestMethod();
         creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);

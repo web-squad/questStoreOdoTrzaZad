@@ -22,7 +22,6 @@ import server.helpers.FormDataParser;
 
 public class MentorEditor implements HttpHandler {
     private CreepyGuyDAO creepyGuyDAO;
-    private Optional<HttpCookie> cookie;
     private CookieHelper cookieHelper;
     private LoginAccesDAO loginAccesDAO;
     private FormDataParser formDataParser;
@@ -39,7 +38,7 @@ public class MentorEditor implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie>  cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         String method = httpExchange.getRequestMethod();
 

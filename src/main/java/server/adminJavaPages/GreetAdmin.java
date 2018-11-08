@@ -17,11 +17,9 @@ import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 
 public class GreetAdmin implements HttpHandler {
-    CreepyGuyDAO creepyGuyDAO;
-    CreepyGuyModel creepyGuyModel;
-    Optional<HttpCookie> cookie;
-    CookieHelper cookieHelper;
-    LoginAccesDAO loginAccesDAO;
+    private CreepyGuyDAO creepyGuyDAO;
+    private CookieHelper cookieHelper;
+    private LoginAccesDAO loginAccesDAO;
 
     public GreetAdmin(Connection connection){
         creepyGuyDAO = new CreepyGuyDAO(connection);
@@ -32,12 +30,12 @@ public class GreetAdmin implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie>cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         if (cookie.isPresent()) {
             if (loginAccesDAO.checkSessionPresent(sessionId)){
 
-                creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
+                CreepyGuyModel creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
                 // get a template file
                 JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
 
