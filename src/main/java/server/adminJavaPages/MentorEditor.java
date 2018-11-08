@@ -100,8 +100,9 @@ public class MentorEditor implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/mentorEditor.twig");
 
         JtwigModel model = JtwigModel.newModel();
+        model.with("nickname", creepyGuyModel.getNickName());
         if (!(mentorModel == null)) {
-            model.with("nickname", creepyGuyModel.getNickName());
+
             model.with("email", mentorModel.getEmail());
             model.with("nick", mentorModel.getNickName());
             model.with("name", mentorModel.getName());

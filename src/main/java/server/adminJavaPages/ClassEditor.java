@@ -104,11 +104,11 @@ public class ClassEditor implements HttpHandler {
 
 
         JtwigModel model = JtwigModel.newModel();
-
         model.with("nickname", creepyGuyModel.getNickName());
-        model.with("description", room.getRoomDescription());
-        model.with("name", room.getRoomName());
-
+        if(!(room == null)) {
+            model.with("description", room.getRoomDescription());
+            model.with("name", room.getRoomName());
+        }
 
         return template.render(model);
     }

@@ -100,9 +100,8 @@ public class ExpLvlEditor implements HttpHandler {
         Level level = creepyGuyDAO.getLevelById(id);
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/expLvlEditor.twig");
         JtwigModel model = JtwigModel.newModel();
-
+        model.with("nickname", creepyGuyModel.getNickName());
         if (!(level == null)) {
-            model.with("nickname", creepyGuyModel.getNickName());
             model.with("description", level.getThreshold());
             model.with("name", level.getLevelName());
         }
