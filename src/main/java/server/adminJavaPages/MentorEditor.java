@@ -2,15 +2,6 @@ package server.adminJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpCookie;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import models.CreepyGuyModel;
@@ -19,6 +10,14 @@ import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 import server.helpers.FormDataParser;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpCookie;
+import java.sql.Connection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 public class MentorEditor implements HttpHandler {
     private CreepyGuyDAO creepyGuyDAO;
@@ -97,21 +96,19 @@ public class MentorEditor implements HttpHandler {
 
     private String fillPage(String sessionId,  String id){
         creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
-
         MentorModel mentorModel = creepyGuyDAO.getMentorById(id);
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/mentorEditor.twig");
 
-
         JtwigModel model = JtwigModel.newModel();
-
-        model.with("nickname", creepyGuyModel.getNickName());
-        model.with("email", mentorModel.getEmail());
-        model.with("nick", mentorModel.getNickName());
-        model.with("name", mentorModel.getName());
-        model.with("surname", mentorModel.getSurname());
-        model.with("pass", mentorModel.getPassword());
-        model.with("class", mentorModel.getRoom());
-
+        if (!(mentorModel == null)) {
+            model.with("nickname", creepyGuyModel.getNickName());
+            model.with("email", mentorModel.getEmail());
+            model.with("nick", mentorModel.getNickName());
+            model.with("name", mentorModel.getName());
+            model.with("surname", mentorModel.getSurname());
+            model.with("pass", mentorModel.getPassword());
+            model.with("class", mentorModel.getRoom());
+        }
         return template.render(model);
     }
 
