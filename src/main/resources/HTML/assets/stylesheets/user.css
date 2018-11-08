@@ -1,0 +1,65 @@
+body{
+    font-size: 1.5vw;
+    color: rgb(0,0,0);
+    margin: 0;
+    padding: 0;
+}
+.nickname{
+    margin-top: 2%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+}
+
+.coin-picker{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255,255,255, 0.4);
+    width: 100%;
+    height: 7vw;  
+
+}
+.coins{
+    display: flex;
+    flex-direction: column;
+    
+}
+.coin-picker .coolcoinIcon{
+    margin-top: 0.5%;
+    
+    height: 6vw;
+}
+.coins-now, .coins-ever-owned {
+    color: rgb(0,0,0);
+    text-transform: uppercase;
+    padding-left: 2vw;
+    margin-top: 4%;
+}
+.quest-in-progress{
+    margin-top: 2%;
+    text-transform: uppercase;
+    margin-left: 1%;
+}
+.questIcon{
+    margin-top: 0.5%;
+    height: 6vw;
+    margin-left: 5%;
+}
+
+.teamIcon{
+    padding-left: 2%;
+    margin-top: 0.5%;   
+    height: 6vw;
+    width: 5vw
+}
+.team-class{
+    display: flex;
+    flex-direction: column;
+    line-height: 2vw;
+    margin-top: 1.5%;
+    text-transform: uppercase;
+    margin-left: 2%;
+}

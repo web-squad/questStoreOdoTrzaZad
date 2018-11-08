@@ -3,7 +3,8 @@
     <head>
         <title>Codecool Quest Store</title>
         <link rel = "stylesheet" type="text/css" href = "../css/main.css">
-        <link rel = "stylesheet" type = "text/css" href = "../assets/stylesheets/css/fontello.css">
+        <link rel = "stylesheet" type = "text/css" href = "css/fontello.css">
+        <link rel = "stylesheet" type = "text/css" href = "fontello_codecooler/css/fontello.css">
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
         <meta charset = "UTF-8">
         <link rel="icon" href="../assets/images/faviconCodecool.png">
@@ -18,11 +19,10 @@
 
             <section class ="bar">
                         
-                <!--
-                 --><img src = "../assets/images/logoBar.jpg"><!--
+                <img src = "../assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
-                        <a>My account</a><!--
+                        <a onclick="changeToWelcomePage()">My account</a><!--
                         --><a>Log out</a>
                         
                      </nav>
@@ -30,20 +30,16 @@
 
             <div class = "main">
 
-                <nav class = "menu col-1-5"><ul>
-                 <!--   <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li><i class="icon-pencil"></i>Wypisz</li></a>
-                    <a><li><i class="icon-floppy"></i>Zapisz</li></a>
-                    <a><li><i class="icon-arrows-cw"></i>Załaduj</li></a>
-                    <a><li class = "last-one"><i class="icon-pencil"></i>Wypisz</li></a> -->
-                </ul></nav>
+                <nav class = "menu col-1-5">
+                    <ul id="codecoolerMenu">
+                        <li data-source="store.html"><i class="icon-basket" ></i>Buy Artifacts</li>
+                        <li data-source="userArtifacts.html"><i class="icon-shopping-bag" ></i>My Artifacts</li>
+                        <li data-source="editUserTeam.html"><i class="icon-pencil" ></i>Edit Team</li>
+                        <li data-source="createTeam.html"><i class="icon-magic" ></i>Create Team</li>
+                    </ul>
+                </nav>
 
-            <div class = "col-4-5"><iframe class = "site" src="codecoolerMain.html" frameBorder = "0"></iframe></div>
+            <div class = "col-4-5"><iframe class = "site" src="codecoolerMain.html" frameBorder = "0" id="inner"></iframe></div>
             <div class = "right-side-style"></div>
         
         </div>
@@ -56,6 +52,10 @@
         </span>
         </footer>
          </div>
-         
+    <script src="../assets/scripts/codecoolerMenuScript.js"></script> 
+    <script>function changeToWelcomePage() {
+            document.getElementById("inner").src = "codecoolerMain.html"
+    }    
+    </script>
     </body>
     </html>

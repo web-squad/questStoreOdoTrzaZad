@@ -5,11 +5,18 @@ import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Connection;
 
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
 public class GreetAdmin implements HttpHandler {
+    Connection connection;
+
+    public GreetAdmin(Connection connection){
+        this.connection = connection;
+    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
