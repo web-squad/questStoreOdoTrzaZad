@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,12 +25,14 @@ public class MentorAddQuest implements HttpHandler {
     private CookieHelper cookieHelper;
     private FormDataParser formDataParser;
     private LoginAccesDAO loginAccesDAO;
+    private Connection connection;
 
-    public MentorAddQuest(MentorDAO mentorDAO, LoginAccesDAO loginAccesDAO){
+    public MentorAddQuest(Connection connection){
         formDataParser = new FormDataParser();
         cookieHelper = new CookieHelper();
-        this.mentorDAO = mentorDAO;
-        this.loginAccesDAO = loginAccesDAO;
+        this.connection = connection;
+        mentorDAO = new MentorDAO(connection);
+        loginAccesDAO = new LoginAccesDAO(connection);
     }
 
 

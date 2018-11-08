@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
+import java.sql.Connection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +20,11 @@ public class MentorWelcomePage implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private MentorDAO mentorDAO;
     private CookieHelper cookieHelper;
+    private Connection connection;
 
-    public MentorWelcomePage(MentorDAO mentorDAO) {
-        this.mentorDAO = mentorDAO;
+    public MentorWelcomePage(Connection connection) {
+        this.connection = connection;
+        this.mentorDAO = new MentorDAO(connection);
         this.cookieHelper = new CookieHelper();
     }
 

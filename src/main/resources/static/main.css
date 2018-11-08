@@ -36,7 +36,7 @@ header {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 15%; /* zmienione */
+    height: 20vh;
     font-weight: bold;
     font-size: 2.5vw;
     padding: 0.5vw;
@@ -44,7 +44,7 @@ header {
 
 header a {
     display: inline-block;
-   align-self: center;
+    align-self: center;
     z-index: 2;
     padding-left: 2vw;
     color: #fff;
@@ -67,6 +67,7 @@ header a:hover {
     width: 100%;
     border-top: 0.1vw solid black;
     background-color:rgb(40,42,41);
+    text-decoration: none;
 }
 
 .bar img {
@@ -87,6 +88,7 @@ header a:hover {
 }
 .primary-nav a {
     text-transform: uppercase;
+    text-decoration: none;
     font-size: 1.7vw;
     display: inline-block;
     text-align: center;
@@ -113,6 +115,9 @@ header a:hover {
 .col-4-5 {
     width: 82%;
     height: 40vw;
+    background-image: url("assets/images/iframeBackground.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .right-side-style {
     width: 3%;
@@ -122,6 +127,11 @@ header a:hover {
     
     height: 40vw;
     background-color: rgb(40,42,41);
+}
+.left-menu-a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
 }
 .menu ul {
     
@@ -255,14 +265,37 @@ header a:hover {
     width: 33%;
     margin-left: 10%;
     margin-top: 7%;
-    height: 30vw;
+    height: 50vh;
     background-color: rgba(5, 27, 40, 1);
     border-radius: 1vw;
     text-align: center;
     text-transform: uppercase;
 }
 .read-button{
-    margin-top: 2vw;
+  position: absolute;
+  top: 92%;
+  left: 51%;
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
+
+}
+.read-button-edit-team {
+  position: absolute;
+  top: 47%;
+  left: 30%;
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
+
+}
+.read-form-user-artifacts {
+    padding-top: 2vh;
+ }
+.read-button-user-artifacts {
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
 }
 .table-artifacts{
     display: block;
@@ -272,7 +305,7 @@ header a:hover {
     padding-left: 5%;
     border-collapse: collapse;
     width: 100%;
-    height: 85%;
+    height: 30vh;
 
 }
 .first-row{
@@ -332,12 +365,20 @@ header a:hover {
 
 .table-team{
 
-    padding-left: 15%;
+  ./* padding-left: 15%;
     padding-top: 5%;
 
     width: 30vw;
     height: 23vw;
+    border-collapse: collapse; */
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 2vw;
+    padding-left: 5%;
     border-collapse: collapse;
+    width: 100%;
+    height: 25vh;
 
 }
 
@@ -394,9 +435,7 @@ header a:hover {
     color: rgb(0,0,0);
     margin: 0;
     padding: 0;
-    background-image: url("assets/images/iframeBackground.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+
 }
 
 
@@ -406,8 +445,9 @@ header a:hover {
     background-color: rgba(255,255,255, 0.4);
     width: 100%;
     height: 7vw;
+    font-size: 1.25vw;
+    padding-top: 0.5%;
 }
-
 
 
 .coins{
@@ -416,14 +456,14 @@ header a:hover {
 
 }
 .coin-picker .coolcoinIcon{
-    margin-top: 0.5%;
-
-    height: 6vw;
+    margin-top: 1%;
+    padding-left: 4vw;
+    height: 4vw;
 }
 .coins-now, .coins-ever-owned {
     color: rgb(0,0,0);
     text-transform: uppercase;
-    padding-left: 2vw;
+    padding-left: 1.3vw;
     margin-top: 4%;
 }
 .quest-in-progress{
@@ -432,15 +472,15 @@ header a:hover {
     margin-left: 1%;
 }
 .questIcon{
-    margin-top: 0.5%;
-    height: 6vw;
+    margin-top: 1%;
+    height: 4vw;
     margin-left: 5%;
 }
 
 .teamIcon{
     padding-left: 2%;
-    margin-top: 0.5%;
-    height: 6vw;
+    margin-top: 1%;
+    height: 4vw;
     width: 5vw
 }
 .team-class{

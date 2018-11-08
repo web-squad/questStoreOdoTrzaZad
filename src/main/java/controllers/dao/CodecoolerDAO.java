@@ -180,29 +180,26 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     } //korzystanie
 
     @Override
-    public String readArtifacts() {
+    public ArrayList<String> readArtifacts() {
         String artifactsQuery = "SELECT * FROM Artifacts";
         ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
-        String artifacts = "";
+        ArrayList<String> artifacts = new ArrayList<>();
         ResultSetMetaData resultSetMetaData;
         try{
             resultSetMetaData = resultSetArtefacts.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
-            for(int i = 1; i <= columnsNumber; i++){
-                artifacts = artifacts + resultSetMetaData.getColumnName(i) + " ";
-            }
-            artifacts = artifacts + "\n";
             while(resultSetArtefacts.next()){
-                for(int i = 1; i <= columnsNumber; i++){
-                    if(i > 1) artifacts = artifacts + ", ";
-                    artifacts = artifacts + resultSetArtefacts.getString(i);
-                }
-                artifacts = artifacts + "\n";
+                String artefactId = resultSetArtefacts.getString("artifact_id");
+                String artefactName = resultSetArtefacts.getString("name");
+                String artefactDescription = resultSetArtefacts.getString("description");
+                String artefactPrice = resultSetArtefacts.getString("price");
+                String artefactToList = artefactId + ";" + artefactName + ";" + artefactDescription + ";" + artefactPrice;
+                artifacts.add(artefactToList);
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
-
+        System.out.println(artifacts);
         return artifacts;
     } //korzystanie
 

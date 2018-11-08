@@ -22,33 +22,28 @@ public class App {
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
 
-        CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
-        MentorDAO mentorDAO = new MentorDAO(connection);
-        CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
-        LoginAccesDAO loginAccesDAO = new LoginAccesDAO(connection);
-
         // set routes
-        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
-        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(codecoolerDAO, loginAccesDAO));
-        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam());
-        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam());
-        server.createContext("/codecoolerJavaPages/Store", new Store());
-        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts());
+        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex(connection));
+        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(connection));
+        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam(connection));
+        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam(connection));
+        server.createContext("/codecoolerJavaPages/Store", new Store(connection));
+        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts(connection));
 
-        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(mentorDAO, loginAccesDAO));
-        server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest(mentorDAO, loginAccesDAO));
-        server.createContext("/mentorJavaPages/MentorAddStudent", new MentorAddStudent(mentorDAO, loginAccesDAO));
+        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(connection));
+        server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest(connection));
+        server.createContext("/mentorJavaPages/MentorAddStudent", new MentorAddStudent(connection));
         server.createContext("/mentorJavaPages/MentorCheckWallet", new MentorCheckWallet());
         server.createContext("/mentorJavaPages/MentorEditArtifact", new MentorEditArtifact());
         server.createContext("/mentorJavaPages/MentorEditQuest", new MentorEditQuest());
-        server.createContext("/mentorJavaPages/MentorEditStudent", new MentorEditStudent());
+        server.createContext("/mentorJavaPages/MentorEditStudent", new MentorEditStudent(connection));
         server.createContext("/mentorJavaPages/MentorIndexPage", new MentorIndexPage());
         server.createContext("/mentorJavaPages/MentorMarkItemAsUsed", new MentorMarkItemAsUsed());
         server.createContext("/mentorJavaPages/MentorMarkQuestAsCompleted", new MentorMarkQuestAsCompleted());
         server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests());
         server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent());
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
-        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(mentorDAO));
+        server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(connection));
 
         server.createContext("/adminJavaPages/ClassAdder", new ClassAdder(connection));
         server.createContext("/adminJavaPages/ClassDeleter", new ClassDeleter());

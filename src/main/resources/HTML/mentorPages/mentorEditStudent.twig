@@ -8,18 +8,24 @@
             </header>
             
             <div class="search-engine">
+                <form method="post">
                 Search for codecooler:
-                <input class="input" type="text" name="search">
-                <input class="btn" type="submit" value="Submit">
-            
-                codecooler id:
-                <input class="input" type="text" name="id">
-                <input class="btn" type="submit" value="Submit">
+                <input class="input" type="text" name="codecoolerToFind">
+                <input class="btn" type="submit" value="Submit" name="search">
+                </form>
             </div>
-        <form>
+        <form method="post">
             <div class="column">
                 <fieldset class="first-table menu-internal">
+                    {{ list }}
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit" name="submitCodecooler">
+                </div><fieldset class="second-table menu-internal">
                     <ul>
+                        <li><label>
+                            Codecooler id:
+                            <input class="input" type="text" name="id">
+                        </label></li>
                         <li><label>
                             New codecooler first name:
                             <input class="input" type="text" name="firstName">
@@ -32,11 +38,6 @@
                             New codecooler nickname:
                             <input class="input" type="text" name="nickname">
                         </label></li>
-                    </ul>
-                </fieldset><div class="separator">
-                <input class="btn" type="submit" value="Submit">
-                </div><fieldset class="second-table menu-internal">
-                    <ul>
                         <li><label>
                             New codecooler email:
                             <input class="input" type="text" name="email">

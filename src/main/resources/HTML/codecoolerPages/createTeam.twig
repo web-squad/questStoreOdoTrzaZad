@@ -5,18 +5,18 @@
         <section class = "container-internal">
             <div class = "coin-picker">
                 <span class = "nickname">{{ nickname }}</span>
-                <img src = "static/assets/images/coolcoin.png" class = "coolcoinIcon">
+                <img src = "../static/assets/images/coolcoin.png" class = "coolcoinIcon">
                 <div class = "coins">
                     <span class = "coins-now">Your coolcoins: {{ coolcoins }}</span>
                     <span class = "coins-ever-owned">Coolcoins ever owned: {{ coolcoins_ever_owned }}</span>
                 </div>
 
-                <img src = "static/assets/images/questIcon.png" class = "questIcon">
+                <img src = "../static/assets/images/questIcon.png" class = "questIcon">
                 <div class = "quest-in-progress">
                     <span class = "quest">Quest in progress: {{ quest }}</span>
                 </div>
 
-                <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+                <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
                 <div class = "team-class">
                     <span class = "class">Your class: {{ room }}</span>
                     <span class = "team">Your team: {{ team }}</span>
@@ -29,7 +29,7 @@
                                 <input type="text" name="team-id" placeholder = "ID" id = "artifact-id"><br>
                                 <input type="text" name = "team-name" placeholder = "Team Name" id = "team-name"><br>
                                 <!--<input type="submit" value="Change Team"  class = "button" id = "mysubmit">-->
-                                <button type = "button">Change Team</button>
+                                <input type="submit" value="Create Team" name = "createTeam"  class = "button" id = "mysubmit">
                             </form>
                             
                     </div>
