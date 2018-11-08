@@ -3,40 +3,64 @@
 {% block content %}
 
     <section class = "container-internal">
-
         <div class = "coin-picker">
             <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
             <span class = "nickname">{{ nickname }}</span>
         </div>
-
-      <header>
-        <h3>Choose Mentor to edit</h3>
-      </header>
-
-      <label class="search-engine">
-      <span>Name</span>
-      <input type="text" name="ID" placeholder="Full name" value="">
-      </label>
+      <form method="post" name="searchForm class = "provide-id">
+            <label class="search-engine">
+            <span>Provide ID</span>
+            <input type= "text" name="ID" placeholder="" value="">
+            <input type = "submit" name = "search">
+             </label>
+            </form>
 
       <form class="submit-form" method="post" name="myForm">
+      <div class = "middle">
         <div class = "column">
           <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
-                <span>ID</span>
-                <input type="text" name="name" placeholder="Full name" value="">
-                </label></li>
-
+              Name
+              <input type="text" name="name" placeholder="" value="{{ name }}" required>
+              </label></li>
               <li><label>
-                <span>Email</span>
-                <input type="text" name="email" placeholder="Email address" value="">
-                </label></li>
+               Email
+               <input type="text" name="email" placeholder="d" value="{{ email }}" required>
+               </label></li>
+               <li><label>
+               Password
+               <input type="text" name="pass" placeholder="d" value="{{ pass }}" required>
+               </label></li>
 
-              <li><label>
-                <span>Class</span>
-                <input type="text" name="class" placeholder="Class name" value="">
-                </label></li>
             </ul>
-          </fieldset><input type ="input" name="edit" class = "submit-button" value = "Edit Mentor"></input></div></form>
+          </fieldset>
+          <!--
+--><div class = "separator">
+          <input class="btn" id="submit" type="submit" name="add" value="Create  Mentor">
+          <input class="btn" id="submit" type="submit" name="edit" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="delete" value="Delete Mentor">
+          </div><!--
+--><div class = "column">
+
+          <fieldset class="second-table menu-internal">
+            <ul>
+              <li><label>
+                  Surname
+                  <input type="text" name="surname" placeholder="d" value="{{ surname }}" required>
+                  </label></li>
+                  <li><label>
+                  Nick Name
+                  <input type="text" name="nick" placeholder="d" value="{{ nick }}" required>
+                  </label></li>
+                <li><label>
+                  Class
+                  <input type="text" name="class" placeholder="d" value="{{class}}" required>
+                  </label></li>
+            </ul>
+          </fieldset>
+          </div></div>
+      </form>
+      </div>
     </section>
 {% endblock %}

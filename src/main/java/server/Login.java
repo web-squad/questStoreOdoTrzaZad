@@ -2,90 +2,62 @@ package server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import controllers.Connector;
 import controllers.dao.LoginAccesDAO;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 import server.helpers.FormDataParser;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.net.HttpCookie;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 
 public class Login implements HttpHandler {
-    String activeSession;
-    int counter = 0;
-    CookieHelper cookieHelper = new CookieHelper();
-    LoginAccesDAO loginAccesDAO;
-    FormDataParser formDataParser;
+    private CookieHelper cookieHelper;
+    private LoginAccesDAO loginAccesDAO;
+    private FormDataParser formDataParser;
+    private Optional<HttpCookie> cookie;
 
     public Login(Connection connection) {
         this.loginAccesDAO = new LoginAccesDAO(connection);
         formDataParser = new FormDataParser();
+        cookieHelper = new CookieHelper();
     }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
         String method = httpExchange.getRequestMethod();
-        counter ++;
-        Optional<HttpCookie> cookie;
+
 
         if(method.equals("GET")) {
             cookie = cookieHelper.getSessionIdCookie(httpExchange);
-            if (cookie.isPresent()) {
-                loginAccesDAO.deleteSessionID(cookie.get().getValue());
-            }
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
-
-            // create a model that will be passed to a template
-            JtwigModel model = JtwigModel.newModel();
-
-            // render a template to a string
-            response = template.render(model);
-
+            cookie.ifPresent(httpCookie -> loginAccesDAO.deleteSessionID(httpCookie.getValue()));
+            response = generatePage();
         }
 
         if (method.equals("POST") ) {
             Map inputs = formDataParser.getData(httpExchange);
             String providedMail = inputs.get("email").toString();
             String providedPassword = inputs.get("pass").toString();
+
             List<Integer> loginData = loginAccesDAO.readLoginData(providedMail, providedPassword);
-            if (!loginData.isEmpty()) {
-                int accessLevel = loginData.get(0);
-                int id = loginData.get(1);
+            String pageAdress = redirect(loginData);
+
+            if (!pageAdress.equals(null)) {
+                httpExchange.getResponseHeaders().set("Location", pageAdress);
                 String sessionId = String.valueOf(hash(providedMail + providedPassword + LocalDateTime.now().toString()));
-                cookie = Optional.of(new HttpCookie(cookieHelper.getSessionCookieName(), sessionId));
-                activeSession = sessionId;
                 loginAccesDAO.saveSessionId(sessionId, providedMail);
+                cookie = Optional.of(new HttpCookie(CookieHelper.getSessionCookieName(), sessionId));
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
-                if (accessLevel == 1){
-                    httpExchange.getResponseHeaders().set("Location", "/codecoolerJavaPages/CodecoolerIndex");
-                }
-                if (accessLevel == 3){
-                    httpExchange.getResponseHeaders().set("Location", "/adminJavaPages/GreetAdmin");
-                }
-                if (accessLevel == 2){
-                    httpExchange.getResponseHeaders().set("Location", "/mentorMainPage");
-                }
-            }
-            else {
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
-
-                // create a model that will be passed to a template
-                JtwigModel model = JtwigModel.newModel();
-
-                // render a template to a string
-                response = template.render(model);
+            } else {
+                response = generatePage();
             }
         }
 
@@ -113,5 +85,32 @@ public class Login implements HttpHandler {
             h = 31*h + string.charAt(i);
         }
         return h;
+    }
+
+    private String generatePage(){
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
+
+
+        JtwigModel model = JtwigModel.newModel();
+
+
+        return template.render(model);
+    }
+
+    private String redirect(List<Integer> loginData){
+        if (!loginData.isEmpty()) {
+            int accessLevel = loginData.get(0);
+            if (accessLevel == 1){
+                return "/codecoolerJavaPages/CodecoolerIndex";
+            }
+            if (accessLevel == 3){
+                return "/adminJavaPages/GreetAdmin";
+            }
+            if (accessLevel == 2){
+                return "/mentorJavaPages/mentorMainPage";
+            }
+        }
+        return null;
     }
 }
