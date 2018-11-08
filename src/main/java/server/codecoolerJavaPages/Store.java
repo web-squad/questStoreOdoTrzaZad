@@ -8,9 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import controllers.dao.CodecoolerDAO;
 import controllers.dao.LoginAccesDAO;
@@ -18,22 +16,26 @@ import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 public class Store implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
+    private FormDataParser formDataParser;
 
     public Store(Connection connection) {
         this.codecoolerDAO = new CodecoolerDAO(connection);
         this.cookieHelper = new CookieHelper();
         this.loginAccesDAO = new LoginAccesDAO(connection);
+        this.formDataParser = new FormDataParser();
     }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
+        Map<String, String> formData = formDataParser.getData(httpExchange);
         int userId = 0;
         String coins = "30";
         String coinsEverOwned = "210";
@@ -72,7 +74,9 @@ public class Store implements HttpHandler {
 
         }
 
+        if(method.equals("get")){
 
+        }
 
         // get a template file
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/store.twig");

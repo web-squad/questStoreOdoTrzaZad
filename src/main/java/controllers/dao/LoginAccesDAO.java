@@ -19,6 +19,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
     private Connection connection;
     private List<Integer> loginData;
 
+
     public LoginAccesDAO(Connection connection){
         this.connection = connection;
     }
@@ -71,6 +72,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             sessionId = sessionId.substring(1, sessionId.length()-1);
             ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id = ? ;");
             ps.setString(1, sessionId);
+            ps.executeUpdate();
             connection.commit();
             ps.close();
         } catch (SQLException e){
@@ -93,4 +95,22 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
         return id;
     }
+
+    public boolean checkSessionPresent(String sessionId){
+        boolean sessionPresent = false;
+        try{
+            ps = connection.prepareStatement("SELECT session_id FROM public.login_access WHERE session_id = ?");
+            ps.setString(1, sessionId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sessionPresent = true;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
+        }
+        return sessionPresent;
+    }
+
 }
