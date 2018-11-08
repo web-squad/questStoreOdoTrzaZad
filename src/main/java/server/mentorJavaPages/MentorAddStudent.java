@@ -6,13 +6,12 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 import controllers.dao.LoginAccesDAO;
 import controllers.dao.MentorDAO;
-import models.Artifact;
+import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
@@ -52,11 +51,13 @@ public class MentorAddStudent implements HttpHandler {
 
                     Map inputs = formDataParser.getData(httpExchange);
                     System.out.println(inputs);
-                    String providedArtifactName = inputs.get("name").toString();
-                    String providedArtifactDescription = inputs.get("description").toString();
-                    String providedArtifactReward = inputs.get("price").toString();
-                    Artifact newArtifact = new Artifact(providedArtifactName, providedArtifactDescription, Integer.parseInt(providedArtifactReward));
-                    mentorDAO.addArtifactToStore(newArtifact);
+                    String providedFirstName = inputs.get("name").toString();
+                    String providedLastName = inputs.get("lastName").toString();
+                    String providedNickname = inputs.get("nickname").toString();
+                    String providedEmail = inputs.get("email").toString();
+                    String providedPassword = inputs.get("password").toString();
+                    CodecoolerModel codecoolerModel = new CodecoolerModel(providedFirstName, providedLastName, providedEmail, providedNickname, providedPassword);
+                    mentorDAO.createCodecooler(codecoolerModel);
 
                     response = generatePage();
                 }
