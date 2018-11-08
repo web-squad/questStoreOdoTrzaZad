@@ -4,10 +4,12 @@ import models.CreepyGuyModel;
 import models.Level;
 import models.MentorModel;
 import models.Room;
-import server.helpers.CookieHelper;
 import views.View;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -261,7 +263,6 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     private void fetchRoom(String id) throws SQLException, NumberFormatException{
         roomData = new HashMap<>();
-        System.out.println(id);
         ps = connection.prepareStatement("SELECT * FROM room WHERE room_id = ?;");
         ps.setInt(1, Integer.parseInt(id));
         ResultSet rs = ps.executeQuery();

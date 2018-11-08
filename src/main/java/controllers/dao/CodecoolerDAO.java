@@ -1,8 +1,7 @@
 package controllers.dao;
 
-import models.CodecoolerModel;
 import models.Artifact;
-
+import models.CodecoolerModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -184,10 +183,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         String artifactsQuery = "SELECT * FROM Artifacts";
         ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
         ArrayList<String> artifacts = new ArrayList<>();
-        ResultSetMetaData resultSetMetaData;
         try{
-            resultSetMetaData = resultSetArtefacts.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtefacts.next()){
                 String artefactId = resultSetArtefacts.getString("artifact_id");
                 String artefactName = resultSetArtefacts.getString("name");
@@ -199,7 +195,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        System.out.println(artifacts);
         return artifacts;
     } //korzystanie
 
@@ -214,13 +209,10 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
             artifactsQuery += whereClauseIds;
             artifactsQuery = artifactsQuery.substring(0, artifactsQuery.indexOf(';'));
-            System.out.println(artifactsQuery);
             ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
 
             artifactsList = createArtifactsList(resultSetArtifacts);
 
-            System.out.println(artifactsQuery);
-            System.out.println(artifactsList.size());
             return artifactsList;
         } else {
             return artifactsList;
@@ -230,26 +222,25 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     private String createWhereWithPossessedArtifacts(ResultSet resultSetArtifactsPossessed){
         ResultSetMetaData resultSetMetaData;
-        String whereClauseIds = "WHERE";
+        StringBuilder whereClauseIds = new StringBuilder("WHERE");
         try{
             resultSetMetaData = resultSetArtifactsPossessed.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtifactsPossessed.next()){
                 for(int i = 1; i <= columnsNumber; i++){
                     if(i == columnsNumber){
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + ";";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(";");
                     }else{
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + " OR";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(" OR");
                     }
 
                 }
             }
-            System.out.println(columnsNumber);
         }catch(SQLException e){
             e.printStackTrace();
         }
 
-        return whereClauseIds;
+        return whereClauseIds.toString();
     }
 
     private List<Artifact> createArtifactsList(ResultSet resultSetArtifacts){

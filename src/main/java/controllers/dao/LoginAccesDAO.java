@@ -2,7 +2,6 @@ package controllers.dao;
 
 
 import org.postgresql.util.PSQLException;
-import views.View;
 
 import java.sql.*;
 import java.util.ArrayList;

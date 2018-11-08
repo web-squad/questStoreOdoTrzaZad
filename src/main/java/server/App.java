@@ -38,10 +38,10 @@ public class App {
         server.createContext("/mentorJavaPages/MentorEditQuest", new MentorEditQuest(connection));
         server.createContext("/mentorJavaPages/MentorEditStudent", new MentorEditStudent(connection));
         server.createContext("/mentorJavaPages/MentorIndexPage", new MentorIndexPage());
-        server.createContext("/mentorJavaPages/MentorMarkItemAsUsed", new MentorMarkItemAsUsed());
-        server.createContext("/mentorJavaPages/MentorMarkQuestAsCompleted", new MentorMarkQuestAsCompleted());
+        server.createContext("/mentorJavaPages/MentorMarkItemAsUsed", new MentorMarkItemAsUsed(connection));
+        server.createContext("/mentorJavaPages/MentorMarkQuestAsCompleted", new MentorMarkQuestAsCompleted(connection));
         server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests());
-        server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent());
+        server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent(connection));
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
         server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(connection));
 

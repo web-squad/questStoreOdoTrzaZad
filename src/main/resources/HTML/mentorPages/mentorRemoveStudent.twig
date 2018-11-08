@@ -6,13 +6,18 @@
             <h1>Remove codecooler:</h1>
             
             <div class="search-engine">
-                    Search for codecooler:<br>
-                    <input class="input" type="text" name="search">
-                    <input class="btn" type="submit" value="Submit">
-        
-                    Codecooler id:<br>
-                    <input class="input" type="text" name="codecoolerId">
-                    <input class="btn" type="submit" value="Submit">
+                    <form method="post">
+                        Search for codecooler:<br>
+                        <input class="input" type="text" name="search"><br>
+                        <input class="btn" type="submit" value="Submit" name="searchButton">
+                        {{ searchResult }}
+                        </form>
+
+                    <form method="post">
+                    Codecooler to remove id:<br>
+                    <input class="input" type="number" name="codecoolerId">
+                    <input class="btn" type="submit" value="removeButton" name="removeButton">
+                    </form>
             </div>
     </div>
 {% endblock %}

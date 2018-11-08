@@ -262,15 +262,16 @@ public class MentorDAO implements MentorDAOInterface {
     }
 
     public void markQuestAsCompleted(int codecoolerID) {
-        ResultSet resultSet;
+        ResultSet resultSet = null;
 
         try {
             ps = connection.prepareStatement("SELECT quest_in_progress FROM codecoolers WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             resultSet = ps.executeQuery();
-            int questID = resultSet.getInt(1);
+            int questID = getFirstIntFromRS(resultSet);
 
             ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 0 WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
             ps.executeUpdate();
 
             ps = connection.prepareStatement("INSERT INTO quest_completed (quest_id, codecooler_id) VALUES (?, ?);");
@@ -281,7 +282,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps = connection.prepareStatement("SELECT reward FROM quests WHERE quest_id = ?;");
             ps.setInt(1, questID);
             resultSet = ps.executeQuery();
-            int questReward = resultSet.getInt(1);
+            int questReward = getFirstIntFromRS(resultSet);
 
             ps = connection.prepareStatement("UPDATE codecoolers SET coolcoins = coolcoins + ? WHERE codecooler_id = ?;");
             ps.setInt(1, questReward);
@@ -297,6 +298,13 @@ public class MentorDAO implements MentorDAOInterface {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
+
+    private int getFirstIntFromRS(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
     public List<String> possessedArtifacts(int codecoolerID) {
