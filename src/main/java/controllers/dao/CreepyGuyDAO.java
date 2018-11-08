@@ -4,6 +4,7 @@ import models.CreepyGuyModel;
 import models.Level;
 import models.MentorModel;
 import models.Room;
+import org.postgresql.util.PSQLException;
 import views.View;
 
 import java.sql.Connection;
@@ -28,11 +29,29 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     public void addMentor(MentorModel mentor) throws NumberFormatException{
         try {
-            addMentorRecord(mentor);
-        } catch ( SQLException e ) {
+            if(!mailExists(mentor)) {
+                addMentorRecord(mentor);
+            }
+        } catch (PSQLException e){
+            System.out.println("loginExists");
+        }
+        catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
+    }
+
+    private boolean mailExists(MentorModel mentorModel) throws SQLException{
+        boolean emailTaken = false;
+        ps = connection.prepareStatement("SELECT login_access.email FROM login_access WHERE email = ?;");
+        ps.setString(1, mentorModel.getEmail());
+        ResultSet rs = ps.executeQuery();
+        while ( rs.next() ) {
+            emailTaken = true;
+        }
+        rs.close();
+        ps.close();
+        return emailTaken;
     }
 
     private void addMentorRecord(MentorModel mentor) throws SQLException, NumberFormatException{
@@ -193,6 +212,8 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         try {
             addRoomRecord(room);
             view.print("Operation done successfully\n");
+        } catch (PSQLException e){
+            System.out.println("loginExists");
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
