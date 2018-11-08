@@ -77,11 +77,9 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
     public boolean checkSessionPresent(String sessionId){
         boolean sessionPresent = false;
         try{
-            sessionId = sessionId.substring(1, sessionId.length() - 1);
             ps = connection.prepareStatement("SELECT session_id FROM public.login_access WHERE session_id = ?");
             ps.setString(1, sessionId);
             ResultSet rs = ps.executeQuery();
-            System.out.println(rs.next());
             while (rs.next()) {
                 sessionPresent = true;
             }
