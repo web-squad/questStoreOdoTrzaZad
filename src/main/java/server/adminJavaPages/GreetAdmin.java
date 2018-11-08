@@ -1,4 +1,4 @@
-package server;
+package server.adminJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -9,13 +9,13 @@ import java.io.OutputStream;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 
-public class CodecoolerIndex implements HttpHandler {
+public class GreetAdmin implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
 
         // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/codecoolerIndex.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
 
         // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();

@@ -7,16 +7,11 @@
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
         <meta charset = "UTF-8">
         <link rel="icon" href="static/assets/images/faviconCodecool.png">
-        <link href = "static/framePagesMain.css" rel = "stylesheet">
-        <link href = "static/user.css" rel = "stylesheet">
-        <link href = "static/firstpage.css" rel = "stylesheet">
-        <link href = "static/editTeam.css" rel = "stylesheet">
-        <link href = "static/assets/stylesheets/store.css" rel = "stylesheet">
-        <link href = "static/assets/stylesheets/userArtifacts.css" rel = "stylesheet">
+
     </head>
 
     <body>
-        <div class = "container-internal">
+        <div class = "container">
 
             <header>
                 <a href = "index.html">Quest Store</a>
@@ -27,7 +22,7 @@
                 <img src = "static/assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
-                        <a onclick="changeToWelcomePage()">My account</a><!--
+                        <a href ="CodecoolerMain">My account</a><!--
                         --><a>Log out</a>
                         
                      </nav>
@@ -37,10 +32,10 @@
 
                 <nav class = "menu col-1-5">
                     <ul id="codecoolerMenu">
-                        <li data-source="store.html"><i class="icon-basket" ></i>Buy Artifacts</li>
-                        <li data-source="userArtifacts.html"><i class="icon-shopping-bag" ></i>My Artifacts</li>
-                        <li data-source="editUserTeam.html"><i class="icon-pencil" ></i>Edit Team</li>
-                        <li data-source="createTeam.html"><i class="icon-magic" ></i>Create Team</li>
+                        <li><i class="icon-basket" ><a href="Store"></i>Buy Artifacts</a></li>
+                        <li><i class="icon-shopping-bag" ><a href="UserArtifacts"></i>My Artifacts</a></li>
+                        <li><i class="icon-pencil" ><a href="EditUserTeam"></i>Edit Team</a></li>
+                        <li><i class="icon-magic" ><a href="CreateTeam"></i>Create Team</a></li>
                     </ul>
                 </nav>
 
