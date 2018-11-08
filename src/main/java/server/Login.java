@@ -72,7 +72,7 @@ public class Login implements HttpHandler {
                     httpExchange.getResponseHeaders().set("Location", "/adminJavaPages/GreetAdmin");
                 }
                 if (accessLevel == 2){
-                    httpExchange.getResponseHeaders().set("Location", "/mentorMainPage");
+                    httpExchange.getResponseHeaders().set("Location", "/mentorJavaPages/MentorWelcomePage");
                 }
             }
             else {

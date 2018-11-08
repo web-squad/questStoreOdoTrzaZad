@@ -22,7 +22,7 @@ public class App {
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         Connector connector = new Connector();
-        Connection connection = connector.connect("karol", "4313284");
+        Connection connection = connector.connect(dbUser, dbPass);
         CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
         MentorDAO mentorDAO = new MentorDAO(connection);
         CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);

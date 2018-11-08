@@ -12,9 +12,6 @@ import java.util.Optional;
 
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
-import controllers.dao.MentorDAO;
-import models.CodecoolerModel;
-import models.CreepyGuyModel;
 import models.MentorModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
@@ -22,13 +19,11 @@ import server.helpers.CookieHelper;
 
 public class MentorWelcomePage implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
-    private MentorDAO mentorDAO;
     private CreepyGuyDAO creepyGuyDAO;
     private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
 
-    public MentorWelcomePage(MentorDAO mentorDAO, CreepyGuyDAO creepyGuyDAO, LoginAccesDAO loginAccesDAO) {
-        this.mentorDAO = mentorDAO;
+    public MentorWelcomePage(CreepyGuyDAO creepyGuyDAO, LoginAccesDAO loginAccesDAO) {
         this.creepyGuyDAO = creepyGuyDAO;
         this.cookieHelper = new CookieHelper();
         this.loginAccesDAO = loginAccesDAO;

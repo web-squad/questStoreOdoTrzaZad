@@ -31,28 +31,28 @@ public class GreetAdmin implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
-
-        if (cookie.isPresent()) {
-            if (loginAccesDAO.checkSessionPresent(cookie.get().getValue())){
-                // get a template file
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
-
-                // create a model that will be passed to a template
-                JtwigModel model = JtwigModel.newModel();
-
-                // render a template to a string
-                response = template.render(model);
-
-            }
-            else{
-                httpExchange.getResponseHeaders().set("Location", "/login");
-            }
-        }
-        httpExchange.sendResponseHeaders(301, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
+//        String response = "";
+//        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+//
+//        if (cookie.isPresent()) {
+//            if (loginAccesDAO.checkSessionPresent(cookie.get().getValue())){
+//                // get a template file
+//                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
+//
+//                // create a model that will be passed to a template
+//                JtwigModel model = JtwigModel.newModel();
+//
+//                // render a template to a string
+//                response = template.render(model);
+//
+//            }
+//            else{
+//                httpExchange.getResponseHeaders().set("Location", "/login");
+//            }
+//        }
+//        httpExchange.sendResponseHeaders(301, response.length());
+//        OutputStream os = httpExchange.getResponseBody();
+//        os.write(response.getBytes());
+//        os.close();
     }
 }
