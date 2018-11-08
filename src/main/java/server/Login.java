@@ -25,11 +25,9 @@ public class Login implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     int counter = 0;
     CookieHelper cookieHelper = new CookieHelper();
-    Connection connection;
     LoginAccesDAO loginAccesDAO;
 
     public Login(Connection connection) {
-        this.connection = connection;
         this.loginAccesDAO = new LoginAccesDAO(connection);
     }
 
@@ -42,7 +40,9 @@ public class Login implements HttpHandler {
 
         if(method.equals("GET")) {
             cookie = getSessionIdCookie(httpExchange);
-            loginAccesDAO.deleteSessionID(cookie.get().getValue());
+            if (cookie.isPresent()) {
+                loginAccesDAO.deleteSessionID(cookie.get().getValue());
+            }
             JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
 
             // create a model that will be passed to a template
