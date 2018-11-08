@@ -10,25 +10,29 @@
       <header>
         <h3>Editing class data</h3>
       </header>
-      
-      <label class="search-engine">
-        Name
-        <input type="text" name="name" placeholder="Full name" value="">
-      </label>
+      <form method="post" name="searchForm>
+            <label class="search-engine">
+            <span>Provide ID</span>
+            <input type= "text" name="ID" placeholder="" value="">
+            <input type = "submit" name = "search">
+            </form>
+            </label>
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
           <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
                 Room Name
-                <input type="text" name="name" placeholder="Full name" value="">
+                <input type="text" name="name" placeholder="Full name" value="{{name}}">
                 </label></li>
 
             </ul>
           </fieldset>
           <!--
 --><div class = "separator">
-          <input class="btn" id="submit" type="submit" name="submit" value="Submit">
+          <input class="btn" id="submit" type="submit" name="add" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="edit" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="delete" value="Delete room">
           </div><!--
 --><div class = "column">
 
@@ -36,7 +40,7 @@
             <ul>
               <li><label>
                 Room Description
-                <input type="text" name="name" placeholder="Full name" value="">
+                <input type="text" name="description" placeholder="Full name" value="{{description}}">
                 </label></li>
             </ul>
           </fieldset>

@@ -3,52 +3,65 @@
 {% block content %}
 
     <section class = "container-internal">
-
         <div class = "coin-picker">
-            <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
+            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
             <span class = "nickname">{{ nickname }}</span>
         </div>
-
       <header>
-        <h3>Choose Mentor to edit</h3>
+        <h3>Editing mentors data</h3>
       </header>
       <form method="post" name="searchForm>
-      <label class="search-engine">
-      <span>Provide ID</span>
-      <input type= "text" name="ID" placeholder="Full name" value="">
-      <input type = "submit" name = "search">
-      </form>
-      </label>
-
+            <label class="search-engine">
+            <span>Provide ID</span>
+            <input type= "text" name="ID" placeholder="" value="">
+            <input type = "submit" name = "search">
+            </form>
+            </label>
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
           <fieldset class="first-table menu-internal">
             <ul>
-                      <li><label>
-                        Name
-                        <input type="text" name="name" placeholder="" value="{{ name }}">
-                        </label></li>
+              <li><label>
+                                      Name
+                                      <input type="text" name="name" placeholder="" value="{{ name }}">
+                                      </label></li>
 
-                      <li><label>
-                        Email
-                        <input type="text" name="email" placeholder="d" value="{{ email }}">
-                        </label></li>
-                      <li><label>
-                        Password
-                        <input type="text" name="pass" placeholder="d" value="{{ pass }}">
-                        </label></li>
-                      <li><label>
-                        Surname
-                        <input type="text" name="surname" placeholder="d" value="{{ surname }}">
-                        </label></li>
-                        <li><label>
-                        Nick Name
-                        <input type="text" name="nick" placeholder="d" value="{{ nick }}">
-                        </label></li>
-                      <li><label>
-                        Class
-                        <input type="text" name="class" placeholder="d" value="{{class}}">
-                        </label></li>
-                      </ul>><input type ="submit" name="edit" class = "submit-button" value = "Edit Mentor"></input></div></form>
+                                    <li><label>
+                                      Email
+                                      <input type="text" name="email" placeholder="d" value="{{ email }}">
+                                      </label></li>
+                                    <li><label>
+                                      Password
+                                      <input type="text" name="pass" placeholder="d" value="{{ pass }}">
+                                      </label></li>
+
+            </ul>
+          </fieldset>
+          <!--
+--><div class = "separator">
+          <input class="btn" id="submit" type="submit" name="add" value="Create  Mentor">
+          <input class="btn" id="submit" type="submit" name="edit" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="delete" value="Delete Mentor">
+          </div><!--
+--><div class = "column">
+
+          <fieldset class="second-table menu-internal">
+            <ul>
+              <li><label>
+                                      Surname
+                                      <input type="text" name="surname" placeholder="d" value="{{ surname }}">
+                                      </label></li>
+                                      <li><label>
+                                      Nick Name
+                                      <input type="text" name="nick" placeholder="d" value="{{ nick }}">
+                                      </label></li>
+                                    <li><label>
+                                      Class
+                                      <input type="text" name="class" placeholder="d" value="{{class}}">
+                                      </label></li>
+            </ul>
+          </fieldset>
+          </div></div>
+      </form>
     </section>
 {% endblock %}

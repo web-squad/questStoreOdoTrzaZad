@@ -15,7 +15,6 @@ public class FormDataParser {
     private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
         Map<String, String> map = new HashMap<>();
         String[] pairs = formData.split("&");
-        System.out.println(formData);
         for(String pair : pairs){
             String[] keyValue = pair.split("=");
             // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms

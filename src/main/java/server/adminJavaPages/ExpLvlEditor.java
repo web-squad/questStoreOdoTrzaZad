@@ -14,26 +14,29 @@ import java.util.Optional;
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import models.CreepyGuyModel;
-import models.MentorModel;
+import models.Level;
+import models.Room;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 import server.helpers.FormDataParser;
 
-public class MentorDeleter implements HttpHandler {
+public class ExpLvlEditor implements HttpHandler {
+
     private CreepyGuyDAO creepyGuyDAO;
     private Optional<HttpCookie> cookie;
     private CookieHelper cookieHelper;
     private LoginAccesDAO loginAccesDAO;
     private FormDataParser formDataParser;
     private CreepyGuyModel creepyGuyModel;
-    private String mentorId;
+    private String expLevelId;
 
-    public MentorDeleter(Connection connection){
+    public ExpLvlEditor(Connection connection){
         creepyGuyDAO = new CreepyGuyDAO(connection);
         formDataParser = new FormDataParser();
         cookieHelper = new CookieHelper();
         loginAccesDAO = new LoginAccesDAO(connection);
+
     }
 
     @Override
@@ -42,32 +45,41 @@ public class MentorDeleter implements HttpHandler {
         cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         String method = httpExchange.getRequestMethod();
+        creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
 
         if (cookie.isPresent()) {
             if (loginAccesDAO.checkSessionPresent(sessionId)){
 
                 if (method.equals("GET")) {
-                    response = generatePage(sessionId);
+                    response = generatePage();
                 }
 
                 if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
                     if (inputs.containsKey("search")){
-                        mentorId = inputs.get("ID").toString();
-                        response = fillPage(sessionId, mentorId);
+                        expLevelId = inputs.get("ID").toString();
+                        response = fillPage(expLevelId);
                     }
                     if (inputs.containsKey("edit")){
-                        Map <String, String> mentorData = new HashMap<>();
-                        mentorData.put("email", inputs.get("email").toString());
-                        mentorData.put("password", inputs.get("pass").toString());
-                        mentorData.put("firstName", inputs.get("name").toString());
-                        mentorData.put("surname", inputs.get("surname").toString());
-                        mentorData.put("room", inputs.get("class").toString());
-                        mentorData.put("Nickname", inputs.get("nick").toString());
-                        creepyGuyDAO.deleteMentor(sessionId);
-
-                        response = generatePage(sessionId);
+                        Map <String, String> lvlData = new HashMap<>();
+                        lvlData.put("roomName", inputs.get("name").toString());
+                        lvlData.put("roomDescription", inputs.get("description").toString());
+                        creepyGuyDAO.editLevel(new Level(lvlData), expLevelId);
+                        response = generatePage();
                     }
+                    if (inputs.containsKey("delete")){
+                        creepyGuyDAO.deleteLevel(expLevelId);
+                        response = generatePage();
+                    }
+                    if (inputs.containsKey("add")){
+                        inputs = formDataParser.getData(httpExchange);
+                        Map <String, String> levelData = new HashMap<>();
+                        levelData.put("roomName", inputs.get("name").toString());
+                        levelData.put("roomDescription", inputs.get("description").toString());
+                        creepyGuyDAO.addLevel(new Level(levelData));
+                        response = generatePage();
+                    }
+
                 }
 
             }
@@ -82,10 +94,10 @@ public class MentorDeleter implements HttpHandler {
 
     }
 
-    private String generatePage(String sessionId){
-        creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
+    private String generatePage(){
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/mentorEditor.twig");
+
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/expLvlEditor.twig");
 
 
         JtwigModel model = JtwigModel.newModel();
@@ -95,22 +107,15 @@ public class MentorDeleter implements HttpHandler {
         return template.render(model);
     }
 
-    private String fillPage(String sessionId,  String id){
-        creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
-
-        MentorModel mentorModel = creepyGuyDAO.getMentorById(id);
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/mentorEditor.twig");
-
-
+    private String fillPage(String id){
+        Level level = creepyGuyDAO.getLevelById(id);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/expLvlEditor.twig");
         JtwigModel model = JtwigModel.newModel();
 
         model.with("nickname", creepyGuyModel.getNickName());
-        model.with("email", mentorModel.getEmail());
-        model.with("nick", mentorModel.getNickName());
-        model.with("name", mentorModel.getName());
-        model.with("surname", mentorModel.getSurname());
-        model.with("pass", mentorModel.getPassword());
-        model.with("class", mentorModel.getRoom());
+        model.with("description", level.getThreshold());
+        model.with("name", level.getLevelName());
+
 
         return template.render(model);
     }
