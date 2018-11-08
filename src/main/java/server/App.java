@@ -41,21 +41,18 @@ public class App {
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
         server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage());
 
-        server.createContext("/adminJavaPages/AdminMain", new AdminMain());
         server.createContext("/adminJavaPages/ClassAdder", new ClassAdder());
         server.createContext("/adminJavaPages/ClassDeleter", new ClassDeleter());
         server.createContext("/adminJavaPages/ClassEditor", new ClassEditor());
         server.createContext("/adminJavaPages/ExpLVLAdder", new ExpLVLAdder());
         server.createContext("/adminJavaPages/ExpLVLDeleter", new ExpLVLDeleter());
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
-        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin());
+        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
         server.createContext("/adminJavaPages/MentorAdder", new MentorAdder());
         server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
         server.createContext("/adminJavaPages/MentorEditor", new MentorEditor());
 
         server.createContext("/login", new Login(connection));
-        server.createContext("/codecoolerIndex", new CodecoolerIndex());
-        server.createContext("/adminMain", new AdminMainPage());
         server.createContext("/static", new Static());
         server.setExecutor(null); // creates a default executor
 

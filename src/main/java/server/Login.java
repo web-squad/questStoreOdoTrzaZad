@@ -43,7 +43,6 @@ public class Login implements HttpHandler {
         if(method.equals("GET")) {
             cookie = getSessionIdCookie(httpExchange);
             loginAccesDAO.deleteSessionID(cookie.get().getValue());
-            System.out.println("dupa");
             JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
 
             // create a model that will be passed to a template
@@ -71,7 +70,7 @@ public class Login implements HttpHandler {
                     httpExchange.getResponseHeaders().set("Location", "/codecoolerIndex");
                 }
                 if (accessLevel == 3){
-                    httpExchange.getResponseHeaders().set("Location", "/adminMainPage");
+                    httpExchange.getResponseHeaders().set("Location", "/adminJavaPages/GreetAdmin");
                 }
                 if (accessLevel == 2){
                     httpExchange.getResponseHeaders().set("Location", "/mentorMainPage");
