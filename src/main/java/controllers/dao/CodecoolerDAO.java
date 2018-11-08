@@ -183,10 +183,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         String artifactsQuery = "SELECT * FROM Artifacts";
         ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
         ArrayList<String> artifacts = new ArrayList<>();
-        ResultSetMetaData resultSetMetaData;
         try{
-            resultSetMetaData = resultSetArtefacts.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtefacts.next()){
                 String artefactId = resultSetArtefacts.getString("artifact_id");
                 String artefactName = resultSetArtefacts.getString("name");
@@ -225,16 +222,16 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     private String createWhereWithPossessedArtifacts(ResultSet resultSetArtifactsPossessed){
         ResultSetMetaData resultSetMetaData;
-        String whereClauseIds = "WHERE";
+        StringBuilder whereClauseIds = new StringBuilder("WHERE");
         try{
             resultSetMetaData = resultSetArtifactsPossessed.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtifactsPossessed.next()){
                 for(int i = 1; i <= columnsNumber; i++){
                     if(i == columnsNumber){
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + ";";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(";");
                     }else{
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + " OR";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(" OR");
                     }
 
                 }
@@ -243,7 +240,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             e.printStackTrace();
         }
 
-        return whereClauseIds;
+        return whereClauseIds.toString();
     }
 
     private List<Artifact> createArtifactsList(ResultSet resultSetArtifacts){
