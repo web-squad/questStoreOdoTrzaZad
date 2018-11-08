@@ -58,10 +58,7 @@ public class ExpLvlEditor implements HttpHandler {
                         response = fillPage(expLevelId);
                     }
                     if (inputs.containsKey("edit")){
-                        Map <String, String> lvlData = new HashMap<>();
-                        lvlData.put("roomName", inputs.get("name").toString());
-                        lvlData.put("roomDescription", inputs.get("description").toString());
-                        creepyGuyDAO.editLevel(new Level(lvlData), expLevelId);
+                        creepyGuyDAO.editLevel(new Level(fillData(inputs)), expLevelId);
                         response = generatePage();
                     }
                     if (inputs.containsKey("delete")){
@@ -70,15 +67,11 @@ public class ExpLvlEditor implements HttpHandler {
                     }
                     if (inputs.containsKey("add")){
                         inputs = formDataParser.getData(httpExchange);
-                        Map <String, String> levelData = new HashMap<>();
-                        levelData.put("roomName", inputs.get("name").toString());
-                        levelData.put("roomDescription", inputs.get("description").toString());
-                        creepyGuyDAO.addLevel(new Level(levelData));
+                        creepyGuyDAO.addLevel(new Level(fillData(inputs)));
                         response = generatePage();
                     }
 
                 }
-
             }
             else{
                 httpExchange.getResponseHeaders().set("Location", "/login");
@@ -92,7 +85,6 @@ public class ExpLvlEditor implements HttpHandler {
     }
 
     private String generatePage(){
-
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/expLvlEditor.twig");
 
@@ -115,5 +107,12 @@ public class ExpLvlEditor implements HttpHandler {
 
 
         return template.render(model);
+    }
+
+    private Map<String, String> fillData(Map<String, String> inputs){
+        Map <String, String> levelData = new HashMap<>();
+        levelData.put("levelName", inputs.get("name").toString());
+        levelData.put("threshold", inputs.get("description").toString());
+        return levelData;
     }
 }

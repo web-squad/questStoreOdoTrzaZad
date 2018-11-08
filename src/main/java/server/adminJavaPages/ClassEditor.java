@@ -58,10 +58,7 @@ public class ClassEditor implements HttpHandler {
                         response = fillPage(classId);
                     }
                     if (inputs.containsKey("edit")){
-                        Map <String, String> roomData = new HashMap<>();
-                        roomData.put("roomName", inputs.get("name").toString());
-                        roomData.put("roomDescription", inputs.get("description").toString());
-                        creepyGuyDAO.editRoom(new Room(roomData), classId);
+                        creepyGuyDAO.editRoom(new Room(fillData(inputs)), classId);
                         response = generatePage();
                     }
                     if (inputs.containsKey("delete")){
@@ -70,10 +67,7 @@ public class ClassEditor implements HttpHandler {
                     }
                     if (inputs.containsKey("add")){
                         inputs = formDataParser.getData(httpExchange);
-                        Map <String, String> roomData = new HashMap<>();
-                        roomData.put("roomName", inputs.get("name").toString());
-                        roomData.put("roomDescription", inputs.get("description").toString());
-                        creepyGuyDAO.addRoom(new Room(roomData));
+                        creepyGuyDAO.addRoom(new Room(fillData(inputs)));
                         response = generatePage();
                     }
 
@@ -117,5 +111,12 @@ public class ClassEditor implements HttpHandler {
 
 
         return template.render(model);
+    }
+
+    private Map<String, String> fillData(Map<String, String> inputs){
+        Map <String, String> roomData = new HashMap<>();
+        roomData.put("roomName", inputs.get("name").toString());
+        roomData.put("roomDescription", inputs.get("description").toString());
+        return roomData;
     }
 }

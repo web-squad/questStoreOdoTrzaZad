@@ -57,27 +57,11 @@ public class MentorEditor implements HttpHandler {
                     }
 
                     if (inputs.containsKey("add")){
-                        Map <String, String> mentorData = new HashMap<>();
-                        mentorData.put("email", inputs.get("email").toString());
-                        mentorData.put("password", inputs.get("pass").toString());
-                        mentorData.put("firstName", inputs.get("name").toString());
-                        mentorData.put("surname", inputs.get("surname").toString());
-                        mentorData.put("room", inputs.get("class").toString());
-                        mentorData.put("Nickname", inputs.get("nick").toString());
-                        creepyGuyDAO.addMentor(new MentorModel(mentorData));
-                        response = generatePage(sessionId);
+                        response = addMentor(inputs, sessionId);
                     }
 
                     if (inputs.containsKey("edit")){
-                        Map <String, String> mentorData = new HashMap<>();
-                        mentorData.put("email", inputs.get("email").toString());
-                        mentorData.put("password", inputs.get("pass").toString());
-                        mentorData.put("firstName", inputs.get("name").toString());
-                        mentorData.put("surname", inputs.get("surname").toString());
-                        mentorData.put("room", inputs.get("class").toString());
-                        mentorData.put("nickName", inputs.get("nick").toString());
-                        creepyGuyDAO.editMentor(new MentorModel(mentorData), mentorId);
-
+                        creepyGuyDAO.editMentor(new MentorModel(fillDataToMap(inputs)), mentorId);
                         response = generatePage(sessionId);
                     }
                     if (inputs.containsKey("delete")){
@@ -129,5 +113,21 @@ public class MentorEditor implements HttpHandler {
         model.with("class", mentorModel.getRoom());
 
         return template.render(model);
+    }
+
+    private String addMentor(Map <String, String> inputs, String sessionId){
+        creepyGuyDAO.addMentor(new MentorModel(fillDataToMap(inputs)));
+        return  generatePage(sessionId);
+    }
+
+    private Map<String, String> fillDataToMap(Map<String, String> inputs){
+        Map <String, String> mentorData = new HashMap<>();
+        mentorData.put("email", inputs.get("email").toString());
+        mentorData.put("password", inputs.get("pass").toString());
+        mentorData.put("firstName", inputs.get("name").toString());
+        mentorData.put("surname", inputs.get("surname").toString());
+        mentorData.put("room", inputs.get("class").toString());
+        mentorData.put("Nickname", inputs.get("nick").toString());
+        return mentorData;
     }
 }
