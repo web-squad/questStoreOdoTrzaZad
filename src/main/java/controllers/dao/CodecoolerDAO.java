@@ -213,6 +213,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             String whereClauseIds = createWhereWithPossessedArtifacts(resultSetArtifactsPossessed);
 
             artifactsQuery += whereClauseIds;
+            artifactsQuery = artifactsQuery.substring(0, artifactsQuery.indexOf(';'));
             System.out.println(artifactsQuery);
             ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
 
@@ -353,7 +354,20 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
-
+    public ArrayList<String> getAllTeams(){
+        ArrayList<String> teamsList = new ArrayList<>();
+        String selectTeamsQuery = "SELECT * FROM teams;";
+        ResultSet teamsResultSet = getResultSet(selectTeamsQuery);
+        try {
+            while (teamsResultSet.next()) {
+                String team = teamsResultSet.getString("id") + ";" + teamsResultSet.getString("team_name");
+                teamsList.add(team);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return teamsList;
+    }
     public void createNewTeam(int id, String teamName){
         String createTeamQuery = "INSERT INTO teams (team_name, codecooler_id) VALUES (" + "\'" + teamName + "\'," + id + ");";
         try{
@@ -393,4 +407,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
+
+
 }

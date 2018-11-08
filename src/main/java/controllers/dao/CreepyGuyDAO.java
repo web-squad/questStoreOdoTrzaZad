@@ -228,9 +228,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.close();
     }
 
-    public void deleteRoom(Room room){
+    public void deleteRoom(String roomID){
         try {
-            deleteRoomRecord(room);
+            deleteRoomRecord(roomID);
             view.print("Operation done successfully\n");
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
@@ -238,9 +238,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         }
     }
 
-    public void deleteRoomRecord(Room room) throws SQLException{
+    public void deleteRoomRecord(String roomId) throws SQLException{
         ps = connection.prepareStatement("DELETE FROM room WHERE room_id = ?;");
-        ps.setInt(1, Integer.parseInt(room.getId()));
+        ps.setString(1, roomId);
         ps.executeUpdate();
         connection.commit();
     }
@@ -335,16 +335,16 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.setInt(1, Integer.parseInt(id));
         ResultSet rs = ps.executeQuery();
         while ( rs.next() ) {
-            mentorData.put("levelName", rs.getString("level"));
-            mentorData.put("threshold", String.valueOf(rs.getInt("threshold")));
+            levelData.put("levelName", rs.getString("level_name"));
+            levelData.put("threshold", String.valueOf(rs.getInt("threshold")));
         }
         rs.close();
         ps.close();
     }
 
-    public void deleteLevel(Level level){
+    public void deleteLevel(String levelID){
         try {
-            deleteLevelRecord(level);
+            deleteLevelRecord(levelID);
             view.print("Operation done successfully\n");
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
@@ -352,9 +352,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         }
     }
 
-    private void deleteLevelRecord(Level level) throws SQLException {
+    private void deleteLevelRecord(String levelID) throws SQLException {
         ps = connection.prepareStatement("DELETE FROM experience_level WHERE id = ?;");
-        ps.setInt(1, Integer.parseInt(level.getId()));
+        ps.setString(1, levelID);
         ps.executeUpdate();
     }
 }

@@ -17,11 +17,9 @@ import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 
 public class GreetAdmin implements HttpHandler {
-    CreepyGuyDAO creepyGuyDAO;
-    CreepyGuyModel creepyGuyModel;
-    Optional<HttpCookie> cookie;
-    CookieHelper cookieHelper;
-    LoginAccesDAO loginAccesDAO;
+    private CreepyGuyDAO creepyGuyDAO;
+    private CookieHelper cookieHelper;
+    private LoginAccesDAO loginAccesDAO;
 
     public GreetAdmin(Connection connection){
         creepyGuyDAO = new CreepyGuyDAO(connection);
@@ -32,27 +30,11 @@ public class GreetAdmin implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie>cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         if (cookie.isPresent()) {
             if (loginAccesDAO.checkSessionPresent(sessionId)){
-
-                creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
-                // get a template file
-                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
-
-                // create a model that will be passed to a template
-                JtwigModel model = JtwigModel.newModel();
-
-                model.with("nickname", creepyGuyModel.getNickName());
-                model.with("second_nickname", creepyGuyModel.getNickName());
-                model.with("name", creepyGuyModel.getName());
-                model.with("surname", creepyGuyModel.getSurname());
-                model.with("email", creepyGuyModel.getEmail());
-
-                // render a template to a string
-                response = template.render(model);
-
+                response = fillPage(sessionId);
             }
             else{
                 httpExchange.getResponseHeaders().set("Location", "/login");
@@ -62,5 +44,20 @@ public class GreetAdmin implements HttpHandler {
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
+    }
+
+    private String fillPage(String sessionId){
+        CreepyGuyModel creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
+
+        JtwigModel model = JtwigModel.newModel();
+
+        model.with("nickname", creepyGuyModel.getNickName());
+        model.with("second_nickname", creepyGuyModel.getNickName());
+        model.with("name", creepyGuyModel.getName());
+        model.with("surname", creepyGuyModel.getSurname());
+        model.with("email", creepyGuyModel.getEmail());
+
+        return template.render(model);
     }
 }

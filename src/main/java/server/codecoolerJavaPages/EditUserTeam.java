@@ -8,7 +8,9 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import controllers.dao.CodecoolerDAO;
@@ -17,21 +19,25 @@ import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 public class EditUserTeam implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
+    private FormDataParser formDataParser;
 
     public EditUserTeam(Connection connection) {
         this.codecoolerDAO = new CodecoolerDAO(connection);
         this.cookieHelper = new CookieHelper();
         this.loginAccesDAO = new LoginAccesDAO(connection);
+        this.formDataParser = new FormDataParser();
     }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
+        String method = httpExchange.getRequestMethod();
         int userId = 0;
         String coins = "30";
         String coinsEverOwned = "210";
@@ -50,6 +56,8 @@ public class EditUserTeam implements HttpHandler {
 //        }catch(SQLException e){
 //            e.printStackTrace(); //temporary
 //        }
+        ArrayList<String> teamsList =  codecoolerDAO.getAllTeams();
+        String table = createTeamsTable(teamsList);
         CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
         if(userId != 0){
             coins = String.valueOf(codecoolerModel.getCoolcoins());
@@ -67,12 +75,18 @@ public class EditUserTeam implements HttpHandler {
 
         }
 
+        if(method.equals("POST")) {
+            Map<String, String> formData = formDataParser.getData(httpExchange);
+            String teamName = formData.get("team-name");
+            codecoolerDAO.editCodecoolerTeam(userId, teamName);
+        }
+
         // get a template file
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/editUserTeam.twig");
 
         // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();
-        fillModelTwig(model, nickname, coins, coinsEverOwned, quest, room, team, name, surname, level);
+        fillModelTwig(model, nickname, coins, coinsEverOwned, quest, room, team, name, surname, level, table);
         // render a template to a string
         String response = template.render(model);
 
@@ -91,7 +105,7 @@ public class EditUserTeam implements HttpHandler {
         return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
     }
 
-    private void fillModelTwig(JtwigModel model,  String nickname, String coins,  String coinsEverOwned, String quest, String room, String team, String name, String surname, String level){
+    private void fillModelTwig(JtwigModel model,  String nickname, String coins,  String coinsEverOwned, String quest, String room, String team, String name, String surname, String level, String table){
         model.with("nickname", nickname);
         model.with("coolcoins", coins);
         model.with("coolcoins_ever_owned", coinsEverOwned);
@@ -101,5 +115,15 @@ public class EditUserTeam implements HttpHandler {
         model.with("name", name);
         model.with("surname", surname);
         model.with("level", level);
+        model.with("table", table);
+    }
+
+    private String createTeamsTable(ArrayList<String> teamsList){
+        String table = "           <tr class = \"first-row\"> <th>ID</th> <th class = \"right-cell\">Team Name</th> </tr>\n";
+        for(String team : teamsList){
+            String[] teamArray =  team.split(";");
+            table += "<tr><td>" + teamArray[0] + "</td><td>" + teamArray[1] + "</td></tr>\n";
+        }
+        return table;
     }
 }

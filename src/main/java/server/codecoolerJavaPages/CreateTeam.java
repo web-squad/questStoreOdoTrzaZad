@@ -9,6 +9,7 @@ import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import controllers.dao.CodecoolerDAO;
@@ -17,21 +18,24 @@ import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 public class CreateTeam implements HttpHandler {
     private static final String SESSION_COOKIE_NAME = "sessionId";
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
+    private FormDataParser formDataParser;
 
     public CreateTeam(Connection connection){
         this.codecoolerDAO = new CodecoolerDAO(connection);
         this.cookieHelper = new CookieHelper();
         this.loginAccesDAO = new LoginAccesDAO(connection);
+        this.formDataParser = new FormDataParser();
     }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-
+        String method = httpExchange.getRequestMethod();
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
         int userId = 0;
         String coins = "30";
@@ -51,6 +55,8 @@ public class CreateTeam implements HttpHandler {
 //        }catch(SQLException e){
 //            e.printStackTrace(); //temporary
 //        }
+
+
         CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
         if(userId != 0){
             coins = String.valueOf(codecoolerModel.getCoolcoins());
@@ -66,6 +72,13 @@ public class CreateTeam implements HttpHandler {
                 level = "1";
             }
 
+        }
+
+        if(method.equals("POST")) {
+            Map<String, String> formData = formDataParser.getData(httpExchange);
+            String teamName = formData.get("team-name");
+
+            codecoolerDAO.createNewTeam(userId, teamName);
         }
 
         // get a template file

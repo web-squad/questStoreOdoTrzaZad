@@ -22,7 +22,6 @@ import server.helpers.FormDataParser;
 
 public class MentorEditor implements HttpHandler {
     private CreepyGuyDAO creepyGuyDAO;
-    private Optional<HttpCookie> cookie;
     private CookieHelper cookieHelper;
     private LoginAccesDAO loginAccesDAO;
     private FormDataParser formDataParser;
@@ -39,7 +38,7 @@ public class MentorEditor implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String response = "";
-        cookie = cookieHelper.getSessionIdCookie(httpExchange);
+        Optional<HttpCookie>  cookie = cookieHelper.getSessionIdCookie(httpExchange);
         String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
         String method = httpExchange.getRequestMethod();
 
@@ -56,16 +55,17 @@ public class MentorEditor implements HttpHandler {
                         mentorId = inputs.get("ID").toString();
                         response = fillPage(sessionId, mentorId);
                     }
-                    if (inputs.containsKey("edit")){
-                        Map <String, String> mentorData = new HashMap<>();
-                        mentorData.put("email", inputs.get("email").toString());
-                        mentorData.put("password", inputs.get("pass").toString());
-                        mentorData.put("firstName", inputs.get("name").toString());
-                        mentorData.put("surname", inputs.get("surname").toString());
-                        mentorData.put("room", inputs.get("class").toString());
-                        mentorData.put("nickName", inputs.get("nick").toString());
-                        creepyGuyDAO.editMentor(new MentorModel(mentorData), mentorId);
 
+                    if (inputs.containsKey("add")){
+                        response = addMentor(inputs, sessionId);
+                    }
+
+                    if (inputs.containsKey("edit")){
+                        creepyGuyDAO.editMentor(new MentorModel(fillDataToMap(inputs)), mentorId);
+                        response = generatePage(sessionId);
+                    }
+                    if (inputs.containsKey("delete")){
+                        creepyGuyDAO.deleteMentor(mentorId);
                         response = generatePage(sessionId);
                     }
                 }
@@ -113,5 +113,21 @@ public class MentorEditor implements HttpHandler {
         model.with("class", mentorModel.getRoom());
 
         return template.render(model);
+    }
+
+    private String addMentor(Map <String, String> inputs, String sessionId){
+        creepyGuyDAO.addMentor(new MentorModel(fillDataToMap(inputs)));
+        return  generatePage(sessionId);
+    }
+
+    private Map<String, String> fillDataToMap(Map<String, String> inputs){
+        Map <String, String> mentorData = new HashMap<>();
+        mentorData.put("email", inputs.get("email").toString());
+        mentorData.put("password", inputs.get("pass").toString());
+        mentorData.put("firstName", inputs.get("name").toString());
+        mentorData.put("surname", inputs.get("surname").toString());
+        mentorData.put("room", inputs.get("class").toString());
+        mentorData.put("Nickname", inputs.get("nick").toString());
+        return mentorData;
     }
 }
