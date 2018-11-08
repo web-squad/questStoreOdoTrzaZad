@@ -90,9 +90,9 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
         ps.close();
     }
 
-    public void deleteMentor(MentorModel mentor) {
+    public void deleteMentor(String id) {
         try {
-            deleteRecord(mentor);
+            deleteRecord(id);
             view.print("Operation done successfully\n");
         } catch ( SQLException e ) {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
@@ -101,13 +101,13 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     }
 
-    private void deleteRecord(MentorModel mentor) throws SQLException{
+    private void deleteRecord(String id) throws SQLException{
         ps = connection.prepareStatement("DELETE FROM codecoolers WHERE codecooler_id = ?;");
-        ps.setInt(1, Integer.parseInt(mentor.getId()));
+        ps.setString(1, id);
         ps.executeUpdate();
 
         ps = connection.prepareStatement("DELETE FROM login_access WHERE id = ?;");
-        ps.setInt(1, Integer.parseInt(mentor.getId()));
+        ps.setString(1,id);
         ps.executeUpdate();
         connection.commit();
         ps.close();

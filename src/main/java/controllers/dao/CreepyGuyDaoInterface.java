@@ -8,7 +8,7 @@ public interface CreepyGuyDaoInterface {
 
     void addMentor(MentorModel mentor);
     void editMentor(MentorModel mentor, String id);
-    void deleteMentor(MentorModel mentorModel);
+    void deleteMentor(String id);
 
     void addRoom(Room room);
     void editRoom(Room room, String id);
