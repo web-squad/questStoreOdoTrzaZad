@@ -13,6 +13,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
     private Connection connection;
     private List<Integer> loginData;
 
+
     public LoginAccesDAO(Connection connection){
         this.connection = connection;
     }

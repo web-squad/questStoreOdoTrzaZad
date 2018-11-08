@@ -48,9 +48,9 @@ public class App {
         server.createContext("/adminJavaPages/ExpLVLDeleter", new ExpLVLDeleter());
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
         server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
-        server.createContext("/adminJavaPages/MentorAdder", new MentorAdder());
+        server.createContext("/adminJavaPages/MentorAdder", new MentorAdder(connection));
         server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
-        server.createContext("/adminJavaPages/MentorEditor", new MentorEditor());
+        server.createContext("/adminJavaPages/MentorEditor", new MentorEditor(connection));
 
         server.createContext("/login", new Login(connection));
         server.createContext("/static", new Static());

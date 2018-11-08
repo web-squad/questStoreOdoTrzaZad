@@ -5,7 +5,7 @@
     <section class = "container-internal">
 
         <div class = "coin-picker">
-            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
             <span class = "nickname">{{ nickname }}</span>
         </div>
 
@@ -15,7 +15,7 @@
 
       <label class="search-engine">
       <span>Name</span>
-      <input type="text" name="name" placeholder="Full name" value="">
+      <input type="text" name="ID" placeholder="Full name" value="">
       </label>
 
       <form class="submit-form" method="post" name="myForm">
@@ -23,7 +23,7 @@
           <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
-                <span>Name</span>
+                <span>ID</span>
                 <input type="text" name="name" placeholder="Full name" value="">
                 </label></li>
 
@@ -37,6 +37,6 @@
                 <input type="text" name="class" placeholder="Class name" value="">
                 </label></li>
             </ul>
-          </fieldset><button type ="button" class = "submit-button">Edit Mentor</button></div></form>
+          </fieldset><input type ="input" name="edit" class = "submit-button" value = "Edit Mentor"></input></div></form>
     </section>
 {% endblock %}
