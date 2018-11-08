@@ -56,7 +56,6 @@ public class MentorAdder implements HttpHandler {
 
                     Map inputs = formDataParser.getData(httpExchange);
                     Map <String, String> mentorData = new HashMap<>();
-                    System.out.println(inputs);
                     mentorData.put("email", inputs.get("email").toString());
                     mentorData.put("password", inputs.get("pass").toString());
                     mentorData.put("firstName", inputs.get("name").toString());

@@ -50,7 +50,7 @@ public class App {
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
         server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(mentorDAO));
 
-        server.createContext("/adminJavaPages/ClassAdder", new ClassAdder());
+        server.createContext("/adminJavaPages/ClassAdder", new ClassAdder(connection));
         server.createContext("/adminJavaPages/ClassDeleter", new ClassDeleter());
         server.createContext("/adminJavaPages/ClassEditor", new ClassEditor());
         server.createContext("/adminJavaPages/ExpLVLAdder", new ExpLVLAdder());
@@ -58,7 +58,7 @@ public class App {
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
         server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
         server.createContext("/adminJavaPages/MentorAdder", new MentorAdder(connection));
-        server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
+        server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter(connection));
         server.createContext("/adminJavaPages/MentorEditor", new MentorEditor(connection));
 
         server.createContext("/login", new Login(connection));
