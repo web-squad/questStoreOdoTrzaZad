@@ -2,7 +2,6 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import controllers.Connector;
-import controllers.Connector;
 import controllers.dao.CodecoolerDAO;
 import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
@@ -19,14 +18,15 @@ public class App {
     public static void main(String[] args) throws Exception {
         String dbPass = "quest";
         String dbUser = "queststore";
+        Connection connection = new Connector().connect(dbUser, dbPass);
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        Connector connector = new Connector();
-        Connection connection = connector.connect(dbUser, dbPass);
+
         CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
         MentorDAO mentorDAO = new MentorDAO(connection);
         CreepyGuyDAO creepyGuyDAO = new CreepyGuyDAO(connection);
         LoginAccesDAO loginAccesDAO = new LoginAccesDAO(connection);
+
         // set routes
         server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
         server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(codecoolerDAO, loginAccesDAO));
@@ -35,8 +35,8 @@ public class App {
         server.createContext("/codecoolerJavaPages/Store", new Store());
         server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts());
 
-        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(mentorDAO));
-        server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest());
+        server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact(mentorDAO, loginAccesDAO));
+        server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest(mentorDAO, loginAccesDAO));
         server.createContext("/mentorJavaPages/MentorAddStudent", new MentorAddStudent());
         server.createContext("/mentorJavaPages/MentorCheckWallet", new MentorCheckWallet());
         server.createContext("/mentorJavaPages/MentorEditArtifact", new MentorEditArtifact());
@@ -56,10 +56,10 @@ public class App {
         server.createContext("/adminJavaPages/ExpLVLAdder", new ExpLVLAdder());
         server.createContext("/adminJavaPages/ExpLVLDeleter", new ExpLVLDeleter());
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
-      //  server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin());
-        server.createContext("/adminJavaPages/MentorAdder", new MentorAdder());
+        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
+        server.createContext("/adminJavaPages/MentorAdder", new MentorAdder(connection));
         server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
-        server.createContext("/adminJavaPages/MentorEditor", new MentorEditor());
+        server.createContext("/adminJavaPages/MentorEditor", new MentorEditor(connection));
 
         server.createContext("/login", new Login(connection));
         server.createContext("/static", new Static());
