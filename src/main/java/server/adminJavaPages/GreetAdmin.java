@@ -48,10 +48,8 @@ public class GreetAdmin implements HttpHandler {
 
     private String fillPage(String sessionId){
         CreepyGuyModel creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
-        // get a template file
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/greetAdmin.twig");
 
-        // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();
 
         model.with("nickname", creepyGuyModel.getNickName());
@@ -60,7 +58,6 @@ public class GreetAdmin implements HttpHandler {
         model.with("surname", creepyGuyModel.getSurname());
         model.with("email", creepyGuyModel.getEmail());
 
-        // render a template to a string
         return template.render(model);
     }
 }
