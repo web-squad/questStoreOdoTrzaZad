@@ -51,9 +51,8 @@ public class MentorAddStudent implements HttpHandler {
                 }
 
                 if (method.equals("POST")){
-
                     Map inputs = formDataParser.getData(httpExchange);
-                    System.out.println(inputs);
+
                     String providedFirstName = inputs.get("name").toString();
                     String providedLastName = inputs.get("lastName").toString();
                     String providedNickname = inputs.get("nickname").toString();

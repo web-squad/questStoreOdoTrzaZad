@@ -34,7 +34,7 @@ public class App {
         server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest(connection));
         server.createContext("/mentorJavaPages/MentorAddStudent", new MentorAddStudent(connection));
         server.createContext("/mentorJavaPages/MentorCheckWallet", new MentorCheckWallet());
-        server.createContext("/mentorJavaPages/MentorEditArtifact", new MentorEditArtifact());
+        server.createContext("/mentorJavaPages/MentorEditArtifact", new MentorEditArtifact(connection));
         server.createContext("/mentorJavaPages/MentorEditQuest", new MentorEditQuest());
         server.createContext("/mentorJavaPages/MentorEditStudent", new MentorEditStudent(connection));
         server.createContext("/mentorJavaPages/MentorIndexPage", new MentorIndexPage());
