@@ -56,7 +56,8 @@ public class MentorEditor implements HttpHandler {
                     }
 
                     if (inputs.containsKey("add")){
-                        response = addMentor(inputs, sessionId);
+                        creepyGuyDAO.addMentor(new MentorModel(fillDataToMap(inputs)));
+                        response = generatePage(sessionId);
                     }
 
                     if (inputs.containsKey("edit")){
@@ -113,10 +114,6 @@ public class MentorEditor implements HttpHandler {
         return template.render(model);
     }
 
-    private String addMentor(Map <String, String> inputs, String sessionId){
-        creepyGuyDAO.addMentor(new MentorModel(fillDataToMap(inputs)));
-        return  generatePage(sessionId);
-    }
 
     private Map<String, String> fillDataToMap(Map<String, String> inputs){
         Map <String, String> mentorData = new HashMap<>();
