@@ -4,6 +4,7 @@ package controllers.dao;
 import org.postgresql.util.PSQLException;
 import views.View;
 
+import javax.xml.transform.Result;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,5 +48,16 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
         rs.close();
         stmt.close();
+    }
+
+    public String getIdBySessionId(String sessionId) throws SQLException {
+        String id = "";
+        Statement stmt = connection.createStatement();
+        String idQuery = "SELECT id FROM login_access WHERE session_id = '" + sessionId + "';";
+        ResultSet resultSet = stmt.executeQuery(idQuery);
+        while(resultSet.next()){
+            id = resultSet.getString("id");
+        }
+        return id;
     }
 }

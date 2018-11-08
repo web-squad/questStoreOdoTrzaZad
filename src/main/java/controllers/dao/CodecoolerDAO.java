@@ -30,7 +30,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
-//18:30 wtorek5
+
         return coins;
     }
 
