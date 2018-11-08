@@ -41,10 +41,13 @@ public class Login implements HttpHandler {
         Optional<HttpCookie> cookie;
 
         if(method.equals("GET")) {
+            System.out.println(method);
             cookie = getSessionIdCookie(httpExchange);
-            loginAccesDAO.deleteSessionID(cookie.get().getValue());
-            JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
+            if(cookie.isPresent()){
+                loginAccesDAO.deleteSessionID(cookie.get().getValue());
+            }
 
+            JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/login.twig");
             // create a model that will be passed to a template
             JtwigModel model = JtwigModel.newModel();
 
@@ -67,10 +70,10 @@ public class Login implements HttpHandler {
                 loginAccesDAO.saveSessionId(sessionId, providedMail);
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
                 if (accessLevel == 1){
-                    httpExchange.getResponseHeaders().set("Location", "/codecoolerIndex");
+                    httpExchange.getResponseHeaders().set("Location", "/codecoolerJavaPages/CodecoolerIndex");
                 }
                 if (accessLevel == 3){
-                    httpExchange.getResponseHeaders().set("Location", "/adminJavaPages/GreetAdmin");
+                    httpExchange.getResponseHeaders().set("Location", "/adminMainPage");
                 }
                 if (accessLevel == 2){
                     httpExchange.getResponseHeaders().set("Location", "/mentorMainPage");

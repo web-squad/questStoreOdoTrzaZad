@@ -2,6 +2,9 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import controllers.Connector;
+import controllers.Connector;
+import controllers.dao.CodecoolerDAO;
+import controllers.dao.LoginAccesDAO;
 import server.codecoolerJavaPages.*;
 import server.adminJavaPages.*;
 import server.mentorJavaPages.*;
@@ -14,13 +17,15 @@ public class App {
     public static void main(String[] args) throws Exception {
         String dbPass = "quest";
         String dbUser = "queststore";
-        Connection connection = new Connector().connect(dbUser, dbPass);
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-
+        Connector connector = new Connector();
+        Connection connection = connector.connect("karol", "4313284");
+        CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
+        LoginAccesDAO loginAccesDAO = new LoginAccesDAO(connection);
         // set routes
         server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
-        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain());
+        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(codecoolerDAO, loginAccesDAO));
         server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam());
         server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam());
         server.createContext("/codecoolerJavaPages/Store", new Store());
@@ -47,7 +52,7 @@ public class App {
         server.createContext("/adminJavaPages/ExpLVLAdder", new ExpLVLAdder());
         server.createContext("/adminJavaPages/ExpLVLDeleter", new ExpLVLDeleter());
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
-        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
+      //  server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin());
         server.createContext("/adminJavaPages/MentorAdder", new MentorAdder());
         server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
         server.createContext("/adminJavaPages/MentorEditor", new MentorEditor());
