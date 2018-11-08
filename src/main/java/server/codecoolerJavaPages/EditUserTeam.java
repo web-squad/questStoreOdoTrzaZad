@@ -50,12 +50,12 @@ public class EditUserTeam implements HttpHandler {
         String surname = "Trzaska";
         String sessionId = httpCookie.get().getValue().replace("\"", "");
         System.out.println(sessionId);
-//        try{
-//            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-//            System.out.println(userId);
-//        }catch(SQLException e){
-//            e.printStackTrace(); //temporary
-//        }
+        try{
+            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
+            System.out.println(userId);
+        }catch(SQLException e){
+            e.printStackTrace(); //temporary
+        }
         ArrayList<String> teamsList =  codecoolerDAO.getAllTeams();
         String table = createTeamsTable(teamsList);
         CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);

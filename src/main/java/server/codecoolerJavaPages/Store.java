@@ -51,12 +51,12 @@ public class Store implements HttpHandler {
         ArrayList<String> artifacts = codecoolerDAO.readArtifacts();
         System.out.println(artifacts);
         String table = createTable(artifacts);
-//        try{
-//            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-//            System.out.println(userId);
-//        }catch(SQLException e){
-//            e.printStackTrace(); //temporary
-//        }
+        try{
+            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
+            System.out.println(userId);
+        }catch(SQLException e){
+            e.printStackTrace(); //temporary
+        }
         CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
         if(userId != 0){
             coins = String.valueOf(codecoolerModel.getCoolcoins());
