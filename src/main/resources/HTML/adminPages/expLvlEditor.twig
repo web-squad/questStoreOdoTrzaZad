@@ -4,26 +4,24 @@
 
     <section class = "container-internal">
         <div class = "coin-picker">
-            <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+            <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
             <span class = "nickname">{{ nickname }}</span>
         </div>
-      <header>
-        <h3>Editing experience levels data</h3>
-      </header>
-      <form method="post" name="searchForm>
+      <form method="post" name="searchForm class = "provide-id">
             <label class="search-engine">
             <span>Provide ID</span>
             <input type= "text" name="ID" placeholder="" value="">
             <input type = "submit" name = "search">
-            </form>
             </label>
+       </form>
+    <div class = "middle">
       <form class="submit-form" method="post" name="myForm">
         <div class = "column">
           <fieldset class="first-table menu-internal">
             <ul>
               <li><label>
                 Level Name
-                <input type="text" name="name" placeholder="Full name" value="{{ name }}">
+                <input type="text" name="name" placeholder="Full name" value="{{ name }}" required>
                 </label></li>
 
             </ul>
@@ -40,11 +38,12 @@
             <ul>
               <li><label>
                 Room Description
-                <input type="text" name="description" placeholder="Full name" value="{{ description }}">
+                <input type="text" name="description" placeholder="Full name" value="{{ description }}" required>
                 </label></li>
             </ul>
           </fieldset>
           </div></div>
       </form>
+      </div>
     </section>
 {% endblock %}

@@ -17,7 +17,7 @@ public interface CodecoolerDAOInterface {
     String getFirstName(int codecoolerId);
     String getSecondName(int codecoolerId);
     String getEmail(int codecoolerId);
-    String readArtifacts();
+    List<String> readArtifacts();
     List<Artifact> readCodecoolersArtifacts(int codecoolerId);
     int getPriceOfArtifact(int artifactId);
     void addNewPossesion(int codecoolerId, int artifactId);

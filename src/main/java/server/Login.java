@@ -102,7 +102,7 @@ public class Login implements HttpHandler {
         if (!loginData.isEmpty()) {
             int accessLevel = loginData.get(0);
             if (accessLevel == 1){
-                return "/codecoolerJavaPages/codecoolerIndex";
+                return "/codecoolerJavaPages/CodecoolerIndex";
             }
             if (accessLevel == 3){
                 return "/adminJavaPages/GreetAdmin";

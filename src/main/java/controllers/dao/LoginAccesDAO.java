@@ -5,6 +5,12 @@ import org.postgresql.util.PSQLException;
 import views.View;
 
 import java.sql.*;
+import java.sql.*;
+import javax.xml.transform.Result;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +79,21 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             System.err.println( e.getClass().getName()+": "+ e.getMessage() );
             System.exit(0);
         }
+    }
+
+    public String getIdBySessionId(String sessionId) throws SQLException {
+        String id = "";
+        Statement stmt = connection.createStatement();
+        System.out.println(sessionId);
+        String idQuery = "SELECT id FROM login_access WHERE session_id = '" + sessionId + "';";
+        ResultSet resultSet = stmt.executeQuery(idQuery);
+        while(resultSet.next()){
+
+            id = resultSet.getString("id");
+            System.out.println(id);
+            System.out.println("DUUUUUUUUUUUUUUUUUUUUUUUUPAAAAAAAAAAAAAAa");
+        }
+        return id;
     }
 
     public boolean checkSessionPresent(String sessionId){

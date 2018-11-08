@@ -2,6 +2,9 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import controllers.Connector;
+import controllers.Connector;
+import controllers.dao.CodecoolerDAO;
+import controllers.dao.LoginAccesDAO;
 import server.codecoolerJavaPages.*;
 import server.adminJavaPages.*;
 import server.mentorJavaPages.*;
@@ -14,17 +17,17 @@ public class App {
     public static void main(String[] args) throws Exception {
         String dbPass = "quest";
         String dbUser = "queststore";
-        Connection connection = new Connector().connect(dbUser, dbPass);
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-
+        Connector connector = new Connector();
+        Connection connection = connector.connect("karol", "4313284");
         // set routes
-        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
-        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain());
-        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam());
-        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam());
-        server.createContext("/codecoolerJavaPages/Store", new Store());
-        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts());
+        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex(connection));
+        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(connection));
+        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam(connection));
+        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam(connection));
+        server.createContext("/codecoolerJavaPages/Store", new Store(connection));
+        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts(connection));
 
         server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact());
         server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest());
@@ -41,6 +44,8 @@ public class App {
         server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
         server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage());
 
+
+        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
         server.createContext("/adminJavaPages/ClassEditor", new ClassEditor(connection));
         server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
         server.createContext("/adminJavaPages/MentorEditor", new MentorEditor(connection));

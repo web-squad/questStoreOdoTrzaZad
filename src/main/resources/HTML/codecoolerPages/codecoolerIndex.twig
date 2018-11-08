@@ -2,11 +2,11 @@
 <html>
     <head>
         <title>Codecool Quest Store</title>
-        <link rel = "stylesheet" type="text/css" href = "static/main.css">
-        <link rel = "stylesheet" type = "text/css" href = "static/fontello.css">
+        <link rel = "stylesheet" type="text/css" href = "../static/main.css">
+        <link rel = "stylesheet" type = "text/css" href = "../static/fontello.css">
         <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
         <meta charset = "UTF-8">
-        <link rel="icon" href="static/assets/images/faviconCodecool.png">
+        <link rel="icon" href="../static/assets/images/faviconCodecool.png">
 
     </head>
 
@@ -19,11 +19,11 @@
 
             <section class ="bar">
                         
-                <img src = "static/assets/images/logoBar.jpg"><!--
+                <img src = "../static/assets/images/logoBar.jpg"><!--
                  --><span>Codecool Poland</span>
                  <nav class = "primary-nav">
                         <a href ="CodecoolerMain">My account</a><!--
-                        --><a>Log out</a>
+                        --><a href = "../login">Log out</a>
                         
                      </nav>
                 </section>
@@ -32,10 +32,10 @@
 
                 <nav class = "menu col-1-5">
                     <ul id="codecoolerMenu">
-                        <li><i class="icon-basket" ><a href="Store"></i>Buy Artifacts</a></li>
-                        <li><i class="icon-shopping-bag" ><a href="UserArtifacts"></i>My Artifacts</a></li>
-                        <li><i class="icon-pencil" ><a href="EditUserTeam"></i>Edit Team</a></li>
-                        <li><i class="icon-magic" ><a href="CreateTeam"></i>Create Team</a></li>
+                        <li><i class="icon-basket" ><a href="Store" class = "left-menu-a"></i>Buy Artifacts</a></li>
+                        <li><i class="icon-shopping-bag" ><a href="UserArtifacts" class = "left-menu-a"></i>My Artifacts</a></li>
+                        <li><i class="icon-pencil" ><a href="EditUserTeam" class = "left-menu-a"></i>Edit Team</a></li>
+                        <li><i class="icon-magic" ><a href="CreateTeam" class = "left-menu-a"></i>Create Team</a></li>
                     </ul>
                 </nav>
 
@@ -52,7 +52,7 @@
         </span>
         </footer>
          </div>
-    <script src="static/assets/scripts/codecoolerMenuScript.js"></script>
+    <script src="../static/assets/scripts/codecoolerMenuScript.js"></script>
     <script>function changeToWelcomePage() {
             document.getElementById("inner").src = "codecoolerMain.html"
     }    
