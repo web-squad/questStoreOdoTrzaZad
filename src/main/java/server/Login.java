@@ -49,8 +49,7 @@ public class Login implements HttpHandler {
 
             List<Integer> loginData = loginAccesDAO.readLoginData(providedMail, providedPassword);
             String pageAdress = redirect(loginData);
-
-            if (!pageAdress.equals(null)) {
+            if (!pageAdress.equals("null")) {
                 httpExchange.getResponseHeaders().set("Location", pageAdress);
                 String sessionId = String.valueOf(hash(providedMail + providedPassword + LocalDateTime.now().toString()));
                 loginAccesDAO.saveSessionId(sessionId, providedMail);
@@ -111,6 +110,6 @@ public class Login implements HttpHandler {
                 return "/mentorJavaPages/mentorMainPage";
             }
         }
-        return null;
+        return "null";
     }
 }
