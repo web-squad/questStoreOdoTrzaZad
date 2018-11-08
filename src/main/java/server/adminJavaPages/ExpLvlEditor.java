@@ -101,10 +101,11 @@ public class ExpLvlEditor implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/expLvlEditor.twig");
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("nickname", creepyGuyModel.getNickName());
-        model.with("description", level.getThreshold());
-        model.with("name", level.getLevelName());
-
+        if (!(level == null)) {
+            model.with("nickname", creepyGuyModel.getNickName());
+            model.with("description", level.getThreshold());
+            model.with("name", level.getLevelName());
+        }
 
         return template.render(model);
     }
