@@ -68,7 +68,7 @@ public class Login implements HttpHandler {
      * See: https://en.wikipedia.org/wiki/POST_(HTTP)
      */
     private void sendResponse(HttpExchange httpExchange, String response) throws IOException {
-        httpExchange.sendResponseHeaders(301, response.length());
+        httpExchange.sendResponseHeaders(301, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
