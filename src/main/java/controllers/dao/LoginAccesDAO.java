@@ -62,11 +62,9 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
 
     public void deleteSessionID(String sessionId){
         try {
-            System.out.println(sessionId);
-            ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id LIKE '% ? %';");
+            sessionId = sessionId.substring(1, sessionId.length()-1);
+            ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id = ? ;");
             ps.setString(1, sessionId);
-            int i = ps.executeUpdate();
-            System.out.println(i);
             connection.commit();
             ps.close();
         } catch (SQLException e){
@@ -74,4 +72,18 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             System.exit(0);
         }
     }
+
+    private boolean checkSessionPresent(String sessionId) throws SQLException {
+        boolean sessionPresent = false;
+        sessionId = sessionId.substring(1, sessionId.length()-1);
+        ps = connection.prepareStatement("SELECT session_id FRROM login_access WHERE session_id = ?");
+        ps.setString(1, sessionId);
+        ResultSet rs = ps.executeQuery();
+        while ( rs.next() ) {
+            sessionPresent = true;
+        }
+        rs.close();
+        return sessionPresent;
+    }
+
 }
