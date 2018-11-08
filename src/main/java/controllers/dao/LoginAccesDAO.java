@@ -65,6 +65,7 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
             sessionId = sessionId.substring(1, sessionId.length()-1);
             ps = connection.prepareStatement("UPDATE public.login_access SET session_id = null WHERE session_id = ? ;");
             ps.setString(1, sessionId);
+            ps.executeUpdate();
             connection.commit();
             ps.close();
         } catch (SQLException e){
@@ -73,16 +74,22 @@ public class LoginAccesDAO implements LoginAccesDAOInterface {
         }
     }
 
-    private boolean checkSessionPresent(String sessionId) throws SQLException {
+    public boolean checkSessionPresent(String sessionId){
         boolean sessionPresent = false;
-        sessionId = sessionId.substring(1, sessionId.length()-1);
-        ps = connection.prepareStatement("SELECT session_id FRROM login_access WHERE session_id = ?");
-        ps.setString(1, sessionId);
-        ResultSet rs = ps.executeQuery();
-        while ( rs.next() ) {
-            sessionPresent = true;
+        try{
+            sessionId = sessionId.substring(1, sessionId.length() - 1);
+            ps = connection.prepareStatement("SELECT session_id FROM public.login_access WHERE session_id = ?");
+            ps.setString(1, sessionId);
+            ResultSet rs = ps.executeQuery();
+            System.out.println(rs.next());
+            while (rs.next()) {
+                sessionPresent = true;
+            }
+            rs.close();
+        }catch (SQLException e){
+            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            System.exit(0);
         }
-        rs.close();
         return sessionPresent;
     }
 
