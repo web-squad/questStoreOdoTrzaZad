@@ -6,6 +6,7 @@ import com.sun.net.httpserver.HttpHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -22,10 +23,10 @@ public class CodecoolerMain implements HttpHandler {
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
     private CookieHelper cookieHelper;
-    public CodecoolerMain(CodecoolerDAO codecoolerDAO, LoginAccesDAO loginAccesDAO) {
-        this.codecoolerDAO = codecoolerDAO;
+    public CodecoolerMain(Connection connection) {
+        this.codecoolerDAO = new CodecoolerDAO(connection);
         this.cookieHelper = new CookieHelper();
-        this.loginAccesDAO = loginAccesDAO;
+        this.loginAccesDAO = new LoginAccesDAO(connection);
     }
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
@@ -69,15 +70,7 @@ public class CodecoolerMain implements HttpHandler {
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/codecoolerMain.twig");
         // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();
-        model.with("nickname", nickname);
-        model.with("coolcoins", coins);
-        model.with("coolcoins_ever_owned", coinsEverOwned);
-        model.with("quest", quest);
-        model.with("room", room);
-        model.with("team", team);
-        model.with("name", name);
-        model.with("surname", surname);
-        model.with("level", level);
+        fillModelTwig(model, nickname, coins, coinsEverOwned, quest, room, team, name, surname, level);
         // render a template to a string
         String response = template.render(model);
 
@@ -93,5 +86,17 @@ public class CodecoolerMain implements HttpHandler {
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
         return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
+    }
+
+    private void fillModelTwig(JtwigModel model,  String nickname, String coins,  String coinsEverOwned, String quest, String room, String team, String name, String surname, String level){
+        model.with("nickname", nickname);
+        model.with("coolcoins", coins);
+        model.with("coolcoins_ever_owned", coinsEverOwned);
+        model.with("quest", quest);
+        model.with("room", room);
+        model.with("team", team);
+        model.with("name", name);
+        model.with("surname", surname);
+        model.with("level", level);
     }
 }

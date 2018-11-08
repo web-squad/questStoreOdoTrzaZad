@@ -21,15 +21,13 @@ public class App {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         Connector connector = new Connector();
         Connection connection = connector.connect("karol", "4313284");
-        CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connection);
-        LoginAccesDAO loginAccesDAO = new LoginAccesDAO(connection);
         // set routes
-        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex());
-        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(codecoolerDAO, loginAccesDAO));
-        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam());
-        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam());
-        server.createContext("/codecoolerJavaPages/Store", new Store());
-        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts());
+        server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex(connection));
+        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(connection));
+        server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam(connection));
+        server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam(connection));
+        server.createContext("/codecoolerJavaPages/Store", new Store(connection));
+        server.createContext("/codecoolerJavaPages/UserArtifacts", new UserArtifacts(connection));
 
         server.createContext("/mentorJavaPages/MentorAddArtifact", new MentorAddArtifact());
         server.createContext("/mentorJavaPages/MentorAddQuest", new MentorAddQuest());

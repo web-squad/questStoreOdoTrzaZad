@@ -4,18 +4,18 @@
 <section class = "container-internal">
     <div class = "coin-picker">
         <span class = "nickname">{{ nickname }}</span>
-        <img src = "static/assets/images/coolcoin.png" class = "coolcoinIcon">
+        <img src = "../static/assets/images/coolcoin.png" class = "coolcoinIcon">
         <div class = "coins">
             <span class = "coins-now">Your coolcoins: {{ coolcoins }}</span>
             <span class = "coins-ever-owned">Coolcoins ever owned: {{ coolcoins_ever_owned }}</span>
         </div>
 
-        <img src = "static/assets/images/questIcon.png" class = "questIcon">
+        <img src = "../static/assets/images/questIcon.png" class = "questIcon">
         <div class = "quest-in-progress">
             <span class = "quest">Quest in progress: {{ quest }}</span>
         </div>
 
-        <img src = "static/assets/images/teamIcon.png" class = "teamIcon">
+        <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
         <div class = "team-class">
             <span class = "class">Your class: {{ room }}</span>
             <span class = "team">Your team: {{ team }}</span>
@@ -25,12 +25,67 @@
 
     <div class = "teams">
             <span class = "your-team">Your team: {{ team }}</span>
+        <form method="get" class = "read-form-edit-team">
+        <input type = "submit" value = "Read Teams" name = "readTeamSubmit" class = "read-button-edit-team">
+        </form>
 
-        <button type = "button" class = "read-button">Read All Teams</button>
         <table class = "table-team">
             <tr class = "first-row">
                 <th>ID</th>
                 <th class = "right-cell">Team Name</th>
+            </tr>
+            <tr class = "second-row">
+                <td>1</td>
+                <td class = "right-cell">Bułka</td>
+            </tr>
+            <tr class = "first-row">
+                <td>2</td>
+                <td class = "right-cell">Chleb</td>
+            </tr>
+
+            <tr class = "second-row">
+                <td>3</td>
+                <td class = "right-cell">Pączek</td>
+            </tr>
+
+            <tr class = "second-row">
+                <td>1</td>
+                <td class = "right-cell">Bułka</td>
+            </tr>
+            <tr class = "first-row">
+                <td>2</td>
+                <td class = "right-cell">Chleb</td>
+            </tr>
+
+            <tr class = "second-row">
+                <td>3</td>
+                <td class = "right-cell">Pączek</td>
+            </tr>
+            <tr class = "second-row">
+                <td>1</td>
+                <td class = "right-cell">Bułka</td>
+            </tr>
+            <tr class = "first-row">
+                <td>2</td>
+                <td class = "right-cell">Chleb</td>
+            </tr>
+
+            <tr class = "second-row">
+                <td>3</td>
+                <td class = "right-cell">Pączek</td>
+            </tr>
+            <tr class = "second-row">
+                <td>1</td>
+                <td class = "right-cell">Bułka</td>
+            </tr>
+            <tr class = "first-row">
+                <td>2</td>
+                <td class = "right-cell">Chleb</td>
+            </tr>
+
+            <tr class = "second-row">
+                <td>3</td>
+                <td class = "right-cell">Pączek</td>
             </tr>
             <tr class = "second-row">
                 <td>1</td>
