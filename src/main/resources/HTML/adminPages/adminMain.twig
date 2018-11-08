@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Codecool Quest Store</title>
+    <link rel="stylesheet" type="text/css" href="../static/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
+    <link rel = "stylesheet" type = "text/css" href = "../static/fontello.css">
+    <link href="../static/internalPage.css" rel="stylesheet">
+    <meta charset = "UTF-8">
+    <script src="../static/assets/scripts/adminScripts.js"></script>
+  </head>
+  <body onload="addListener()">
+    <div class = "container">
+      <header>
+
+        <a href = "index.html">Quest Store</a>
+
+      </header>
+      <section class ="bar">
+          <!--
+    --><img src="../static/assets/images/logoBar.jpg"><!--
+    --><span>Codecool Poland</span>    
+        <nav class = "primary-nav" id="nav">
+          <a href="GreetAdmin">My account</a><!--
+--><a href = "../login">Log out</a>
+        </nav></section>
+      <div class = "main">
+        <nav class = "menu col-1-5"><ul>
+          <li id="mentorHandler" class="dropdown">Mentor Handler<div >
+            <div class="dropdown-content">
+            <ul>
+              <li><a href="MentorEditor">Edit Mentors</a></li>
+            </ul>
+            </div>
+            </div></li>
+          <li id="classHandler" class="dropdown">Class Handler<div >
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="ClassEditor">Edit Classes</a></li>
+              </ul>
+            </div>
+            </div></li>
+          <li id="expHandler" class="dropdown">Exp Handle<div >
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="ExpLvlEditor">Edit Experience Levels</a></li>
+              </ul>
+            </div>
+            </div></li>
+          </ul></nav>
+        <div class = "col-4-5">{% block content %}{% endblock %}</div>
+        <div class = "right-side-style"></div>
+      </div>
+      <footer class = "container footer">
+        <p>&copy; Thrash Code sp. zoo</p>
+        <span>
+            <a href = "https://www.facebook.com/CodecoolPoland/" class="icon-facebook-squared"></a>
+            <a href = "https://twitter.com/codecoolpoland" class="icon-twitter-squared"></a>
+            <a href = "https://pl.linkedin.com/school/codecool/" class="icon-linkedin-squared"></a> 
+        </span>
+        </footer>
+    </div>
+
+  </body>
+</html>

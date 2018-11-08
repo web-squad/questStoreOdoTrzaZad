@@ -1,0 +1,37 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+        <h1>Here you can add new quest to shop:</h1>
+        <form>
+            <div class="column">
+                <fieldset class="first-table menu-internal">
+                    <ul>
+                        <li><label>
+                            Quest name:
+                            <input class="input" type="text" name="name">
+                        </label></li>
+                        <li><label>
+                            Quest description:
+                            <input class="input" type="text" name="description">
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu-internal">
+                    <ul>
+                        <li><label>
+                            Quest reward:
+                            <input class="input" type="text" name="price">
+                        </label></li>
+                        <li><label>
+                            Quest image:
+                            <input class="input" type="text" name="questURL">
+                        </label></li>
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+{% endblock %}

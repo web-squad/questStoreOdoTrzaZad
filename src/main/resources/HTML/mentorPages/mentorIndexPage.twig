@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Codecool Quest Store</title>
+        <link rel = "stylesheet" type="text/css" href = "static/main.css">
+        <link rel = "stylesheet" type = "text/css" href = "static/fontello.css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
+        <meta charset = "UTF-8">
+        <link rel="icon" href="static/assets/images/faviconCodecool.png">
+        <link rel = "stylesheet" type = "text/css" href = "static/internalPage.css">
+    </head>
+
+    <body>
+        <div class = "container">
+
+            <header>
+                <a href = "index.html">Quest Store</a>
+            </header>
+
+            <section class ="bar">
+                        
+                <!--
+                 --><img src = "assets/images/logoBar.jpg"><!--
+                 --><span>Codecool Poland</span>
+                 <nav class = "primary-nav">
+                        <a href="MentorWelcomePage>>My account</a><!--
+                        --><a>Log out</a>
+                     </nav>
+                </section>
+
+            <div class = "main">
+
+                    <nav class = "menu col-1-5"><ul>
+                            <li class="dropdown">Codecoolers
+                                <div class="dropdown-content">
+                                <ul id="codecoolerOptionsList">
+                                    <li id="codecoolerAdder"><a href="MentorAddStudent">Add Codecooler</a></li>
+                                    <li id="codecoolerEditor"><a href="MentorEditStudent">Edit Codecooler</a></li>
+                                    <li id="codecoolerDeleter"><a href="MentorRemoveStudent">Delete Codecooler</a></li>
+                                    <li id="codecoolerMarkItem"><a href="MentorMarkItemAsUsed">Mark Item as Used</a></li>
+                                    <li id="codecoolerQuest"><a href="MentorMarkQuestAsCompleted">Mark Quest as completed</a></li>
+                                    <li id="codecoolerWallet"><a href="MentorCheckWallet">Check codecooler wallet</a></li>
+                              </ul>
+                              </div></li>
+                            <li class="dropdown">Item shop
+                                <div class="dropdown-content">
+                                <ul id="shopOptionsList">
+                                    <li id="showShop"><a href="MentorShop">Show shop</a></li>
+                                    <li id="editItem"><a href="MentorEditArtifact">Edit item</a></li>
+                                    <li id="addItem"><a href="MentorAddArtifact">Add new item</a></li>
+                                </ul>
+                            </div></li>
+                            <li class="dropdown">Quests
+                                <div class="dropdown-content">
+                                <ul id="questOptionsList">
+                                    <li id="showQuests"><a href="MentorQuests">Show quests</a></li>
+                                    <li id="editQuest"><a href="MentorEditQuest">Edit quest</a></li>
+                                    <li id="addQuest"><a href="MentorAddQuest">Add new quest</a></li>
+                                </ul>
+                            </div></li>
+                            </ul></nav>
+
+            <div class = "col-4-5">{% block content %}{% endblock %}</div>
+            <div class = "right-side-style"></div>
+        
+        </div>
+    <footer class = "container footer">
+        <p>&copy; Thrash Code sp. zoo</p>
+        <span>
+            <a href = "https://www.facebook.com/CodecoolPoland/" class="icon-facebook-squared"></a>
+            <a href = "https://twitter.com/codecoolpoland" class="icon-twitter-squared"></a>
+            <a href = "https://pl.linkedin.com/school/codecool/" class="icon-linkedin-squared"></a> 
+        </span>
+        </footer>
+         </div>
+    <script src="../assets/scripts/MentorMenuScript.js"></script>
+    <script>function changeToWelcomePage() {
+        document.getElementById("inner").src = "mentorWelcomePage.html"
+    }
+    </script> 
+    </body>
+    </html>
