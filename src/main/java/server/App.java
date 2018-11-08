@@ -20,7 +20,7 @@ public class App {
         // create a server on port 8000
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         Connector connector = new Connector();
-        Connection connection = connector.connect("karol", "4313284");
+        Connection connection = connector.connect(dbUser, dbPass);
         // set routes
         server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex(connection));
         server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(connection));
