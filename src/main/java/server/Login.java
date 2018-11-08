@@ -7,6 +7,7 @@ import controllers.dao.LoginAccesDAO;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 import java.io.*;
 import java.net.HttpCookie;
@@ -25,9 +26,11 @@ public class Login implements HttpHandler {
     int counter = 0;
     CookieHelper cookieHelper = new CookieHelper();
     LoginAccesDAO loginAccesDAO;
+    FormDataParser formDataParser;
 
     public Login(Connection connection) {
         this.loginAccesDAO = new LoginAccesDAO(connection);
+        formDataParser = new FormDataParser();
     }
 
     @Override
@@ -53,7 +56,7 @@ public class Login implements HttpHandler {
         }
 
         if (method.equals("POST") ) {
-            Map inputs = getData(httpExchange);
+            Map inputs = formDataParser.getData(httpExchange);
             String providedMail = inputs.get("email").toString();
             String providedPassword = inputs.get("pass").toString();
             List<Integer> loginData = loginAccesDAO.readLoginData(providedMail, providedPassword);
@@ -101,25 +104,6 @@ public class Login implements HttpHandler {
 
     }
 
-    private static Map<String, String> parseFormData(String formData) throws UnsupportedEncodingException {
-        Map<String, String> map = new HashMap<>();
-        String[] pairs = formData.split("&");
-        for(String pair : pairs){
-            String[] keyValue = pair.split("=");
-            // We have to decode the value because it's urlencoded. see: https://en.wikipedia.org/wiki/POST_(HTTP)#Use_for_submitting_web_forms
-            String value = new URLDecoder().decode(keyValue[1], "UTF-8");
-            map.put(keyValue[0], value);
-        }
-        return map;
-    }
-
-
-    private Map<String, String> getData(HttpExchange httpExchange) throws IOException{
-        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), StandardCharsets.UTF_8);
-        BufferedReader br = new BufferedReader(isr);
-        String formData = br.readLine();
-        return parseFormData(formData);
-    }
 
     private long hash(String string) {
         long h = 1125899906842597L; // prime
