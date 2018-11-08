@@ -69,7 +69,7 @@ public class Login implements HttpHandler {
                 loginAccesDAO.saveSessionId(sessionId, providedMail);
                 httpExchange.getResponseHeaders().add("Set-Cookie", cookie.get().toString());
                 if (accessLevel == 1){
-                    httpExchange.getResponseHeaders().set("Location", "/codecoolerIndex");
+                    httpExchange.getResponseHeaders().set("Location", "/codecoolerJavaPages/CodecoolerIndex");
                 }
                 if (accessLevel == 3){
                     httpExchange.getResponseHeaders().set("Location", "/adminJavaPages/GreetAdmin");

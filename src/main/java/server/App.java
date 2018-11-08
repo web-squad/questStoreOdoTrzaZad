@@ -52,8 +52,8 @@ public class App {
         server.createContext("/adminJavaPages/ExpLVLEditor", new ExpLVLEditor());
         server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
         server.createContext("/adminJavaPages/MentorAdder", new MentorAdder(connection));
-      //  server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin());
-      //  server.createContext("/adminJavaPages/MentorAdder", new MentorAdder());
+        server.createContext("/adminJavaPages/GreetAdmin", new GreetAdmin(connection));
+        server.createContext("/adminJavaPages/MentorAdder", new MentorAdder(connection));
         server.createContext("/adminJavaPages/MentorDeleter", new MentorDeleter());
         server.createContext("/adminJavaPages/MentorEditor", new MentorEditor(connection));
 

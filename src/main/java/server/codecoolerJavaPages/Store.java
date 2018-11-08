@@ -35,7 +35,7 @@ public class Store implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();
         Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
-        Map<String, String> formData = formDataParser.getData(httpExchange);
+
         int userId = 0;
         String coins = "30";
         String coinsEverOwned = "210";
@@ -73,10 +73,14 @@ public class Store implements HttpHandler {
             }
 
         }
-
-        if(method.equals("get")){
-
+        if(method.equals("POST")) {
+            Map<String, String> formData = formDataParser.getData(httpExchange);
+            int itemId = Integer.parseInt(formData.get("artifact-id"));
+            codecoolerDAO.addNewPossesion(userId, itemId);
+            int price = codecoolerDAO.getPriceOfArtifact(itemId);
+            codecoolerDAO.subtractCodecoolersCoolcoins(userId, price);
         }
+
 
         // get a template file
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/store.twig");
