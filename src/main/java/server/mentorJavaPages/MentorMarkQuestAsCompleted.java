@@ -2,20 +2,20 @@ package server.mentorJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import controllers.dao.LoginAccesDAO;
+import controllers.dao.MentorDAO;
+import org.jtwig.JtwigModel;
+import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
+import server.helpers.FormDataParser;
 
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.Connection;
-import java.util.*;
-
-import controllers.dao.MentorDAO;
-import models.CodecoolerModel;
-import org.jtwig.JtwigModel;
-import org.jtwig.JtwigTemplate;
-import server.helpers.CookieHelper;
-import server.helpers.FormDataParser;
-import controllers.dao.LoginAccesDAO;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 public class MentorMarkQuestAsCompleted implements HttpHandler {
     private Optional<HttpCookie> cookie;
@@ -47,15 +47,15 @@ public class MentorMarkQuestAsCompleted implements HttpHandler {
 
                 if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
-                    if (inputs.containsKey("searchButton")){
+                    if (inputs.containsKey("search")){
                         List<String> searchResults = mentorDAO.searchForStudent(inputs.get("search").toString());
-                        System.out.println(searchResults);
                         response = generatePage(searchResults);
                     }
-                    if (inputs.containsKey("showWalletButton")){
+                    if (inputs.containsKey("update")){
                         try {
-                            int providedId = Integer.valueOf(inputs.get("codecoolerWallet").toString());
-                            mentorDAO.markQuestAsCompleted(providedId);
+                            int questID = Integer.valueOf(inputs.get("questid").toString());
+                            int codecoolerid = Integer.valueOf(inputs.get("codecoolerid").toString());
+                            mentorDAO.markQuestAsCompleted(codecoolerid, questID);
                             response = generatePage();
 
                         } catch (NumberFormatException e) {
@@ -77,7 +77,7 @@ public class MentorMarkQuestAsCompleted implements HttpHandler {
 
     private String generatePage(){
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorCheckWallet.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorMarkQuestAsCompleted.twig");
 
         JtwigModel model = JtwigModel.newModel();
 
@@ -86,7 +86,7 @@ public class MentorMarkQuestAsCompleted implements HttpHandler {
 
     private String generatePage(List<String> searchResult){
 
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorCheckWallet.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorMarkQuestAsCompleted.twig");
 
         JtwigModel model = JtwigModel.newModel().with("searchResult", searchResult);
 

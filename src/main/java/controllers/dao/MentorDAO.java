@@ -1,9 +1,15 @@
 package controllers.dao;
 
-import models.*;
+import models.Artifact;
+import models.CodecoolerModel;
+import models.MentorModel;
+import models.Quest;
 import views.View;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -261,15 +267,10 @@ public class MentorDAO implements MentorDAOInterface {
         return 0;
     }
 
-    public void markQuestAsCompleted(int codecoolerID) {
+    public void markQuestAsCompleted(int codecoolerID, int questID) {
         ResultSet resultSet = null;
 
         try {
-            ps = connection.prepareStatement("SELECT quest_in_progress FROM codecoolers WHERE codecooler_id = ?;");
-            ps.setInt(1, codecoolerID);
-            resultSet = ps.executeQuery();
-            int questID = getFirstIntFromRS(resultSet);
-
             ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 1 WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             ps.executeUpdate();

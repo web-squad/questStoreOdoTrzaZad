@@ -10,12 +10,14 @@
                 Search for codecooler:
                 <input class="input" type="text" name="search" required>
                 <input class="btn" type="submit" value="searchButton">
+                {{ searchResult }}
                 </form>
 
                 <form method="post">
-                codecooler id:
-                <input class="input" type="number" name="id" required>
-                <input class="btn" type="submit" value="markButton">
+                Provide id set:
+                <input class="input" type="number" name="questid" placeholder="Completed quest ID" required>
+                <input class="input" type="number" name="codecoolerid" placeholder="Codecooler ID" required>
+                <input class="btn" type="submit" name="update" value="markButton">
                 </form>
             </div>
     </div>

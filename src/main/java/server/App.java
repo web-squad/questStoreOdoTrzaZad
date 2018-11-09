@@ -2,12 +2,11 @@ package server;
 
 import com.sun.net.httpserver.HttpServer;
 import controllers.Connector;
-import controllers.dao.CodecoolerDAO;
-import controllers.dao.CreepyGuyDAO;
-import controllers.dao.LoginAccesDAO;
-import controllers.dao.MentorDAO;
+import server.adminJavaPages.ClassEditor;
+import server.adminJavaPages.ExpLvlEditor;
+import server.adminJavaPages.GreetAdmin;
+import server.adminJavaPages.MentorEditor;
 import server.codecoolerJavaPages.*;
-import server.adminJavaPages.*;
 import server.mentorJavaPages.*;
 
 import java.net.InetSocketAddress;
@@ -40,9 +39,9 @@ public class App {
         server.createContext("/mentorJavaPages/MentorIndexPage", new MentorIndexPage());
         server.createContext("/mentorJavaPages/MentorMarkItemAsUsed", new MentorMarkItemAsUsed(connection));
         server.createContext("/mentorJavaPages/MentorMarkQuestAsCompleted", new MentorMarkQuestAsCompleted(connection));
-        server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests());
+        server.createContext("/mentorJavaPages/MentorQuests", new MentorQuests(connection));
         server.createContext("/mentorJavaPages/MentorRemoveStudent", new MentorRemoveStudent(connection));
-        server.createContext("/mentorJavaPages/MentorShop", new MentorShop());
+        server.createContext("/mentorJavaPages/MentorShop", new MentorShop(connection));
         server.createContext("/mentorJavaPages/MentorWelcomePage", new MentorWelcomePage(connection));
 
 
