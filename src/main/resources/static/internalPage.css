@@ -1,5 +1,5 @@
 
-.container-internal{
+.container-internal {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,66 +14,66 @@
     font-family: 'Lato', sans-serif;
 }
 
-header h1{
+header h1 {
   margin-left: auto;
   margin-right: auto;
   color: rgb(0,0,0);
 }
-header h3{
+header h3 {
   margin-left: auto;
   margin-right: auto;
   color: rgb(0,0,0);
 }
 
-.column{
+.column {
   display: flex;
   flex-direction: row; /* row */
   justify-content: space-between;
 }
 
-.separator{
+.separator {
   display: flex;
   align-items: center;
 }
 
-table, fieldset{
-  background-color: rgba(83, 80, 80, 0.9);
+table, fieldset {
+  background-color: rgba(5, 27, 40, 1);
   border: 0.3vw solid transparent;
   border-radius: 1vw;
   padding: 0.8vw;
 }
 
-.search-engine{
+.search-engine {
   display: flex;
   align-self: center;
-  background-color: rgba(83, 80, 80, 0.9);
+  background-color: rgba(5, 27, 40, 1);
   border: 0vw solid transparent;
   padding: 1vw;
   border-radius: 1vw;
 }
 
-.first-table{
+.first-table {
   margin-right: auto;
   margin-top: 2vw;
   width: 25%;
   height: auto;
 
 }
-.second-table{
+.second-table {
   margin-right: 15vw;
   margin-top: 5vw;
   width: 35%;
   height: auto;
 }
 
-.menu-internal{
+.menu-internal {
   text-align: center;
   padding: 0;
   margin: 0;
   list-style-type: none;
 }
 
-.menu-internal{
+.menu-internal {
   padding: 0.94vw;
   color: #fff;
   border-right: 0.5vw solid transparent;
@@ -82,6 +82,30 @@ table, fieldset{
   border-left: 0.5vw solid transparent;
 }
 
-.middle{
-margin-left: 10vw;
-margin-top: 5vh;}
+.middle {
+    margin-left: 10vw;
+    margin-top: 5vh;
+}
+
+.menu-item {
+    text-transform: uppercase;
+    color: #fff;
+    text-decoration: none;
+}
+
+.class-editor-description, .exp-editor-description, .mentor-editor-description, .topic {
+    color: #fff;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.middle {
+    margin-left: 2vw;
+    margin-right: auto;
+}
+
+.greetTable {
+    color: #fff;
+    width: 20vw;
+    height: 10vh;
+}
