@@ -47,16 +47,26 @@ public class MentorMarkItemAsUsed implements HttpHandler {
                 if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
                     if (inputs.containsKey("searchButton")){
-                        int providedId = Integer.valueOf(inputs.get("search").toString());
-                        List<String> wallet = mentorDAO.possessedArtifacts(providedId);
+                        try {
+                            int providedId = Integer.valueOf(inputs.get("search").toString());
+                            List<String> wallet = mentorDAO.possessedArtifacts(providedId);
+                            response = generatePage(wallet);
 
-                        response = generatePage(wallet);
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            response = generatePage();
+                        }
                     }
                     if (inputs.containsKey("itemToMarkButton")){
-                        int providedId = Integer.valueOf(inputs.get("id").toString());
-                        mentorDAO.markItemAsUsed(providedId);
+                        try {
+                            int providedId = Integer.valueOf(inputs.get("id").toString());
+                            mentorDAO.markItemAsUsed(providedId);
+                            response = generatePage();
 
-                        response = generatePage();
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            response = generatePage();
+                        }
                     }
                 }
             }

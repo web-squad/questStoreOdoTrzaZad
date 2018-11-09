@@ -56,10 +56,15 @@ public class MentorRemoveStudent implements HttpHandler {
                         response = generatePage(searchResults);
                     }
                     if (inputs.containsKey("removeButton")){
-                        int providedId = Integer.valueOf(inputs.get("codecoolerId").toString());
-                        mentorDAO.removeCodecooler(providedId);
+                        try {
+                            int providedId = Integer.valueOf(inputs.get("codecoolerId").toString());
+                            mentorDAO.removeCodecooler(providedId);
+                            response = generatePage();
 
-                        response = generatePage();
+                        }  catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            response = generatePage();
+                        }
                     }
                 }
             }

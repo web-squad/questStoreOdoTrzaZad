@@ -53,10 +53,15 @@ public class MentorMarkQuestAsCompleted implements HttpHandler {
                         response = generatePage(searchResults);
                     }
                     if (inputs.containsKey("showWalletButton")){
-                        int providedId = Integer.valueOf(inputs.get("codecoolerWallet").toString());
-                        mentorDAO.markQuestAsCompleted(providedId);
+                        try {
+                            int providedId = Integer.valueOf(inputs.get("codecoolerWallet").toString());
+                            mentorDAO.markQuestAsCompleted(providedId);
+                            response = generatePage();
 
-                        response = generatePage();
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            response = generatePage();
+                        }
                     }
                 }
             }

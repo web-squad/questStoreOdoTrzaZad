@@ -53,11 +53,19 @@ public class MentorCheckWallet implements HttpHandler {
                         response = generatePage(searchResults);
                     }
                     if (inputs.containsKey("showWalletButton")){
-                        int providedId = Integer.valueOf(inputs.get("codecoolerWallet").toString());
-                        List<String> wallet = mentorDAO.possessedArtifacts(providedId);
-                        int coins = mentorDAO.codecoolerCoins(providedId);
 
-                        response = generatePage(wallet, coins);
+                        try{
+                            int providedId = Integer.valueOf(inputs.get("codecoolerWallet").toString());
+                            List<String> wallet = mentorDAO.possessedArtifacts(providedId);
+                            int coins = mentorDAO.codecoolerCoins(providedId);
+
+                            response = generatePage(wallet, coins);
+
+                        } catch (NumberFormatException e) {
+                            e.printStackTrace();
+                            response = generatePage();
+                        }
+
                     }
                 }
             }

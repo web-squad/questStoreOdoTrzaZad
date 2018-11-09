@@ -48,14 +48,20 @@ public class MentorEditQuest implements HttpHandler {
                 if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
 
-                    int providedQuestId = Integer.valueOf(inputs.get("questId").toString());
-                    String providedQuestName = inputs.get("questName").toString();
-                    String providedQuestDescription = inputs.get("questDesc").toString();
-                    int providedQuestReward = Integer.valueOf(inputs.get("questReward").toString());
-                    Quest editedQuest = new Quest(providedQuestName, providedQuestDescription, providedQuestReward);
-                    mentorDAO.editQuest(providedQuestId, editedQuest);
+                    try {
+                        int providedQuestId = Integer.valueOf(inputs.get("questId").toString());
+                        String providedQuestName = inputs.get("questName").toString();
+                        String providedQuestDescription = inputs.get("questDesc").toString();
+                        int providedQuestReward = Integer.valueOf(inputs.get("questReward").toString());
+                        Quest editedQuest = new Quest(providedQuestName, providedQuestDescription, providedQuestReward);
+                        mentorDAO.editQuest(providedQuestId, editedQuest);
 
-                    response = generatePage();
+                        response = generatePage();
+
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        response = generatePage();
+                    }
                 }
             }
             else{
