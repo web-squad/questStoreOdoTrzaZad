@@ -38,8 +38,8 @@ public class MentorShop implements HttpHandler {
 
         if (cookie.isPresent()) {
             if (loginAccesDAO.checkSessionPresent(sessionId)){
-                List<String> artifactsInShop = mentorDAO.listOfArtifactsInShop();
-                response = generatePage(artifactsInShop);
+                String artifactsInShopTable = createTable(mentorDAO.listOfArtifactsInShop());
+                response = generatePage(artifactsInShopTable);
             }
             else{
                 httpExchange.getResponseHeaders().set("Location", "/login");
@@ -52,14 +52,23 @@ public class MentorShop implements HttpHandler {
     }
 
 
-    private String generatePage(List<String> artifacts){
+    private String generatePage(String artifactsTable){
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorShop.twig");
 
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("entries", artifacts);
+        model.with("table", artifactsTable);
 
         return template.render(model);
+    }
+
+    private String createTable(List<String> List){
+        String table = "           <tr class = \"first-row\"> <th>ID</th> <th class = \"right-cell\">Artifact Name</th> </tr>\n";
+        for(String team : List){
+            String[] teamArray =  team.split(";");
+            table += "<tr><td>" + teamArray[0] + "</td><td>" + teamArray[1] + "</td><td>" + teamArray[2] + "</td><td>" + teamArray[3] + "</td></tr> \n";
+        }
+        return table;
     }
 }

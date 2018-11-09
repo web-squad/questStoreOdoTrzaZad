@@ -63,7 +63,7 @@ public class UserArtifacts implements HttpHandler {
             surname = codecoolerModel.getLastName();
             if(Integer.parseInt(coinsEverOwned) >= 10 && (Integer.parseInt(coinsEverOwned) % 10 == 0)) {
                 level = String.valueOf(Integer.parseInt(coinsEverOwned) / 10);
-            }else if (level.equals("0")){
+            }else{
                 level = "1";
             }
 
@@ -104,11 +104,11 @@ public class UserArtifacts implements HttpHandler {
         model.with("table", table);
     }
     private String createTable(List<Artifact> items) {
-        String table = "<tr><th>Item ID</th><th>Item</th><th>Cost</th></tr>\n";
+        StringBuilder table = new StringBuilder("<tr><th>Item ID</th><th>Item</th><th>Cost</th></tr>\n");
         for(Artifact item : items) {
 
-            table += "<tr><td>"+ item.getId() + "</td><td class = 'item'>" +item.getName() + "</td><td class = 'price'>" + item.getPrice() + "</td></tr>\n";
+            table.append(new StringBuilder().append("<tr><td>").append(item.getId()).append("</td><td class = 'item'>").append(item.getName()).append("</td><td class = 'price'>").append(item.getPrice()).append("</td></tr>\n").toString());
         }
-        return table;
+        return table.toString();
     }
 }

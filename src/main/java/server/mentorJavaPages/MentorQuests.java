@@ -38,8 +38,8 @@ public class MentorQuests implements HttpHandler {
 
         if (cookie.isPresent()) {
             if (loginAccesDAO.checkSessionPresent(sessionId)){
-                    List<String> quests = mentorDAO.listOfQuests();
-                    response = generatePage(quests);
+                    String questsTable = createTable(mentorDAO.listOfQuests());
+                    response = generatePage(questsTable);
             }
             else{
                 httpExchange.getResponseHeaders().set("Location", "/login");
@@ -52,14 +52,23 @@ public class MentorQuests implements HttpHandler {
     }
 
 
-    private String generatePage(List<String> quests){
+    private String generatePage(String questsTable){
 
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorQuests.twig");
 
         JtwigModel model = JtwigModel.newModel();
 
-        model.with("entries", quests);
+        model.with("table", questsTable);
 
         return template.render(model);
+    }
+
+    private String createTable(List<String> List){
+        String table = "           <tr class = \"first-row\"> <th>ID</th> <th class = \"right-cell\">Quest Name</th> </tr>\n";
+        for(String team : List){
+            String[] teamArray =  team.split(";");
+            table += "<tr><td>" + teamArray[0] + "</td><td>" + teamArray[1] + "</td><td>" + teamArray[2] + "</td><td>" + teamArray[3] + "</td></tr> \n";
+        }
+        return table;
     }
 }

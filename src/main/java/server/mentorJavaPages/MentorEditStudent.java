@@ -2,23 +2,22 @@ package server.mentorJavaPages;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.HttpCookie;
-import java.sql.Connection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
+import controllers.dao.CodecoolerDAO;
+import controllers.dao.LoginAccesDAO;
 import controllers.dao.MentorDAO;
 import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
 import server.helpers.CookieHelper;
 import server.helpers.FormDataParser;
-import controllers.dao.LoginAccesDAO;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.HttpCookie;
+import java.sql.Connection;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
         public class MentorEditStudent implements HttpHandler {
             private Optional<HttpCookie> cookie;
@@ -26,12 +25,15 @@ import controllers.dao.LoginAccesDAO;
             private FormDataParser formDataParser;
             private LoginAccesDAO loginAccesDAO;
             private MentorDAO mentorDAO;
+            private CodecoolerDAO codecoolerDAO;
+            private CodecoolerModel codecoolerModel;
 
             public MentorEditStudent(Connection connection){
                 this.mentorDAO = new MentorDAO(connection);
                 formDataParser = new FormDataParser();
                 cookieHelper = new CookieHelper();
                 loginAccesDAO = new LoginAccesDAO(connection);
+                codecoolerDAO = new CodecoolerDAO(connection);
             }
 
             @Override
@@ -51,9 +53,16 @@ import controllers.dao.LoginAccesDAO;
                         if (method.equals("POST")){
                             Map inputs = formDataParser.getData(httpExchange);
                             if (inputs.containsKey("search")){
-                                List<String> searchResults = mentorDAO.searchForStudent(inputs.get("codecoolerToFind").toString());
-                                System.out.println(searchResults);
-                                response = generatePage(searchResults);
+                                String codecoolerId = mentorDAO.searchForStudent(inputs.get("codecoolerToFind").toString()).get(0);
+                                System.out.println(codecoolerId);
+                                codecoolerModel = codecoolerDAO.getCodecoolerModel(Integer.parseInt(codecoolerId));
+                                JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/mentorPages/mentorEditStudent.twig");
+
+                                JtwigModel model = JtwigModel.newModel();
+
+                                fillModelTwig(model);
+
+                                response = template.render(model);
                             }
                             if (inputs.containsKey("submitCodecooler")){
                                 try {
@@ -102,5 +111,17 @@ import controllers.dao.LoginAccesDAO;
                 JtwigModel model = JtwigModel.newModel().with("list", list);
 
                 return template.render(model);
+            }
+
+            private void fillModelTwig(JtwigModel model){
+                model.with("nickname", codecoolerModel.getNickname());
+                model.with("coolcoins", String.valueOf(codecoolerModel.getCoolcoins()));
+                model.with("coolcoins_ever_owned", String.valueOf(codecoolerModel.getCoolcoinsEverEarned()));
+                model.with("quest", String.valueOf(codecoolerModel.getQuestInProgress()));
+                model.with("room", String.valueOf(codecoolerModel.getRoom()));
+                model.with("team", String.valueOf(codecoolerModel.getTeamID()));
+                model.with("name", codecoolerModel.getFirstName());
+                model.with("surname", codecoolerModel.getLastName());
+                model.with("level", String.valueOf(codecoolerModel.getExpLevel()));
             }
         }

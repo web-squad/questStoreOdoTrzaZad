@@ -169,7 +169,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps = connection.prepareStatement("SELECT * FROM quests;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                quests.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " reward: " + rs.getInt(4));
+                quests.add(rs.getInt(1) +  ";"  + rs.getString(2)+ ";" + rs.getString(3) + ";" + rs.getInt(4));
             }
             rs.close();
             ps.close();
@@ -203,7 +203,7 @@ public class MentorDAO implements MentorDAOInterface {
             ps = connection.prepareStatement("SELECT * FROM artifacts;");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                artifacts.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " price: " + rs.getInt(4));
+                artifacts.add(rs.getInt(1) + ";" + rs.getString(2) + ";" + rs.getString(3) + ";" + rs.getInt(4));
             }
             rs.close();
             ps.close();
@@ -354,7 +354,7 @@ public class MentorDAO implements MentorDAOInterface {
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                searchResult.add("ID:" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(2));
+                searchResult.add(rs.getString(1));
             }
             rs.close();
             ps.close();

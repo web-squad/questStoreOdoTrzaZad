@@ -3,10 +3,7 @@
 {% block content %}
 
     <div class="container-internal">
-            <header>
-            <h1>Edit codecooler:</h1>
-            </header>
-            
+
             <div class="search-engine">
                 <form method="post">
                 Search for codecooler:
@@ -17,7 +14,22 @@
         <form method="post">
             <div class="column">
                 <fieldset class="first-table menu-internal">
-                    {{ list }}
+                    <span class = "nickname">{{ name }} {{ surname}} </span>
+
+                                    <div class = "coins">
+                                        <span class = "coins-now"> coolcoins: {{ coolcoins }}</span>
+                                        <span class = "coins-ever-owned">Coolcoins ever owned: {{ coolcoins_ever_owned }}</span>
+                                    </div>
+
+
+                                    <div class = "quest-in-progress">
+                                        <span class = "quest">Quest in progress: {{ quest }}</span>
+                                    </div>
+
+
+                                    <div class = "team-class">
+                                        <span class = "class">classID: {{ room }}</span>
+                                        <span class = "team">teamID: {{ team }}</span>
                 </fieldset><div class="separator">
                 <input class="btn" type="submit" value="Submit" name="submitCodecooler">
                 </div><fieldset class="second-table menu-internal">
