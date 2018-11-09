@@ -270,7 +270,7 @@ public class MentorDAO implements MentorDAOInterface {
             resultSet = ps.executeQuery();
             int questID = getFirstIntFromRS(resultSet);
 
-            ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 0 WHERE codecooler_id = ?;");
+            ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 1 WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             ps.executeUpdate();
 
@@ -310,7 +310,7 @@ public class MentorDAO implements MentorDAOInterface {
     public List<String> possessedArtifacts(int codecoolerID) {
         List<String> possessedArtifacts = new ArrayList<>();
         try {
-            ps = connection.prepareStatement("SELECT artifacts_in_possess.artifact_id, artifacts.name FROM artifacts_in_possess " +
+            ps = connection.prepareStatement("SELECT artifacts_in_possess.id, artifacts.name FROM artifacts_in_possess " +
                     "INNER JOIN artifacts ON artifacts_in_possess.artifact_id = artifacts.artifact_id WHERE codecooler_id = ?;");
             ps.setInt(1, codecoolerID);
             ResultSet rs = ps.executeQuery();
@@ -328,7 +328,7 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void markItemAsUsed(int artifact_id) {
         try {
-            PreparedStatement ps = connection.prepareStatement("UPDATE artifacts_in_possess SET used = NOT used WHERE artifact_id = ?;");
+            PreparedStatement ps = connection.prepareStatement("UPDATE artifacts_in_possess SET used = NOT used WHERE id = ?;");
             ps.setInt(1, artifact_id);
             ps.executeUpdate();
             connection.commit();
