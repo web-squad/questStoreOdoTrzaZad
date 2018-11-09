@@ -68,7 +68,7 @@ public class MentorAddArtifact implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
             }
         }
-        httpExchange.sendResponseHeaders(200, response.length());
+        httpExchange.sendResponseHeaders(200, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();

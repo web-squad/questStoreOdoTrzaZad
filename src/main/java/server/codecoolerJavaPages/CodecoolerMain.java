@@ -61,7 +61,6 @@ public class CodecoolerMain implements HttpHandler {
             }else if (level.equals("0")){
                 level = "1";
             }
-
         }
 
         // get a template file
