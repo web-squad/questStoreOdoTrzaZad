@@ -308,7 +308,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
 
     private void addLevelRecord(Level level) throws SQLException, NumberFormatException{
-        ps = connection.prepareStatement("INSERT INTO experience_level ( level, threshold) VALUES (?, ?);");
+        ps = connection.prepareStatement("INSERT INTO experience_level ( level_name, threshold) VALUES (?, ?);");
         ps.setString(1, level.getLevelName());
         ps.setInt(2, Integer.parseInt(level.getThreshold()));
         ps.executeUpdate();
@@ -375,7 +375,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     private void deleteLevelRecord(String levelID) throws SQLException {
         ps = connection.prepareStatement("DELETE FROM experience_level WHERE id = ?;");
-        ps.setString(1, levelID);
+        ps.setInt(1, Integer.parseInt(levelID));
         ps.executeUpdate();
     }
 }
