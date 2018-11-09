@@ -75,7 +75,7 @@ public class MentorEditor implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
             }
         }
-        httpExchange.sendResponseHeaders(301, response.length());
+        httpExchange.sendResponseHeaders(301, response.getBytes().length);
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
