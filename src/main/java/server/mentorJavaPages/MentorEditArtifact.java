@@ -47,14 +47,20 @@ public class MentorEditArtifact implements HttpHandler {
                 if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
 
-                    int providedArtifactId = Integer.valueOf(inputs.get("artifactId").toString());
-                    String providedArtifactName = inputs.get("artifactName").toString();
-                    String providedArtifactDescription = inputs.get("artifactDesc").toString();
-                    int providedArtifactPrice = Integer.valueOf(inputs.get("artifactPrice").toString());
-                    Artifact editedArtifact = new Artifact(providedArtifactName, providedArtifactDescription, providedArtifactPrice);
-                    mentorDAO.editArtifact(providedArtifactId, editedArtifact);
+                    try {
+                        int providedArtifactId = Integer.valueOf(inputs.get("artifactId").toString());
+                        String providedArtifactName = inputs.get("artifactName").toString();
+                        String providedArtifactDescription = inputs.get("artifactDesc").toString();
+                        int providedArtifactPrice = Integer.valueOf(inputs.get("artifactPrice").toString());
+                        Artifact editedArtifact = new Artifact(providedArtifactName, providedArtifactDescription, providedArtifactPrice);
+                        mentorDAO.editArtifact(providedArtifactId, editedArtifact);
 
-                    response = generatePage();
+                        response = generatePage();
+
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        response = generatePage();
+                    }
                 }
             }
             else{

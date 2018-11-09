@@ -56,16 +56,22 @@ import controllers.dao.LoginAccesDAO;
                                 response = generatePage(searchResults);
                             }
                             if (inputs.containsKey("submitCodecooler")){
-                                int providedId = Integer.valueOf(inputs.get("id").toString());
-                                String providedName = inputs.get("firstName").toString();
-                                String providedSurname = inputs.get("lastName").toString();
-                                String providedNickname = inputs.get("nickname").toString();
-                                String providedEmail = inputs.get("email").toString();
-                                String providedPassword = inputs.get("password").toString();
-                                CodecoolerModel codecoolerModel = new CodecoolerModel(providedName, providedSurname, providedEmail, providedNickname, providedPassword);
-                                mentorDAO.editCodecooler(providedId, codecoolerModel);
+                                try {
+                                    int providedId = Integer.valueOf(inputs.get("id").toString());
+                                    String providedName = inputs.get("firstName").toString();
+                                    String providedSurname = inputs.get("lastName").toString();
+                                    String providedNickname = inputs.get("nickname").toString();
+                                    String providedEmail = inputs.get("email").toString();
+                                    String providedPassword = inputs.get("password").toString();
+                                    CodecoolerModel codecoolerModel = new CodecoolerModel(providedName, providedSurname, providedEmail, providedNickname, providedPassword);
+                                    mentorDAO.editCodecooler(providedId, codecoolerModel);
 
-                                response = generatePage();
+                                    response = generatePage();
+
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                    response = generatePage();
+                                }
                             }
                         }
                     }
