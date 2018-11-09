@@ -262,7 +262,7 @@ public class CreepyGuyDAO implements CreepyGuyDaoInterface {
 
     public void deleteRoomRecord(String roomId) throws SQLException{
         ps = connection.prepareStatement("DELETE FROM room WHERE room_id = ?;");
-        ps.setString(1, roomId);
+        ps.setInt(1, Integer.valueOf(roomId));
         ps.executeUpdate();
         connection.commit();
     }
