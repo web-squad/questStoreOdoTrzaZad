@@ -66,6 +66,7 @@ public class ClassEditor implements HttpHandler {
                         response = generatePage();
                     }
                     if (inputs.containsKey("add")){
+                        inputs = formDataParser.getData(httpExchange);
                         creepyGuyDAO.addRoom(new Room(fillData(inputs)));
                         response = generatePage();
                     }
@@ -77,7 +78,7 @@ public class ClassEditor implements HttpHandler {
                 httpExchange.getResponseHeaders().set("Location", "/login");
             }
         }
-        httpExchange.sendResponseHeaders(301, response.length());
+        httpExchange.sendResponseHeaders(200, response.length());
         OutputStream os = httpExchange.getResponseBody();
         os.write(response.getBytes());
         os.close();
@@ -105,6 +106,7 @@ public class ClassEditor implements HttpHandler {
         JtwigModel model = JtwigModel.newModel();
         model.with("nickname", creepyGuyModel.getNickName());
         if(!(room == null)) {
+
             model.with("description", room.getRoomDescription());
             model.with("name", room.getRoomName());
         }

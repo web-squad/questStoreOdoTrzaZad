@@ -271,6 +271,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             }
         }catch(SQLException e){
             e.printStackTrace();
+            return 0;
         }
 
         return price;
