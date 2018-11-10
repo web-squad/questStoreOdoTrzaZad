@@ -1,0 +1,39 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+            <h1 class = "topic">Edit quest:</h1>
+
+        <form method="post">
+            <div class="column">
+                <fieldset class="first-table menu-internal">
+                    <ul>
+                        <li><label>
+                            Quest id:<br>
+                            <input class="input" type="number" name="questId" required><br>
+                        </label></li>
+                        <li><label>
+                            New quest name:
+                            <input class="input" type="text" name="questName" required>
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu-internal">
+                    <ul>
+                        <li><label>
+                            New quest description:
+                            <input class="input" type="text" name="questDesc" required>
+                        </label></li>
+                        <li><label>
+                            New quest reward:
+                            <input class="input" type="number" name="questReward" required>
+                        </label></li>
+
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+            <h1 class = "topic">Remove codecooler:</h1>
+            
+            <div class="search-engine">
+                    <form method="post">
+                        Search for codecooler:<br>
+                        <input class="input" type="text" name="search" required><br>
+                        <input class="btn" type="submit" value="Submit" name="searchButton">
+                        {{ searchResult }}
+                        </form>
+
+                    <form method="post">
+                    Codecooler to remove id:<br>
+                    <input class="input" type="number" name="codecoolerId" required>
+                    <input class="btn" type="submit" value="removeButton" name="removeButton">
+                    </form>
+            </div>
+    </div>
+{% endblock %}

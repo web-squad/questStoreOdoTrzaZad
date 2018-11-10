@@ -1,0 +1,491 @@
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
+* {
+    box-sizing: inherit;
+}
+a, i {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; 
+}
+a:hover {
+    cursor: pointer;
+
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    font-family: 'Lato', sans-serif;
+}
+header {
+    background-image: url("assets/images/indexHeader.jpg");
+    background: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 20vh;
+    font-weight: bold;
+    font-size: 2.5vw;
+    padding: 0.5vw;
+}
+
+header a {
+    display: inline-block;
+    align-self: center;
+    z-index: 2;
+    padding-left: 2vw;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+}
+header a:hover {
+    color: #fff;
+}
+.main {
+  /*  z-index: 1;
+    width: 100%;
+    background-color: #fff;*/
+}
+
+.bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    width: 100%;
+    border-top: 0.1vw solid black;
+    background-color:rgb(40,42,41);
+    text-decoration: none;
+}
+
+.bar img {
+    width: 3.2vw;
+    height: 3vw;
+    padding-top: 0.8vw;
+}
+.bar span {
+    text-transform: uppercase;
+    color: #fff;
+    padding-top: 0.7vw;
+    padding-left: 1vw;
+    font-size: 2vw;
+}
+.primary-nav {
+    margin-left: auto;
+    padding-right: 3%;
+}
+.primary-nav a {
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 1.7vw;
+    display: inline-block;
+    text-align: center;
+    padding: 0.8vw;
+    color: #fff;
+}
+.primary-nav a:hover {
+    background-color: rgb(1, 119, 164);
+    color: #fff;
+    transition: 0.4s;
+}
+.main {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 1.4vw;
+
+}
+.col-1-5 {
+    width: 15%;
+}
+.col-4-5 {
+    width: 82%;
+    height: 40vw;
+    background-image: url("assets/images/iframeBackground.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.right-side-style {
+    width: 3%;
+    background-color: rgb(40,42,41);
+}
+.menu {
+    
+    height: 40vw;
+    background-color: rgb(40,42,41);
+}
+.left-menu-a {
+    text-decoration: none;
+    color: #fff;
+    text-transform: uppercase;
+}
+.menu ul {
+    
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+.menu ul li {
+    padding: 0.94vw;
+    color: #fff;
+    border-right: 0.5vw solid transparent;
+    border-top: 0.2vw solid transparent;
+    border-bottom: 0.2vw solid transparent;
+    border-left: 0.5vw solid transparent;
+
+}
+
+.menu ul li:hover {
+    background-color: rgb(1, 119, 164);
+    border-right: 0.5vw solid blue;
+    border-top: 0.2vw solid black;
+    border-bottom: 0.2vw solid black;
+    border-left: 0.5vw solid blue;
+    transition: 0.3s;
+    
+}
+.site {
+    width: 100%;
+    height: 40vw;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    border-style: none;
+    width: 100%;
+    height: 8vw;
+    background-color: rgb(40,42,31);
+    border-top: 0.2vw solid black;
+    
+}
+.footer p {
+    text-transform: uppercase;
+    color: #fff;
+    padding-top: 1.5%;
+    padding-left: 15%;
+    font-weight: bold;
+    font-size: 1.8vw;
+}
+.icon-facebook-squared, .icon-twitter-squared, .icon-linkedin-squared {
+    color: #fff;
+    font-size: 6vw;
+    text-decoration: none;
+}
+
+.icon-facebook-squared {
+    padding-top: 0.5%;
+    
+}
+.icon-facebook-squared:hover {
+    color: #3b5998;
+    transition: 0.4s;
+
+}
+.icon-twitter-squared {
+    right: 15%;
+    padding-top: 0.5%;
+    
+}
+
+.icon-twitter-squared:hover {
+    color: #00aced;
+    transition: 0.4s;
+}
+.icon-linkedin-squared {
+    padding-right: 3vw;
+    padding-top: 0.5%;
+}
+.icon-linkedin-squared:hover { 
+    color: #0077B5;
+    transition: 0.4s;
+}
+.icon-floppy, .icon-arrows-cw, .icon-pencil {
+    padding-right: 1vw;
+    font-size: 1.5vw;
+    color: #fff;
+}
+
+.dropdown {
+    margin: 0;
+    position: relative;
+
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: rgb(40,42,31);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content li {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content li:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+
+/* ------------------------------------------------
+---------------**USER ARTIFACTS HTML ------------------- */
+
+
+.read-artifacts{
+    width: 33%;
+    margin-left: 10%;
+    margin-top: 7%;
+    height: 50vh;
+    background-color: rgba(5, 27, 40, 1);
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+.read-button{
+  position: absolute;
+  top: 92%;
+  left: 51%;
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
+
+}
+.read-button-edit-team {
+  position: absolute;
+  top: 47%;
+  left: 30%;
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
+
+}
+.read-form-user-artifacts {
+    padding-top: 2vh;
+ }
+.read-button-user-artifacts {
+  width: 10vw;
+  height: 8vh;
+  border-radius: 3vh;
+}
+.table-artifacts{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 2vw; /* it wasn't in store css <- if something crashes look at this */
+    padding-left: 5%;
+    border-collapse: collapse;
+    width: 100%;
+    height: 30vh;
+
+}
+.first-row{
+    background-color: rgba(255,255,255, 0.6);
+    width: 100%;
+}
+.second-row{
+    background-color: rgba(83, 80, 80, 0.9);
+    background-color: rgba(255,255,255, 0.8);
+}
+.price{
+    padding-left: 10vw;
+}
+
+.buy-artifacts{
+    text-transform: uppercase;
+    font-size: 3vw;
+    margin-top: 10vw;
+    margin-left: 5vw; /* this wasn't in editTeam.css */
+}
+
+.read-artifacts{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ------------------_ EDIT TEAM CSS --------------- */
+
+.teams{
+    width: 30vw;
+    margin-left: 5%;
+    margin-top: 10%;
+    height: 30vw;
+    background-color: rgba(5, 27, 40, 1);
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.change-team{
+    width: 10vw;
+    margin-left: 2%;
+    margin-top: 10%;
+    height: 30vw;
+    border-radius: 1vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.your-team{
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 2vw;
+
+}
+
+
+.table-team{
+    display: block;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-top: 2vw;
+    padding-left: 5%;
+    border-collapse: collapse;
+    width: 100%;
+    height: 25vh;
+
+}
+
+
+
+.create-team {
+    margin: auto;
+    margin-top: 10%;
+}
+
+
+
+
+/* ----------------------------FIRST PAGE CSS --------------------------- */
+
+
+.first-table{
+    margin-left: auto;
+    margin-right: auto;
+    width: 40vw;
+    height: 30vw;
+    border-collapse: collapse;
+
+}
+.first-table th{
+    color: #fff;
+    font-size: 3vw;
+
+}
+.first-table td{
+    font-size: 2vw;
+}
+
+
+/* ---------------------- USER CSS ------------------------------*/
+.nickname{
+    margin-top: 2%;
+    padding-right: 2%;
+    padding-left: 2%;
+}
+
+
+.container-internal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 1.5vw;
+    color: rgb(0,0,0);
+    margin: 0;
+    padding: 0;
+
+}
+
+
+.coin-picker{
+    display: flex;
+    flex-direction: row;
+    background-color: rgba(255,255,255, 0.4);
+    width: 100%;
+    height: 7vw;
+    font-size: 1.25vw;
+    padding-top: 0.5%;
+}
+
+
+.coins{
+    display: flex;
+    flex-direction: column;
+
+}
+.coin-picker .coolcoinIcon{
+    margin-top: 1%;
+    padding-left: 4vw;
+    height: 4vw;
+}
+.coins-now, .coins-ever-owned {
+    color: rgb(0,0,0);
+    text-transform: uppercase;
+    padding-left: 1.3vw;
+    margin-top: 4%;
+}
+.quest-in-progress{
+    margin-top: 2%;
+    text-transform: uppercase;
+    margin-left: 1%;
+}
+.questIcon{
+    margin-top: 1%;
+    height: 4vw;
+    margin-left: 5%;
+}
+
+.teamIcon{
+    padding-left: 2%;
+    margin-top: 1%;
+    height: 4vw;
+    width: 5vw
+}
+.team-class{
+    display: flex;
+    flex-direction: column;
+    line-height: 2vw;
+    margin-top: 1.5%;
+    text-transform: uppercase;
+    margin-left: 2%;
+}
+
+
+/* ------------------------- EXP LEVEL EDITOR ----------------------*/
+
+.search-engine {
+
+    width: 40%;
+    margin-left: 27.5%;
+    margin-top: 0;
+}

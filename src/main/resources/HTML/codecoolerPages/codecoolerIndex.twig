@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Codecool Quest Store</title>
+        <link rel = "stylesheet" type="text/css" href = "../static/main.css">
+        <link rel = "stylesheet" type = "text/css" href = "../static/fontello.css">
+        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet"> 
+        <meta charset = "UTF-8">
+        <link rel="icon" href="../static/assets/images/faviconCodecool.png">
+
+    </head>
+
+    <body>
+        <div class = "container">
+
+            <header>
+                <a href = "index.html">Quest Store</a>
+            </header>
+
+            <section class ="bar">         
+                <img src = "../static/assets/images/logoBar.jpg"><!--
+                 --><span>Codecool Poland</span>
+                 <nav class = "primary-nav">
+                     <a href ="CodecoolerMain">My account</a><!--
+                  --><a href = "../login">Log out</a>          
+                 </nav>
+            </section>
+
+            <div class = "main">
+
+                <nav class = "menu col-1-5">
+                    <ul id="codecoolerMenu">
+                        <li><i class="icon-basket" ><a href="Store" class = "left-menu-a"></i>Buy Artifacts</a></li>
+                        <li><i class="icon-shopping-bag" ><a href="UserArtifacts" class = "left-menu-a"></i>My Artifacts</a></li>
+                        <li><i class="icon-pencil" ><a href="EditUserTeam" class = "left-menu-a"></i>Edit Team</a></li>
+                        <li><i class="icon-magic" ><a href="CreateTeam" class = "left-menu-a"></i>Create Team</a></li>
+                    </ul>
+                </nav>
+
+            <div class = "col-4-5">{% block content %}{% endblock %}</div>
+            <div class = "right-side-style"></div>
+        
+        </div>
+    <footer class = "container footer">
+        <p>&copy; Thrash Code sp. zoo</p>
+        <span>
+            <a href = "https://www.facebook.com/CodecoolPoland/" class="icon-facebook-squared"></a>
+            <a href = "https://twitter.com/codecoolpoland" class="icon-twitter-squared"></a>
+            <a href = "https://pl.linkedin.com/school/codecool/" class="icon-linkedin-squared"></a> 
+        </span>
+        </footer>
+         </div>
+    </body>
+    </html>

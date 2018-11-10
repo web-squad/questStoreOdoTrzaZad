@@ -1,0 +1,37 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+        <h1 class = "topic">Super cool header for our artifactEditor!</h1>
+        <form method="post">
+            <div class="column">
+                <fieldset class="first-table menu-internal">
+                    <ul>
+                        <li><label>
+                            Old artifact ID:
+                            <input class="input" type="number" name="artifactId" required>
+                        </label></li>
+                        <li><label>
+                            New artifact name:
+                            <input class="input" type="text" maxlength="20" name="artifactName" required>
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu-internal">
+                    <ul>
+                        <li><label>
+                            New artifact description:
+                            <input class="input" type="text" maxlength="50" name="artifactDesc" required>
+                        </label></li>
+                        <li><label>
+                            New artifact price:
+                            <input class="input" type="number" name="artifactPrice" required>
+                        </label></li>
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+{% endblock %}

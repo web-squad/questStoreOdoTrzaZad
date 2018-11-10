@@ -1,0 +1,42 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+        <div class="container-internal">
+            <h1 class = "topic">Here you can add new codecooler:</h1>
+            </div>
+        <form method="post">
+            <div class="column">
+                <fieldset class="first-table menu-internal">
+                    <ul>
+                        <li><label>
+                            First name:
+                            <input class="input" type="text" maxlength="20" name="name" required>
+                        </label></li>
+                        <li><label>
+                            Surname:
+                            <input class="input" type="text" maxlength="20" name="lastName" required>
+                        </label></li>
+                        <li><label>
+                            Nickname:
+                            <input class="input" type="text" maxlength="20" name="nickname" required>
+                        </label></li>
+                    </ul>
+                </fieldset><div class="separator">
+                <input class="btn" type="submit" value="Submit">
+                </div><fieldset class="second-table menu-internal">
+                    <ul>
+                        <li><label>
+                            Email:
+                            <input class="input" type="text" maxlength="40" name="email" required>
+                        </label></li>
+                        <li><label>
+                            Password:
+                            <input class="input" type="password" maxlength="25" name="password" required>
+                        </label></li>
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+{% endblock %}

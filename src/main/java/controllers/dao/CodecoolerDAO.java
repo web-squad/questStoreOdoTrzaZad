@@ -1,8 +1,7 @@
 package controllers.dao;
 
-import models.CodecoolerModel;
 import models.Artifact;
-
+import models.CodecoolerModel;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }catch(SQLException e){
             e.printStackTrace();
         }
-//18:30 wtorek5
+
         return coins;
     }
 
@@ -180,29 +179,22 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     } //korzystanie
 
     @Override
-    public String readArtifacts() {
+    public ArrayList<String> readArtifacts() {
         String artifactsQuery = "SELECT * FROM Artifacts";
         ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
-        String artifacts = "";
-        ResultSetMetaData resultSetMetaData;
+        ArrayList<String> artifacts = new ArrayList<>();
         try{
-            resultSetMetaData = resultSetArtefacts.getMetaData();
-            int columnsNumber = resultSetMetaData.getColumnCount();
-            for(int i = 1; i <= columnsNumber; i++){
-                artifacts = artifacts + resultSetMetaData.getColumnName(i) + " ";
-            }
-            artifacts = artifacts + "\n";
             while(resultSetArtefacts.next()){
-                for(int i = 1; i <= columnsNumber; i++){
-                    if(i > 1) artifacts = artifacts + ", ";
-                    artifacts = artifacts + resultSetArtefacts.getString(i);
-                }
-                artifacts = artifacts + "\n";
+                String artefactId = resultSetArtefacts.getString("artifact_id");
+                String artefactName = resultSetArtefacts.getString("name");
+                String artefactDescription = resultSetArtefacts.getString("description");
+                String artefactPrice = resultSetArtefacts.getString("price");
+                String artefactToList = artefactId + ";" + artefactName + ";" + artefactDescription + ";" + artefactPrice;
+                artifacts.add(artefactToList);
             }
         }catch(SQLException e){
             e.printStackTrace();
         }
-
         return artifacts;
     } //korzystanie
 
@@ -216,13 +208,11 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             String whereClauseIds = createWhereWithPossessedArtifacts(resultSetArtifactsPossessed);
 
             artifactsQuery += whereClauseIds;
-            System.out.println(artifactsQuery);
+            artifactsQuery = artifactsQuery.substring(0, artifactsQuery.indexOf(';'));
             ResultSet resultSetArtifacts = getResultSet(artifactsQuery);
 
             artifactsList = createArtifactsList(resultSetArtifacts);
 
-            System.out.println(artifactsQuery);
-            System.out.println(artifactsList.size());
             return artifactsList;
         } else {
             return artifactsList;
@@ -232,26 +222,25 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
 
     private String createWhereWithPossessedArtifacts(ResultSet resultSetArtifactsPossessed){
         ResultSetMetaData resultSetMetaData;
-        String whereClauseIds = "WHERE";
+        StringBuilder whereClauseIds = new StringBuilder("WHERE");
         try{
             resultSetMetaData = resultSetArtifactsPossessed.getMetaData();
             int columnsNumber = resultSetMetaData.getColumnCount();
             while(resultSetArtifactsPossessed.next()){
                 for(int i = 1; i <= columnsNumber; i++){
                     if(i == columnsNumber){
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + ";";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(";");
                     }else{
-                        whereClauseIds += " artifact_id = " + resultSetArtifactsPossessed.getInt(i) + " OR";
+                        whereClauseIds.append(" artifact_id = ").append(resultSetArtifactsPossessed.getInt(i)).append(" OR");
                     }
 
                 }
             }
-            System.out.println(columnsNumber);
         }catch(SQLException e){
             e.printStackTrace();
         }
 
-        return whereClauseIds;
+        return whereClauseIds.toString();
     }
 
     private List<Artifact> createArtifactsList(ResultSet resultSetArtifacts){
@@ -282,6 +271,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
             }
         }catch(SQLException e){
             e.printStackTrace();
+            return 0;
         }
 
         return price;
@@ -356,7 +346,20 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
-
+    public ArrayList<String> getAllTeams(){
+        ArrayList<String> teamsList = new ArrayList<>();
+        String selectTeamsQuery = "SELECT * FROM teams;";
+        ResultSet teamsResultSet = getResultSet(selectTeamsQuery);
+        try {
+            while (teamsResultSet.next()) {
+                String team = teamsResultSet.getString("id") + ";" + teamsResultSet.getString("team_name");
+                teamsList.add(team);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return teamsList;
+    }
     public void createNewTeam(int id, String teamName){
         String createTeamQuery = "INSERT INTO teams (team_name, codecooler_id) VALUES (" + "\'" + teamName + "\'," + id + ");";
         try{
@@ -396,4 +399,6 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
+
+
 }

@@ -1,0 +1,81 @@
+{% extends "adminMain.twig" %}
+
+{% block content %}
+
+    <section class = "container-internal">
+        <div class = "coin-picker">
+            <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
+        </div>
+
+        <h1 class = "mentor-editor-description">Here you can add, delete and change existing mentors</h1>
+      <form method="post" name="searchForm" class = "provide-id">
+            <label class="search-engine">
+            <span>Provide ID</span>
+            <input type= "number" name="ID" placeholder="" value="" required>
+            <input type = "submit" name = "search">
+             </label>
+            </form>
+
+      <form class="submit-form" method="post" name="myForm">
+      <div class = "middle">
+        <div class = "column">
+          <fieldset class="first-table menu-internal">
+            <ul>
+              <li>
+                <label>
+                <span>Name</span>
+                <input type="text" name="name" placeholder="" value="{{ name }}" required>
+                </label>
+              </li>
+              <li>
+              <label>
+               <span>Email</span>
+               <input type="text" name="email" placeholder="d" value="{{ email }}" required>
+              </label>
+               </li>
+              <li>
+                <label>
+                  <span>Password</span>
+                  <input type="text" name="pass" placeholder="d" value="{{ pass }}" required>
+                </label>
+               </li>
+
+            </ul>
+          </fieldset>
+          <!--
+--><div class = "separator">
+          <input class="btn" id="submit" type="submit" name="add" value="Create  Mentor">
+          <input class="btn" id="submit" type="submit" name="edit" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="delete" value="Delete Mentor">
+          </div><!--
+--><div class = "column">
+
+          <fieldset class="second-table menu-internal">
+            <ul>
+              <li>
+              <label>
+                  <span>Surname</span>
+                  <input type="text" name="surname" placeholder="d" value="{{ surname }}" required>
+                  </label>
+              </li>
+              <li>
+                <label>
+                  <span>Nick Name</span>
+                  <input type="text" name="nick" placeholder="d" value="{{ nick }}" required>
+                </label>
+              </li>
+              <li>
+                  <label>
+                    <span>Class</span>
+                    <input type="number" name="class" placeholder="d" value="{{class}}" required>
+                  </label>
+              </li>
+            </ul>
+          </fieldset>
+          </div>
+          </div>
+      </form>
+      </div>
+    </section>
+{% endblock %}

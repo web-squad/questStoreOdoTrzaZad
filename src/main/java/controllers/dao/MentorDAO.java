@@ -1,83 +1,99 @@
 package controllers.dao;
 
-import models.*;
+import models.Artifact;
+import models.CodecoolerModel;
+import models.MentorModel;
+import models.Quest;
 import views.View;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class MentorDAO implements MentorDAOInterface {
 
     Connection connection;
-    Statement stmt;
+    PreparedStatement ps;
     View view = new View();
 
-    public MentorDAO(Connection connection){
+    public MentorDAO(Connection connection) {
         this.connection = connection;
     }
 
     public void createCodecooler(CodecoolerModel cm) {
         try {
-            stmt = connection.createStatement();
-            String loginAccessQuery = String.format("INSERT INTO login_access (email, password, access_level) VALUES ('%s', '%s', %d );", cm.getEmail(), cm.getPassword(), 1);
-            stmt.executeUpdate(loginAccessQuery);
-//            stmt = connection.createStatement();
-            String codecoolerTableQuery = String.format("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)" +
-                            " VALUES ('%d', '%d', '%d', '%d', '%d', '%s', '%s', '%s');", cm.getCoolcoins(), cm.getExpLevel(), cm.getRoom(), cm.getCoolcoinsEverEarned(), cm.getQuestInProgress(),
-                    cm.getFirstName(), cm.getLastName(), cm.getNickname());
-            stmt.executeUpdate(codecoolerTableQuery);
+            ps = connection.prepareStatement("INSERT INTO login_access (email, password, access_level) VALUES (?, ?, ?);");
+            ps.setString(1, cm.getEmail());
+            ps.setString(2, cm.getPassword());
+            ps.setInt(3, 1);
+            ps.executeUpdate();
 
-//            stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT id FROM login_access WHERE email = '%s';", cm.getEmail());
-            ResultSet rs = stmt.executeQuery(codecoolersQuery);
+            ps = connection.prepareStatement("INSERT INTO codecoolers (coolcoins, exp_level, actual_room, coolcoins_ever_earned, quest_in_progress, first_name, last_name, nickname)" +
+                    " VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+            ps.setInt(1, cm.getCoolcoins());
+            ps.setInt(2, cm.getExpLevel());
+            ps.setInt(3, cm.getRoom());
+            ps.setInt(4, cm.getCoolcoinsEverEarned());
+            ps.setInt(5, cm.getQuestInProgress());
+            ps.setString(6, cm.getFirstName());
+            ps.setString(7, cm.getLastName());
+            ps.setString(8, cm.getNickname());
+            ps.executeUpdate();
+
+            ps = connection.prepareStatement("SELECT id FROM login_access WHERE email = ?;");
+            ps.setString(1, cm.getEmail());
+            ResultSet rs = ps.executeQuery();
             int codecooler_id = 0;
-            while( rs.next() ) {
+            while (rs.next()) {
                 codecooler_id = rs.getInt(1);
             }
 
-//            stmt = connection.createStatement();
-            String teamQuery = String.format("INSERT INTO teams (codecooler_id, team_name) VALUES (%d, '%s')", codecooler_id, "szpoki");
-            stmt.executeUpdate(teamQuery);
+            ps = connection.prepareStatement("INSERT INTO teams (codecooler_id, team_name) VALUES (?, ?)");
+            ps.setInt(1, codecooler_id);
+            ps.setString(2, "szpoki");
+            ps.executeUpdate();
 
             view.print("Operation done successfully\n");
             connection.commit();
-            stmt.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
     public void removeCodecooler(int codecoolerID) {
         try {
-            stmt = connection.createStatement();
+            ps = connection.prepareStatement("DELETE FROM quest_completed WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
 
-            String sql = String.format("DELETE FROM quest_completed WHERE codecooler_id = %d;", codecoolerID);
-            stmt.executeUpdate(sql);
+            ps = connection.prepareStatement("DELETE FROM teams WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
+
+            ps = connection.prepareStatement("DELETE FROM artifacts_in_possess WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
+
+            ps = connection.prepareStatement("DELETE FROM codecoolers WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
+
+            ps = connection.prepareStatement("DELETE FROM login_access WHERE id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
             connection.commit();
 
-            sql = String.format("DELETE FROM teams WHERE codecooler_id = %d;", codecoolerID);
-            stmt.executeUpdate(sql);
-            connection.commit();
-
-            sql = String.format("DELETE FROM artifacts_in_possess WHERE codecooler_id = %d;", codecoolerID);
-            stmt.executeUpdate(sql);
-            connection.commit();
-
-            sql = String.format("DELETE FROM codecoolers WHERE codecooler_id = %d;", codecoolerID);
-            stmt.executeUpdate(sql);
-            connection.commit();
-
-            sql = String.format("DELETE FROM login_access WHERE id = %d;", codecoolerID);
-            stmt.executeUpdate(sql);
-            connection.commit();
-
-            stmt.close();
+            ps.close();
             view.print("Operation done successfully\n");
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -85,35 +101,44 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void editCodecooler(int codecoolerID, CodecoolerModel cm) {
         try {
-            stmt = connection.createStatement();
-            String sql = String.format("UPDATE login_access SET email = '%s', password = '%s' WHERE id = %d;", cm.getEmail(), cm.getPassword(), codecoolerID);
-            stmt.executeUpdate(sql);
-            sql = String.format("UPDATE codecoolers SET coolcoins = '%d', exp_level = '%d', actual_room = '%d', coolcoins_ever_earned = '%d',quest_in_progress = '%d'," +
-                            "first_name = '%s', last_name = '%s', nickname = '%s' WHERE codecooler_id = %d;", cm.getCoolcoins(), cm.getExpLevel(),
-                                cm.getRoom(), cm.getCoolcoinsEverEarned(), cm.getQuestInProgress(), cm.getFirstName(), cm.getLastName(), cm.getNickname(), codecoolerID);
-            stmt.executeUpdate(sql);
+            ps = connection.prepareStatement("UPDATE login_access SET email = ?, password = ? WHERE id = ?;");
+            ps.setString(1, cm.getEmail());
+            ps.setString(2, cm.getPassword());
+            ps.setInt(3, codecoolerID);
+            ps.executeUpdate();
+            ps = connection.prepareStatement("UPDATE codecoolers SET coolcoins = ?, exp_level = ?, actual_room = ?, coolcoins_ever_earned = ?,quest_in_progress = ?," +
+                    "first_name = ?, last_name = ?, nickname = ? WHERE codecooler_id = ?;");
+            ps.setInt(1, cm.getCoolcoins());
+            ps.setInt(2, cm.getExpLevel());
+            ps.setInt(3, cm.getRoom());
+            ps.setInt(4, cm.getCoolcoinsEverEarned());
+            ps.setInt(5, cm.getQuestInProgress());
+            ps.setString(6, cm.getFirstName());
+            ps.setString(7, cm.getLastName());
+            ps.setString(8, cm.getNickname());
+            ps.setInt(9, codecoolerID);
+            ps.executeUpdate();
             connection.commit();
-            stmt.close();
+            ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
-    public List<String> allCodecoolers(){
+    public List<String> allCodecoolers() {
         List<String> codecoolers = new ArrayList<>();
         try {
-            stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT codecooler_id, nickname FROM codecoolers;");
-            ResultSet rs = stmt.executeQuery(codecoolersQuery);
-            while ( rs.next() ) {
+            ps = connection.prepareStatement("SELECT codecooler_id, nickname FROM codecoolers;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                 codecoolers.add(rs.getInt(1) + " " + rs.getString(2));
             }
             rs.close();
-            stmt.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -123,15 +148,17 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void editQuest(int quest_id, Quest editedQuest) {
         try {
-            stmt = connection.createStatement();
-            String sql = String.format("UPDATE quests SET name = '%s', description = '%s', reward = '%d' WHERE quest_id = %d;",
-                    editedQuest.getName(), editedQuest.getDescription(), editedQuest.getReward(), quest_id);
-            stmt.executeUpdate(sql);
+            ps = connection.prepareStatement("UPDATE quests SET name = ?, description = ?, reward = ? WHERE quest_id = ?;");
+            ps.setString(1, editedQuest.getName());
+            ps.setString(2, editedQuest.getDescription());
+            ps.setInt(3, editedQuest.getReward());
+            ps.setInt(4, quest_id);
+            ps.executeUpdate();
             connection.commit();
-            stmt.close();
+            ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -139,16 +166,15 @@ public class MentorDAO implements MentorDAOInterface {
     public List<String> listOfQuests() {
         List<String> quests = new ArrayList<>();
         try {
-            stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT * FROM quests;");
-            ResultSet rs = stmt.executeQuery(codecoolersQuery);
-            while ( rs.next() ) {
-                quests.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " reward: " + rs.getInt(4));
+            ps = connection.prepareStatement("SELECT * FROM quests;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                quests.add(rs.getInt(1) +  ";"  + rs.getString(2)+ ";" + rs.getString(3) + ";" + rs.getInt(4));
             }
             rs.close();
-            stmt.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
@@ -157,15 +183,16 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void addNewQuest(Quest newQuest) {
         try {
-            stmt = connection.createStatement();
-            String questQuery = String.format("INSERT INTO quests (name, description, reward) VALUES ('%s', '%s', %d );",
-                    newQuest.getName(), newQuest.getDescription(), newQuest.getReward());
-            stmt.executeUpdate(questQuery);
+            ps = connection.prepareStatement("INSERT INTO quests (name, description, reward) VALUES (?, ?, ?);");
+            ps.setString(1, newQuest.getName());
+            ps.setString(2, newQuest.getDescription());
+            ps.setInt(3, newQuest.getReward());
+            ps.executeUpdate();
             view.print("Operation done successfully\n");
             connection.commit();
-            stmt.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -173,16 +200,15 @@ public class MentorDAO implements MentorDAOInterface {
     public List<String> listOfArtifactsInShop() {
         List<String> artifacts = new ArrayList<>();
         try {
-            stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT * FROM artifacts;");
-            ResultSet rs = stmt.executeQuery(codecoolersQuery);
-            while ( rs.next() ) {
-                artifacts.add(rs.getInt(1) + " name: " + rs.getString(2) + " description: " + rs.getString(3) + " price: " + rs.getInt(4));
+            ps = connection.prepareStatement("SELECT * FROM artifacts;");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                artifacts.add(rs.getInt(1) + ";" + rs.getString(2) + ";" + rs.getString(3) + ";" + rs.getInt(4));
             }
             rs.close();
-            stmt.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return artifacts;
@@ -190,30 +216,33 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void editArtifact(int artifact_id, Artifact editedArtifact) {
         try {
-            stmt = connection.createStatement();
-            String artifactQuery = String.format("UPDATE artifacts SET name = '%s', description = '%s', price = '%d' WHERE artifact_id = %d;",
-                    editedArtifact.getName(), editedArtifact.getDescription(), editedArtifact.getPrice(), artifact_id);
-            stmt.executeUpdate(artifactQuery);
+            ps = connection.prepareStatement("UPDATE artifacts SET name = ?, description = ?, price = ? WHERE artifact_id = ?;");
+            ps.setString(1, editedArtifact.getName());
+            ps.setString(2, editedArtifact.getDescription());
+            ps.setInt(3, editedArtifact.getPrice());
+            ps.setInt(4, artifact_id);
+            ps.executeUpdate();
             connection.commit();
-            stmt.close();
+            ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
 
     public void addArtifactToStore(Artifact newArtifact) {
         try {
-            stmt = connection.createStatement();
-            String artifactQuery = String.format("INSERT INTO artifacts (name, description, price) VALUES ('%s', '%s', %d );",
-                    newArtifact.getName(), newArtifact.getDescription(), newArtifact.getPrice());
-            stmt.executeUpdate(artifactQuery);
+            ps = connection.prepareStatement("INSERT INTO artifacts (name, description, price) VALUES (?, ?, ?);");
+            ps.setString(1, newArtifact.getName());
+            ps.setString(2, newArtifact.getDescription());
+            ps.setInt(3, newArtifact.getPrice());
+            ps.executeUpdate();
             view.print("Operation done successfully\n");
             connection.commit();
-            stmt.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -221,71 +250,78 @@ public class MentorDAO implements MentorDAOInterface {
     public int codecoolerCoins(int codecooler_id) {
         ResultSet resultSet;
 
-        try{
-            stmt = connection.createStatement();
-            String codecoolersQuery = "SELECT coolcoins FROM codecoolers WHERE codecooler_id = " + codecooler_id + ";";
-            resultSet = stmt.executeQuery(codecoolersQuery);
-            while( resultSet.next() ) {
+        try {
+            ps = connection.prepareStatement("SELECT coolcoins FROM codecoolers WHERE codecooler_id = ?;");
+            ps.setInt(1, codecooler_id);
+            resultSet = ps.executeQuery();
+            while (resultSet.next()) {
                 int coins = resultSet.getInt(1);
                 return coins;
             }
-        }catch(SQLException e){
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return 0;
     }
 
-    public void markQuestAsCompleted(int codecoolerID) {
-        ResultSet resultSet;
+    public void markQuestAsCompleted(int codecoolerID, int questID) {
+        ResultSet resultSet = null;
 
         try {
-            stmt = connection.createStatement();
-            String codecoolersQuery = "SELECT quest_in_progress FROM codecoolers WHERE codecooler_id = " + codecoolerID + ";";
-            resultSet = stmt.executeQuery(codecoolersQuery);
-            int questID = resultSet.getInt(1);
+            ps = connection.prepareStatement("UPDATE codecoolers SET quest_in_progress = 1 WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ps.executeUpdate();
 
-            stmt = connection.createStatement();
-            codecoolersQuery = String.format("UPDATE codecoolers SET quest_in_progress = 0 WHERE codecooler_id =" + codecoolerID + ";");
-            stmt.executeUpdate(codecoolersQuery);
+            ps = connection.prepareStatement("INSERT INTO quest_completed (quest_id, codecooler_id) VALUES (?, ?);");
+            ps.setInt(1, questID);
+            ps.setInt(2, codecoolerID);
+            ps.executeUpdate();
 
-            stmt = connection.createStatement();
-            String questCompletedQuery = String.format("INSERT INTO quest_completed (quest_id, codecooler_id) VALUES ('%s', '%s');", questID, codecoolerID);
-            stmt.executeUpdate(questCompletedQuery);
+            ps = connection.prepareStatement("SELECT reward FROM quests WHERE quest_id = ?;");
+            ps.setInt(1, questID);
+            resultSet = ps.executeQuery();
+            int questReward = getFirstIntFromRS(resultSet);
 
-            stmt = connection.createStatement();
-            String questsQuery = "SELECT reward FROM quests WHERE quest_id = " + questID + ";";
-            resultSet = stmt.executeQuery(questsQuery);
-            int questReward = resultSet.getInt(1);
-
-            stmt = connection.createStatement();
-            codecoolersQuery = String.format("UPDATE codecoolers SET coolcoins = coolcoins + " + questReward + " WHERE codecooler_id =" + codecoolerID + ";");
-            stmt.executeUpdate(codecoolersQuery);
+            ps = connection.prepareStatement("UPDATE codecoolers SET coolcoins = coolcoins + ? WHERE codecooler_id = ?;");
+            ps.setInt(1, questReward);
+            ps.setInt(2, codecoolerID);
+            ps.executeUpdate();
 
 
             view.print("Operation done successfully\n");
             connection.commit();
-            stmt.close();
-        } catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            resultSet.close();
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+    }
+
+    private int getFirstIntFromRS(ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
 
     public List<String> possessedArtifacts(int codecoolerID) {
         List<String> possessedArtifacts = new ArrayList<>();
         try {
-            stmt = connection.createStatement();
-            String codecoolersQuery = String.format("SELECT artifacts_in_possess.artifact_id, artifacts.name FROM artifacts_in_possess " +
-                    "INNER JOIN artifacts ON artifacts_in_possess.artifact_id = artifacts.artifact_id WHERE codecooler_id = %d;", codecoolerID);
-            ResultSet rs = stmt.executeQuery(codecoolersQuery);
-            while ( rs.next() ) {
+            ps = connection.prepareStatement("SELECT artifacts_in_possess.id, artifacts.name FROM artifacts_in_possess " +
+                    "INNER JOIN artifacts ON artifacts_in_possess.artifact_id = artifacts.artifact_id WHERE codecooler_id = ?;");
+            ps.setInt(1, codecoolerID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
                 possessedArtifacts.add("id: " + rs.getInt(1) + " name: " + rs.getString(2));
             }
             rs.close();
-            stmt.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+            ps.close();
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
         return possessedArtifacts;
@@ -293,14 +329,14 @@ public class MentorDAO implements MentorDAOInterface {
 
     public void markItemAsUsed(int artifact_id) {
         try {
-            stmt = connection.createStatement();
-            String artifactQuery = String.format("UPDATE artifacts_in_possess SET used = NOT used WHERE artifact_id = %d;", artifact_id);
-            stmt.executeUpdate(artifactQuery);
+            PreparedStatement ps = connection.prepareStatement("UPDATE artifacts_in_possess SET used = NOT used WHERE id = ?;");
+            ps.setInt(1, artifact_id);
+            ps.executeUpdate();
             connection.commit();
-            stmt.close();
+            ps.close();
             view.print("Operation done successfully\n");
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
     }
@@ -317,17 +353,56 @@ public class MentorDAO implements MentorDAOInterface {
             ps.setString(4, '%' + word + '%');
 
             ResultSet rs = ps.executeQuery();
-            while ( rs.next() ) {
-                searchResult.add("ID:" + rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(2));
+            while (rs.next()) {
+                searchResult.add(rs.getString(1));
             }
             rs.close();
             ps.close();
-        }catch ( SQLException e ) {
-            System.err.println( e.getClass().getName()+": "+ e.getMessage() );
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
 
         return searchResult;
+    }
+
+
+    public MentorModel getMentorBySessionId(String sessionId) {
+        try {
+            return new MentorModel(fetchMentor(sessionId));
+        } catch (SQLException e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        } catch (NumberFormatException e) {
+            view.print("Passed ID is not numerical value");
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    private Map<String, String> fetchMentor(String id) throws Exception {
+        Map<String, String> mentorData = new HashMap<>();
+        ps = connection.prepareStatement("SELECT login_access.email, login_access.access_level, codecoolers.first_name, codecoolers.nickname, " +
+                "codecoolers.last_name, login_access.password, codecoolers.actual_room FROM login_access " +
+                " INNER JOIN codecoolers ON login_access.id = codecoolers.codecooler_id WHERE session_id = ?;");
+        ps.setString(1, id);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            mentorData.put("firstName", rs.getString("first_name"));
+            mentorData.put("surname", rs.getString("last_name"));
+            mentorData.put("email", rs.getString("email"));
+            mentorData.put("password", rs.getString("password"));
+            mentorData.put("nickName", rs.getString("nickname"));
+            mentorData.put("room", String.valueOf(rs.getInt("actual_room")));
+            if (rs.getInt("access_level") != 2) {
+                throw new Exception();
+            }
+        }
+        rs.close();
+        ps.close();
+
+        return mentorData;
     }
 }
 

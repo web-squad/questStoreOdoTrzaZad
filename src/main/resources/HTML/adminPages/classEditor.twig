@@ -1,0 +1,56 @@
+{% extends "adminMain.twig" %}
+
+{% block content %}
+
+    <section class = "container-internal">
+        <div class = "coin-picker">
+            <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
+            <span class = "nickname">{{ nickname }}</span>
+        </div>
+
+        <h1 class = "class-editor-description">Here you can add, delete and change existing classes:</h1>
+      <form method="post" name="searchForm" class = "provide-id">
+          <label class="search-engine">
+            <span>Provide ID</span>
+            <input type= "number" name="ID" placeholder="" value="" required>
+            <input type = "submit" name = "search">
+          </label>
+      </form>
+      <div class = "middle">
+      <form class="submit-form" method="post" name="myForm">
+        <div class = "column">
+          <fieldset class="first-table menu-internal">
+            <ul>
+              <li>
+              <label>
+                <span>Room Name</span>
+                <input type="text" name="name" placeholder="Full name" value="{{name}}" required>
+                </label>
+                </li>
+
+            </ul>
+          </fieldset>
+          <!--
+    --><div class = "separator">
+          <input class="btn" id="submit" type="submit" name="add" value="Add new room">
+          <input class="btn" id="submit" type="submit" name="edit" value="Make  changes">
+          <input class="btn" id="submit" type="submit" name="delete" value="Delete room">
+        </div><!--
+--><div class = "column">
+
+          <fieldset class="second-table menu-internal">
+              <ul>
+                <li>
+                  <label>
+                      <span>Room Description</span>
+                      <input type="text" name="description" placeholder="Full name" value="{{description}}" required>
+                  </label>
+                  </li>
+              </ul>
+            </fieldset>
+          </div>
+        </div>
+      </form>
+      </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "mentorIndexPage.twig" %}
+
+{% block content %}
+
+    <div class="container-internal">
+            <h1 class = "topic">Mark someone's artifact as used:</h1>
+            
+            <div class="search-engine">
+                <form method="post">
+                Search for codecooler wallet:<br>
+                <input class="input" type="number" name="search" required><br>
+                <input class="btn" type="submit" value="Submit" name="searchButton">
+                {{ searchResult }}
+                </form>
+                <form method="post">
+                Artifact id:
+                <input class="input" type="number" name="id" required>
+                <input class="btn" type="submit" value="Submit" name="itemToMarkButton">
+                </form>
+
+            </div>
+    </div>
+{% endblock %}
