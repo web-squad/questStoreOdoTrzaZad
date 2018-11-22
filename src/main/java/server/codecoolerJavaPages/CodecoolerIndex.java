@@ -20,21 +20,20 @@ import java.util.Optional;
 
 public class CodecoolerIndex implements HttpHandler {
 
-    private static final String SESSION_COOKIE_NAME = "sessionId";
+
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
-    private CookieHelper cookieHelper;
+
 
     public CodecoolerIndex(Connection connection) {
         this.codecoolerDAO = new CodecoolerDAO(connection);
-        this.cookieHelper = new CookieHelper();
         this.loginAccesDAO = new LoginAccesDAO(connection);
     }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         ResponseSender responseSender = new ResponseSender();
-        Optional<HttpCookie> httpCookie = getSessionIdCookie(httpExchange);
+        Optional<HttpCookie> httpCookie = responseSender.getSessionIdCookie(httpExchange);
         String sessionId = httpCookie.get().getValue().replace("\"", "");
         int userId = 0;
         try{
@@ -50,16 +49,5 @@ public class CodecoolerIndex implements HttpHandler {
             responseSender.sendResponseIfInvalidUser(httpExchange);
         }
     }
-
-
-
-
-
-    private Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
-        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
-        List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
-        return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
-    }
-
 
 }

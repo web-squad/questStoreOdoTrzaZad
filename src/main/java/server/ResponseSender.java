@@ -4,12 +4,21 @@ import com.sun.net.httpserver.HttpExchange;
 import models.CodecoolerModel;
 import org.jtwig.JtwigModel;
 import org.jtwig.JtwigTemplate;
+import server.helpers.CookieHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.HttpCookie;
+import java.util.List;
+import java.util.Optional;
 
 public class ResponseSender {
+    private CookieHelper cookieHelper;
+    private static final String SESSION_COOKIE_NAME = "sessionId";
 
+    public ResponseSender() {
+        this.cookieHelper = new CookieHelper();
+    }
 
     public void sendResponseIfUserExists(HttpExchange httpExchange, CodecoolerModel codecoolerModel) throws IOException {
         // get a template file
@@ -26,6 +35,17 @@ public class ResponseSender {
         os.write(response.getBytes());
         os.close();
     }
+    public Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
+        String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
+        List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
+        return cookieHelper.findCookieByName(SESSION_COOKIE_NAME, cookies);
+    }
+
+
+    public void sendResponseIfInvalidUser(HttpExchange httpExchange) throws IOException {
+        httpExchange.getResponseHeaders().add("Location", "/login");
+        httpExchange.sendResponseHeaders(303, 0);
+    }
 
     private void fillModelTwig(JtwigModel model, CodecoolerModel codecoolerModel){
         int coinsEverOwned = codecoolerModel.getCoolcoinsEverEarned();
@@ -37,10 +57,5 @@ public class ResponseSender {
         }
         model.with("codecoolerModel", codecoolerModel);
         model.with("level", level);
-    }
-
-    public void sendResponseIfInvalidUser(HttpExchange httpExchange) throws IOException {
-        httpExchange.getResponseHeaders().add("Location", "/login");
-        httpExchange.sendResponseHeaders(303, 0);
     }
 }
