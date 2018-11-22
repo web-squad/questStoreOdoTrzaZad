@@ -3,33 +3,33 @@
 {% block content %}
         <section class = "container-internal">
             <div class = "coin-picker">
-                <span class = "nickname">{{ nickname }}</span>
+                <span class = "nickname">{{ codecoolerModel.getNickname() }}</span>
                 <img src = "../static/assets/images/coolcoin.png" class = "coolcoinIcon">
                 <div class = "coins">
-                    <span class = "coins-now">Your coolcoins: {{ coolcoins }}</span>
-                    <span class = "coins-ever-owned">Coolcoins ever owned: {{ coolcoins_ever_owned }}</span>
+                    <span class = "coins-now">Your coolcoins: {{ codecoolerModel.getCoolcoins() }}</span>
+                    <span class = "coins-ever-owned">Coolcoins ever owned: {{ codecoolerModel.getCoolcoinsEverEarned() }}</span>
                 </div>
 
                 <img src = "../static/assets/images/questIcon.png" class = "questIcon">
                 <div class = "quest-in-progress">
-                    <span class = "quest">Quest in progress: {{ quest }}</span>
+                    <span class = "quest">Quest in progress: {{ codecoolerModel.getQuestInProgress() }}</span>
                 </div>
 
                 <img src = "../static/assets/images/teamIcon.png" class = "teamIcon">
                 <div class = "team-class">
-                    <span class = "class">Your class: {{ room }}</span>
-                    <span class = "team">Your team: {{ team }}</span>
+                    <span class = "class">Your class: {{ codecoolerModel.getRoom() }}</span>
+                    <span class = "team">Your team: {{ codecoolerModel.getTeamID() }}</span>
                 </div>
             </div>
   
             <div class = "column">
                 <table class = "first-table">
                     <tr>
-                        <th>Hello {{ nickname }}</th>
+                        <th>Hello {{ codecoolerModel.getNickname()}}</th>
                     </tr>
                     <tr class = "first-row">
                         <td>Name:</td>
-                        <td>{{ name }} {{ surname }}</td>
+                        <td>{{ codecoolerModel.getFirstName() }} {{ codecoolerModel.getLastName() }}</td>
                     </tr>
                     <tr class = "second-row">
                         <td>Level:</td>
@@ -38,7 +38,7 @@
 
                     <tr class = "first-row">
                         <td>Coolcoins:</td>
-                        <td>{{ coolcoins }}</td>
+                        <td>{{ codecoolerModel.getCoolcoins() }}</td>
                     </tr>
                 </table>
             </div>

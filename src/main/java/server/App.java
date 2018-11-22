@@ -23,7 +23,6 @@ public class App {
 
         // set routes
         server.createContext("/codecoolerJavaPages/CodecoolerIndex", new CodecoolerIndex(connection));
-        server.createContext("/codecoolerJavaPages/CodecoolerMain", new CodecoolerMain(connection));
         server.createContext("/codecoolerJavaPages/CreateTeam", new CreateTeam(connection));
         server.createContext("/codecoolerJavaPages/EditUserTeam", new EditUserTeam(connection));
         server.createContext("/codecoolerJavaPages/Store", new Store(connection));
