@@ -19,8 +19,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class CodecoolerIndex implements HttpHandler {
-
-
     private CodecoolerDAO codecoolerDAO;
     private LoginAccesDAO loginAccesDAO;
 
@@ -35,18 +33,22 @@ public class CodecoolerIndex implements HttpHandler {
         ResponseSender responseSender = new ResponseSender();
         Optional<HttpCookie> httpCookie = responseSender.getSessionIdCookie(httpExchange);
         String sessionId = httpCookie.get().getValue().replace("\"", "");
+        String method = httpExchange.getRequestMethod();
         int userId = 0;
-        try{
-            userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
-        }catch(SQLException e){
-            e.printStackTrace();
-        }
-        CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
-        if(userId != 0){
-            responseSender.sendResponseIfUserExists(httpExchange, codecoolerModel);
+        if(method.equals("GET")){
+            try{
+                userId = Integer.parseInt(loginAccesDAO.getIdBySessionId(sessionId));
+            }catch(SQLException e){
+                e.printStackTrace();
+            }
+            CodecoolerModel codecoolerModel = codecoolerDAO.getCodecoolerModel(userId);
+            if(userId != 0){
+                String site = "codecoolerMain.twig";
+                responseSender.sendResponseIfUserExists(httpExchange, codecoolerModel, site);
 
-        }else{
-            responseSender.sendResponseIfInvalidUser(httpExchange);
+            }else{
+                responseSender.sendResponseIfInvalidUser(httpExchange);
+            }
         }
     }
 

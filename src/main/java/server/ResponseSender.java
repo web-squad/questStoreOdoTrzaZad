@@ -20,9 +20,9 @@ public class ResponseSender {
         this.cookieHelper = new CookieHelper();
     }
 
-    public void sendResponseIfUserExists(HttpExchange httpExchange, CodecoolerModel codecoolerModel) throws IOException {
+    public void sendResponseIfUserExists(HttpExchange httpExchange, CodecoolerModel codecoolerModel, String site) throws IOException {
         // get a template file
-        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/codecoolerMain.twig");
+        JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/codecoolerPages/" + site);
 
         // create a model that will be passed to a template
         JtwigModel model = JtwigModel.newModel();

@@ -2,6 +2,7 @@ package controllers.dao;
 
 import models.Artifact;
 import models.CodecoolerModel;
+import server.Team;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -179,18 +180,18 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
     } //korzystanie
 
     @Override
-    public ArrayList<String> readArtifacts() {
+    public List<Artifact> readArtifacts() {
         String artifactsQuery = "SELECT * FROM Artifacts";
         ResultSet resultSetArtefacts = getResultSet(artifactsQuery);
-        ArrayList<String> artifacts = new ArrayList<>();
+        ArrayList<Artifact> artifacts = new ArrayList<>();
         try{
             while(resultSetArtefacts.next()){
-                String artefactId = resultSetArtefacts.getString("artifact_id");
-                String artefactName = resultSetArtefacts.getString("name");
-                String artefactDescription = resultSetArtefacts.getString("description");
-                String artefactPrice = resultSetArtefacts.getString("price");
-                String artefactToList = artefactId + ";" + artefactName + ";" + artefactDescription + ";" + artefactPrice;
-                artifacts.add(artefactToList);
+                int artifactId = Integer.parseInt(resultSetArtefacts.getString("artifact_id"));
+                String artifactName = resultSetArtefacts.getString("name");
+                String artifactDescription = resultSetArtefacts.getString("description");
+                int artifactPrice = Integer.parseInt(resultSetArtefacts.getString("price"));
+                Artifact artifact = new Artifact(artifactId, artifactName, artifactDescription, artifactPrice);
+                artifacts.add(artifact);
             }
         }catch(SQLException e){
             e.printStackTrace();
@@ -346,14 +347,16 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
 
     }
-    public ArrayList<String> getAllTeams(){
-        ArrayList<String> teamsList = new ArrayList<>();
+    public ArrayList<Team> getAllTeams(){
+        ArrayList<Team> teamsList = new ArrayList<>();
         String selectTeamsQuery = "SELECT * FROM teams;";
         ResultSet teamsResultSet = getResultSet(selectTeamsQuery);
         try {
             while (teamsResultSet.next()) {
                 String team = teamsResultSet.getString("id") + ";" + teamsResultSet.getString("team_name");
-                teamsList.add(team);
+                String[] teamArray =  team.split(";");
+                Team teamObject =  new Team(teamArray[0], teamArray[1]);
+                teamsList.add(teamObject);
             }
         }catch(SQLException e){
             e.printStackTrace();
