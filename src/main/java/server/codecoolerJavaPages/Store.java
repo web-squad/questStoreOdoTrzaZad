@@ -15,6 +15,7 @@ import java.io.OutputStream;
 import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,13 +74,7 @@ public class Store implements HttpHandler {
 
         }
         if(method.equals("POST")) {
-            Map<String, String> formData = formDataParser.getData(httpExchange);
-            int itemId = Integer.parseInt(formData.get("artifact-id"));
-            int price = codecoolerDAO.getPriceOfArtifact(itemId);
-            if (price != 0 && price < codecoolerModel.getCoolcoins()){
-                codecoolerDAO.addNewPossesion(userId, itemId);
-                codecoolerDAO.subtractCodecoolersCoolcoins(userId, price);
-            }
+            handleBuyingItem(httpExchange, userId, codecoolerModel);
 
         }
 
@@ -100,6 +95,25 @@ public class Store implements HttpHandler {
         os.close();
 
     }
+
+    public void handleBuyingItem(HttpExchange httpExchange, int userId, CodecoolerModel codecoolerModel) throws IOException {
+        Map<String, String> formData = formDataParser.getData(httpExchange);
+        int itemId = Integer.parseInt(formData.get("artifact-id"));
+        int price = codecoolerDAO.getPriceOfArtifact(itemId);
+        if (price != 0 && price < codecoolerModel.getCoolcoins()){
+            codecoolerDAO.addNewPossesion(userId, itemId);
+            codecoolerDAO.subtractCodecoolersCoolcoins(userId, price);
+        }
+    }
+
+    public void setFormDataParser(FormDataParser formDataParser) {
+        this.formDataParser = formDataParser;
+    }
+
+    public void setCodecoolerDAO(CodecoolerDAO codecoolerDAO) {
+        this.codecoolerDAO = codecoolerDAO;
+    }
+
     private Optional<HttpCookie> getSessionIdCookie(HttpExchange httpExchange){
         String cookieStr = httpExchange.getRequestHeaders().getFirst("Cookie");
         List<HttpCookie> cookies = cookieHelper.parseCookies(cookieStr);
