@@ -371,7 +371,7 @@ public class CodecoolerDAO implements CodecoolerDAOInterface {
         }
     }
 
-    public ResultSet getResultSet(String query){
+    private ResultSet getResultSet(String query){
         ResultSet resultSet = null;
         try{
             resultSet = statement.executeQuery(query);
