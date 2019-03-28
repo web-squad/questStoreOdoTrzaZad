@@ -27,7 +27,7 @@ class CodecoolerDAOTest {
     }
 
     @Test
-    void testIfGetAllTeams() throws SQLException {
+    void testIfGetAllTeamsCreateTeamListProperly() throws SQLException {
         //Given
         when(connectionMock.createStatement()).thenReturn(statementMock);
         CodecoolerDAO codecoolerDAO = new CodecoolerDAO(connectionMock);
