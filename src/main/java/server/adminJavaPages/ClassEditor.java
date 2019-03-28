@@ -33,83 +33,64 @@ public class ClassEditor implements HttpHandler {
         formDataParser = new FormDataParser();
         cookieHelper = new CookieHelper();
         loginAccesDAO = new LoginAccesDAO(connection);
-
     }
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
-        String response = "";
         Optional<HttpCookie>  cookie = cookieHelper.getSessionIdCookie(httpExchange);
-        String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
-        String method = httpExchange.getRequestMethod();
-        creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
-
         if (cookie.isPresent()) {
-            if (loginAccesDAO.checkSessionPresent(sessionId)){
+            String sessionId = cookie.get().getValue().substring(1, cookie.get().getValue().length() - 1);
+            if (loginAccesDAO.checkSessionPresent(sessionId)) {
+                String response = "";
+                String method = httpExchange.getRequestMethod();
+                creepyGuyModel = creepyGuyDAO.getAdminBySessionId(sessionId);
 
                 if (method.equals("GET")) {
                     response = generatePage();
-                }
-
-                if (method.equals("POST")){
+                } else if (method.equals("POST")){
                     Map inputs = formDataParser.getData(httpExchange);
+                    classId = inputs.get("ID").toString();
                     if (inputs.containsKey("search")){
-                        classId = inputs.get("ID").toString();
                         response = fillPage(classId);
-                    }
-                    if (inputs.containsKey("edit")){
+                    } else if (inputs.containsKey("edit")){
                         creepyGuyDAO.editRoom(new Room(fillData(inputs)), classId);
                         response = generatePage();
-                    }
-                    if (inputs.containsKey("delete")){
+                    }else if (inputs.containsKey("delete")){
                         creepyGuyDAO.deleteRoom(classId);
                         response = generatePage();
-                    }
-                    if (inputs.containsKey("add")){
+                    }else if (inputs.containsKey("add")){
                         creepyGuyDAO.addRoom(new Room(fillData(inputs)));
                         response = generatePage();
                     }
-
                 }
-
-            }
-            else{
+                httpExchange.sendResponseHeaders(301, response.getBytes().length);
+                OutputStream os = httpExchange.getResponseBody();
+                os.write(response.getBytes());
+                os.close();
+            } else {
                 httpExchange.getResponseHeaders().set("Location", "/login");
             }
+        } else {
+            httpExchange.getResponseHeaders().set("Location", "/login");
         }
-        httpExchange.sendResponseHeaders(301, response.getBytes().length);
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
-
     }
 
     private String generatePage(){
-
-
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/classEditor.twig");
-
-
         JtwigModel model = JtwigModel.newModel();
-
         model.with("nickname", creepyGuyModel.getNickName());
-
         return template.render(model);
     }
 
     private String fillPage(String id){
         Room room = creepyGuyDAO.getRoomById(id);
         JtwigTemplate template = JtwigTemplate.classpathTemplate("HTML/adminPages/classEditor.twig");
-
-
         JtwigModel model = JtwigModel.newModel();
         model.with("nickname", creepyGuyModel.getNickName());
-        if(!(room == null)) {
-
+        if((room != null)) {
             model.with("description", room.getRoomDescription());
             model.with("name", room.getRoomName());
         }
-
         return template.render(model);
     }
 
