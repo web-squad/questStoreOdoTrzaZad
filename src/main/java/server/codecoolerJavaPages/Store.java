@@ -100,7 +100,7 @@ public class Store implements HttpHandler {
         Map<String, String> formData = formDataParser.getData(httpExchange);
         int itemId = Integer.parseInt(formData.get("artifact-id"));
         int price = codecoolerDAO.getPriceOfArtifact(itemId);
-        if (price != 0 && price < codecoolerModel.getCoolcoins()){
+        if (price != 0 && price <= codecoolerModel.getCoolcoins()){
             codecoolerDAO.addNewPossesion(userId, itemId);
             codecoolerDAO.subtractCodecoolersCoolcoins(userId, price);
         }
