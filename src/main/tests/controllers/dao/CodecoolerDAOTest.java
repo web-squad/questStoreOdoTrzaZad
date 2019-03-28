@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class CodecoolerDAOTest {
 
     @Test
-    void testIfHandleBuyingMethodWorksCorrectly() throws IOException {
+    void testIfHandleBuyingItemMethodChecksCodecoolerMoneyCorrectly() throws IOException {
         HttpExchange httpExchange = mock(HttpExchange.class);
         FormDataParser formDataParser = mock(FormDataParser.class);
         CodecoolerDAO codecoolerDAO = mock(CodecoolerDAO.class);
