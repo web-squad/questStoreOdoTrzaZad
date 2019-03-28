@@ -1,7 +1,6 @@
 package controllers.dao;
 
 import com.sun.net.httpserver.HttpExchange;
-import controllers.dao.CodecoolerDAO;
 import models.CodecoolerModel;
 import org.junit.jupiter.api.Test;
 import server.codecoolerJavaPages.Store;
@@ -15,7 +14,7 @@ import java.util.Map;
 import static org.mockito.Mockito.*;
 
 
-class CodecoolerDAOTest {
+class StoreTest {
 
     @Test
     void testIfHandleBuyingItemMethodCorrectlyChecksIfCodecoolerCanAffordItem() throws IOException {
@@ -38,4 +37,6 @@ class CodecoolerDAOTest {
         verify(codecoolerDAO, times(1)).addNewPossesion(userId, itemId);
         verify(codecoolerDAO, times(1)).subtractCodecoolersCoolcoins(anyInt(), anyInt());
     }
+
+
 }
