@@ -132,10 +132,10 @@ class ClassEditorTest {
     }
 
     @Test
-    void testIfPostEdit() throws IOException, NoSuchFieldException {
+    void testIfPageIsSuccessfullyGeneratedAfterCreepyGuyEditsRoom() throws IOException, NoSuchFieldException {
         setUpTestIfPost();
         when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("edit"));
-        doNothing().when(creepyGuyDAO).editRoom(any(),anyString());
-        verifyGeneratePage();
+        classEditor.handle(httpExchange);
+        verify(creepyGuyDAO).editRoom(any(), any());
     }
 }
