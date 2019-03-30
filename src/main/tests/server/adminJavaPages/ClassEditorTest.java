@@ -5,6 +5,9 @@ import controllers.dao.CreepyGuyDAO;
 import controllers.dao.LoginAccesDAO;
 import models.CreepyGuyModel;
 import models.Room;
+import org.jtwig.JtwigTemplate;
+import org.jtwig.environment.Environment;
+import org.jtwig.resource.reference.ResourceReference;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +17,7 @@ import server.helpers.CookieHelper;
 import com.sun.net.httpserver.HttpExchange;
 import server.helpers.FormDataParser;
 
+import javax.sql.rowset.spi.TransactionalWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
@@ -49,19 +53,27 @@ class ClassEditorTest {
         this.creepyGuyDAO = mock(CreepyGuyDAO.class);
         this.outputStream = mock(OutputStream.class);
         this.headers = mock(Headers.class);
+        this.loginAccesDAO = mock(LoginAccesDAO.class);
+        this.formDataParser = mock(FormDataParser.class);
     }
 
     @Test
     void testIfGenerateClassEditorPage() throws IOException, NoSuchFieldException {
+        stubActiveSessionTest("GET");
+        setFields();
+        classEditor.handle(httpExchange);
+        verify(creepyGuyModel).getNickName();
+        verifyResponse();
+    }
+
+    private void stubActiveSessionTest(String method) {
         when(cookieHelper.getSessionIdCookie(httpExchange)).thenReturn(Optional.of(httpCookie));
         when(httpCookie.getValue()).thenReturn("someValue");
         when(loginAccesDAO.checkSessionPresent(anyString())).thenReturn(true);
-        when(httpExchange.getRequestMethod()).thenReturn("GET");
+        when(httpExchange.getRequestMethod()).thenReturn(method);
         when(creepyGuyDAO.getAdminBySessionId(anyString())).thenReturn(creepyGuyModel);
         when(creepyGuyModel.getNickName()).thenReturn("someName");
         when(httpExchange.getResponseBody()).thenReturn(outputStream);
-        setFields();
-        verifyGeneratePage();
     }
 
     private void setFields() throws NoSuchFieldException {
@@ -70,9 +82,9 @@ class ClassEditorTest {
         FieldSetter.setField(classEditor, classEditor.getClass().getDeclaredField("creepyGuyDAO"), creepyGuyDAO);
     }
 
-    private void verifyGeneratePage() throws IOException {
-        classEditor.handle(httpExchange);
+    private void verifyResponse() throws IOException {
         verify(httpExchange).sendResponseHeaders(anyInt(), anyLong());
+        verify(httpExchange).getResponseBody();
         verify(outputStream).write(any());
         verify(outputStream).close();
     }
@@ -83,10 +95,6 @@ class ClassEditorTest {
         when(loginAccesDAO.checkSessionPresent(anyString())).thenReturn(true);
         when(httpExchange.getResponseHeaders()).thenReturn(headers);
         setFields();
-        verifyChangeServerLocation();
-    }
-
-    private void verifyChangeServerLocation() throws IOException, NoSuchFieldException {
         classEditor.handle(httpExchange);
         verify(headers).set(anyString(), anyString());
     }
@@ -98,26 +106,22 @@ class ClassEditorTest {
         when(loginAccesDAO.checkSessionPresent(anyString())).thenReturn(false);
         when(httpExchange.getResponseHeaders()).thenReturn(headers);
         setFields();
-        verifyChangeServerLocation();
+        classEditor.handle(httpExchange);
+        verify(headers).set(anyString(), anyString());
     }
 
     @Test
-    void testIfPostSearch() throws IOException, NoSuchFieldException {
-        setUpTestIfPost();
+    void testHandleSearch() throws IOException, NoSuchFieldException {
+        setUpHandlePost();
         when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("search"));
-        when(creepyGuyDAO.getRoomById(anyString())).thenReturn(null);
-        verifyGeneratePage();
+        classEditor.handle(httpExchange);
+        verify(creepyGuyDAO).getRoomById(anyString());
+        verify(creepyGuyModel).getNickName();
+        verifyResponse();
     }
 
-    private void setUpTestIfPost() throws NoSuchFieldException {
-        this.formDataParser = mock(FormDataParser.class);
-        when(cookieHelper.getSessionIdCookie(httpExchange)).thenReturn(Optional.of(httpCookie));
-        when(httpCookie.getValue()).thenReturn("someValue");
-        when(loginAccesDAO.checkSessionPresent(anyString())).thenReturn(true);
-        when(httpExchange.getRequestMethod()).thenReturn("POST");
-        when(creepyGuyDAO.getAdminBySessionId(anyString())).thenReturn(creepyGuyModel);
-        when(creepyGuyModel.getNickName()).thenReturn("someName");
-        when(httpExchange.getResponseBody()).thenReturn(outputStream);
+    private void setUpHandlePost() throws NoSuchFieldException {
+        stubActiveSessionTest("POST");
         FieldSetter.setField(classEditor, classEditor.getClass().getDeclaredField("formDataParser"), formDataParser);
         setFields();
     }
@@ -132,10 +136,32 @@ class ClassEditorTest {
     }
 
     @Test
-    void testIfPostEdit() throws IOException, NoSuchFieldException {
-        setUpTestIfPost();
+    void testHandleEdit() throws IOException, NoSuchFieldException {
+        setUpHandlePost();
         when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("edit"));
-        doNothing().when(creepyGuyDAO).editRoom(any(),anyString());
-        verifyGeneratePage();
+        classEditor.handle(httpExchange);
+        verify(creepyGuyDAO).editRoom(any(),anyString());
+        verify(creepyGuyModel).getNickName();
+        verifyResponse();
+    }
+
+    @Test
+    void testHandleDelete() throws IOException, NoSuchFieldException {
+        setUpHandlePost();
+        when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("delete"));
+        classEditor.handle(httpExchange);
+        verify(creepyGuyDAO).deleteRoom(anyString());
+        verify(creepyGuyModel).getNickName();
+        verifyResponse();
+    }
+
+    @Test
+    void testHandleAdd() throws IOException, NoSuchFieldException {
+        setUpHandlePost();
+        when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("add"));
+        classEditor.handle(httpExchange);
+        verify(creepyGuyDAO).addRoom(any());
+        verify(creepyGuyModel).getNickName();
+        verifyResponse();
     }
 }
