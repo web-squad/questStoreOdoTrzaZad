@@ -140,7 +140,7 @@ class ClassEditorTest {
         setUpHandlePost();
         when(formDataParser.getData(httpExchange)).thenReturn(getDummyInputs("edit"));
         classEditor.handle(httpExchange);
-        verify(creepyGuyDAO).editRoom(any(),anyString());
+        verify(creepyGuyDAO).editRoom(any(), anyString());
         verify(creepyGuyModel).getNickName();
         verifyResponse();
     }
