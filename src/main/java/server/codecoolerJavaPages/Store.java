@@ -34,6 +34,15 @@ public class Store implements HttpHandler {
         this.loginAccesDAO = new LoginAccesDAO(connection);
         this.formDataParser = new FormDataParser();
     }
+
+//
+//    public Store(CodecoolerDAO codecoolerDAO, CookieHelper cookieHelper, LoginAccesDAO loginAccesDAO, FormDataParser formDataParser) {
+//        this.codecoolerDAO = codecoolerDAO;
+//        this.cookieHelper = cookieHelper;
+//        this.loginAccesDAO = loginAccesDAO;
+//        this.formDataParser = formDataParser;
+//    }
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         String method = httpExchange.getRequestMethod();

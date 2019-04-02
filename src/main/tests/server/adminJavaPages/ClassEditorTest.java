@@ -8,6 +8,7 @@ import models.Room;
 import org.jtwig.JtwigTemplate;
 import org.jtwig.environment.Environment;
 import org.jtwig.resource.reference.ResourceReference;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -18,6 +19,7 @@ import com.sun.net.httpserver.HttpExchange;
 import server.helpers.FormDataParser;
 
 import javax.sql.rowset.spi.TransactionalWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpCookie;
@@ -51,7 +53,7 @@ class ClassEditorTest {
         this.loginAccesDAO = mock(LoginAccesDAO.class);
         this.creepyGuyModel = mock(CreepyGuyModel.class);
         this.creepyGuyDAO = mock(CreepyGuyDAO.class);
-        this.outputStream = mock(OutputStream.class);
+        this.outputStream = new ByteArrayOutputStream();//mock(OutputStream.class);
         this.headers = mock(Headers.class);
         this.loginAccesDAO = mock(LoginAccesDAO.class);
         this.formDataParser = mock(FormDataParser.class);
@@ -61,7 +63,9 @@ class ClassEditorTest {
     void testIfGenerateClassEditorPage() throws IOException, NoSuchFieldException {
         stubActiveSessionTest("GET");
         setFields();
+
         classEditor.handle(httpExchange);
+
         verify(creepyGuyModel).getNickName();
         verifyResponse();
     }
@@ -83,10 +87,12 @@ class ClassEditorTest {
     }
 
     private void verifyResponse() throws IOException {
-        verify(httpExchange).sendResponseHeaders(anyInt(), anyLong());
-        verify(httpExchange).getResponseBody();
-        verify(outputStream).write(any());
-        verify(outputStream).close();
+        String expectedResponse = "";
+        verify(httpExchange).sendResponseHeaders(301, 3807L);
+        Assertions.assertEquals(outputStream.toString(), expectedResponse);
+//        verify(httpExchange).getResponseBody();
+//        verify(outputStream).write(any());
+//        verify(outputStream).close();
     }
 
     @Test
